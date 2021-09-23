@@ -18,7 +18,11 @@ namespace CarpoolApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            Page p = new Views.Login();
+            p.Title = "Login";
+            MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+
+            //MainPage = new MainPage();
         }
 
         protected override void OnStart()

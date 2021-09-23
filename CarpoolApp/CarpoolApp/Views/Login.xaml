@@ -7,6 +7,9 @@
             <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+
+            <Label Text="{Binding Email}" FontSize="Large" FontAttributes="Bold"></Label>
+            <Button Text="Show" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding GetString}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
