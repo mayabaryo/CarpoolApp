@@ -4,12 +4,30 @@
              x:Class="CarpoolApp.Views.Login">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Welcome to Carpool!"></Label>
+            <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email"   
+                           Keyboard="Email"/>
+            <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password" IsPassword="True"/>
+            <Button Text="Login" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding LoginCommand}"></Button>
 
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Don't have an account? " />
+                        <Span Text="Sign Up!" TextColor="Blue" TextDecorations="Underline">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TapCommand}" />
+                            </Span.GestureRecognizers>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <!--<Label Text="Don't have an account? Sign Up!" ></Label>
+            <Button Text="Sign Up As Adult" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding AdultSignUpPage}"></Button>
+            <Button Text="Sign Up As Activity Manager" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding ManagerSignUpPage}"></Button>
             <Label Text="{Binding Email}" FontSize="Large" FontAttributes="Bold"></Label>
-            <Button Text="Show" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding GetString}"></Button>
+            <Button Text="Login" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding GetString}"></Button>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,6 +1,9 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using CarpoolApp.Models;
+using CarpoolApp.Views;
+using System.Collections.Generic;
 
 namespace CarpoolApp
 {
@@ -14,9 +17,13 @@ namespace CarpoolApp
             }
         }
 
+        //The current logged in user
+        public User CurrentUser { get; set; }
+
         public App()
         {
             InitializeComponent();
+            CurrentUser = null;
 
             Page p = new Views.Login();
             p.Title = "Login";

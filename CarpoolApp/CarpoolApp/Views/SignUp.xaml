@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarpoolApp.Views.SignUp">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Enter Your Details"></Label>
+            <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email" Keyboard="Email"/>
+            <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password" IsPassword="True"/>
+            <Entry x:Name="FirstName" Text="{Binding FirstName}" Placeholder="First Name"/>
+            <Entry x:Name="LastName" Text="{Binding LastName}" Placeholder="Last Name"/>
+            <Label Text="BirthDate"></Label>
+            <DatePicker x:Name="BirthDate"></DatePicker>
+            <Entry x:Name="PhoneNumber" Text="{Binding PhoneNumber}" Placeholder="Phone Number"/>
+            <Entry x:Name="City" Text="{Binding City}" Placeholder="City"/>
+            <Entry x:Name="Neighborhood" Text="{Binding Neighborhood}" Placeholder="Neighborhood"/>
+            <Entry x:Name="Street" Text="{Binding Street}" Placeholder="Street"/>
+            <Entry x:Name="HouseNumber" Text="{Binding HouseNumber}" Placeholder="House Number"/>
+
+            <Button Text="Sign Up" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding SignUpCommand}"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
