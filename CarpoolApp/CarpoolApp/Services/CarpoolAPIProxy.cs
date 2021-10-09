@@ -107,11 +107,11 @@ namespace CarpoolApp.Services
             }
         }
 
-        public async Task<User> SignUpAsync(string email, string pass, string fName, string lName)
+        public async Task<User> SignUpAsync(string email, string userName, string pass, string fName, string lName)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/SignUp?email={email}&pass={pass}&fName={fName}&lName={lName}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/SignUp?email={email}&userName={userName}&pass={pass}&fName={fName}&lName={lName}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
