@@ -79,11 +79,11 @@ namespace CarpoolApp.Services
             this.basePhotosUri = basePhotosUri;
         }
 
-        public async Task<User> LoginAsync(string email, string pass)
+        public async Task<User> LoginAsync(string email, string userName, string pass)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/Login?email={email}&pass={pass}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/Login?email={email}&userName={userName}&pass={pass}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions

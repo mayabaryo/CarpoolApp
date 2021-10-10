@@ -33,6 +33,16 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("Email");
             }
         }
+        private string userName;
+        public string UserName
+        {
+            get { return userName; }
+            set
+            {
+                userName = value;
+                OnPropertyChanged("UserName");
+            }
+        }
         private string password;
         public string Password
         {
@@ -67,7 +77,7 @@ namespace CarpoolApp.ViewModels
         public async void OnLogin()
         {
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            User user = await proxy.LoginAsync(this.Email, this.Password);
+            User user = await proxy.LoginAsync(this.Email, this.UserName, this.Password);
 
             if (user != null)
             {
