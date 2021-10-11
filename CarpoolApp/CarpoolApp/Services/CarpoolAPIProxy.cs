@@ -107,12 +107,42 @@ namespace CarpoolApp.Services
             }
         }
 
-        public async Task<User> SignUpAsync(string email, string userName, string pass, string fName, string lName,
-            DateTime birthDate,ContactPhone phoneNum, Image photo, string city, string neighborhood, string street, string houseNum)
+        public async Task<User> AdultSignUpAsync(string email, string userName, string pass, string fName, string lName,
+            DateTime birthDate, string phoneNum, string photo, string city, string neighborhood, string street, string houseNum)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/SignUp?email={email}&userName={userName}&pass={pass}&fName={fName}&lName={lName}" +
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/AdultSignUp?email={email}&userName={userName}&pass={pass}&fName={fName}&lName={lName}" +
+                    $"&birthDate={birthDate}&phoneNum={phoneNum}&photo={photo}&city={city}&neighborhood={neighborhood}&street={street}&houseNum={houseNum}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    User u = JsonSerializer.Deserialize<User>(content, options);
+                    return u;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<User> KidSignUpAsync(string email, string userName, string pass, string fName, string lName,
+            DateTime birthDate, string phoneNum, string photo, string city, string neighborhood, string street, string houseNum)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/KidSignUp?email={email}&userName={userName}&pass={pass}&fName={fName}&lName={lName}" +
                     $"&birthDate={birthDate}&phoneNum={phoneNum}&photo={photo}&city={city}&neighborhood={neighborhood}&street={street}&houseNum={houseNum}");
                 if (response.IsSuccessStatusCode)
                 {

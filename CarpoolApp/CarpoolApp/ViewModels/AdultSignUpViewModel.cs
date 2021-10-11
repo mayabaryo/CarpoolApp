@@ -74,8 +74,8 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("BirthDate");
             }
         }
-        private ContactPhone phoneNumber;
-        public ContactPhone PhoneNumber
+        private string phoneNumber;
+        public string PhoneNumber
         {
             get { return phoneNumber; }
             set

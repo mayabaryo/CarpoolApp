@@ -85,8 +85,8 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("BirthDate");
             }
         }
-        private ContactPhone phoneNumber;
-        public ContactPhone PhoneNumber
+        private string phoneNumber;
+        public string PhoneNumber
         {
             get { return phoneNumber; }
             set
@@ -95,8 +95,8 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("PhoneNumber");
             }
         }
-        private Image photo;
-        public Image Photo
+        private string photo;
+        public string Photo
         {
             get { return photo; }
             set
@@ -105,7 +105,6 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("Photo");
             }
         }
-
         private string city;
         public string City
         {
@@ -136,8 +135,8 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("Street");
             }
         }
-        private int houseNumber;
-        public int HouseNumber
+        private string houseNumber;
+        public string HouseNumber
         {
             get { return houseNumber; }
             set
@@ -148,28 +147,15 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        public ICommand SignUpCommand { protected set; get; }
+        public ICommand AdultSignUpCommand { protected set; get; }
         public SignUpViewModel()
         {
-            SignUpCommand = new Command(OnSignUp);
+            AdultSignUpCommand = new Command(OnAdultSignUp);
         }
-        public async void OnSignUp()
+        public async void OnAdultSignUp()
         {
-            Email = email,
-                UserName = userName,
-                UserPswd = pass,
-                FirstName = fName,
-                LastName = lName,
-                BirthDate = birthDate,
-                PhoneNum = phoneNumber,
-                Photo = photo,
-                City = city,
-                Neighborhood = neighborhood,
-                Street = street,
-                HouseNum = houseNum
-
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            User user = await proxy.SignUpAsync(this.Email, this.UserName, this.Password, this.FirstName, this.LastName,
+            User user = await proxy.AdultSignUpAsync(this.Email, this.UserName, this.Password, this.FirstName, this.LastName,
                 this.BirthDate, this.PhoneNumber, this.Photo, this.City, this.Neighborhood, this.Street, this.HouseNumber);
 
             if (user != null)
