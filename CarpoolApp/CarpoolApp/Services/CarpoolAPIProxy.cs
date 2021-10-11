@@ -79,11 +79,11 @@ namespace CarpoolApp.Services
             this.basePhotosUri = basePhotosUri;
         }
 
-        public async Task<User> LoginAsync(string email, string userName, string pass)
+        public async Task<User> LoginAsync(string email,/* string userName,*/ string pass)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/Login?email={email}&userName={userName}&pass={pass}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/Login?email={email}&pass={pass}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -107,11 +107,13 @@ namespace CarpoolApp.Services
             }
         }
 
-        public async Task<User> SignUpAsync(string email, string userName, string pass, string fName, string lName)
+        public async Task<User> SignUpAsync(string email, string userName, string pass, string fName, string lName,
+            DateTime birthDate,ContactPhone phoneNum, Image photo, string city, string neighborhood, string street, string houseNum)
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/SignUp?email={email}&userName={userName}&pass={pass}&fName={fName}&lName={lName}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/SignUp?email={email}&userName={userName}&pass={pass}&fName={fName}&lName={lName}" +
+                    $"&birthDate={birthDate}&phoneNum={phoneNum}&photo={photo}&city={city}&neighborhood={neighborhood}&street={street}&houseNum={houseNum}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions

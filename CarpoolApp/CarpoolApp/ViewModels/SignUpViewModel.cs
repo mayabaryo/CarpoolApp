@@ -95,6 +95,17 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("PhoneNumber");
             }
         }
+        private Image photo;
+        public Image Photo
+        {
+            get { return photo; }
+            set
+            {
+                photo = value;
+                OnPropertyChanged("Photo");
+            }
+        }
+
         private string city;
         public string City
         {
@@ -144,8 +155,22 @@ namespace CarpoolApp.ViewModels
         }
         public async void OnSignUp()
         {
+            Email = email,
+                UserName = userName,
+                UserPswd = pass,
+                FirstName = fName,
+                LastName = lName,
+                BirthDate = birthDate,
+                PhoneNum = phoneNumber,
+                Photo = photo,
+                City = city,
+                Neighborhood = neighborhood,
+                Street = street,
+                HouseNum = houseNum
+
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            User user = await proxy.SignUpAsync(this.Email, this.UserName, this.Password, this.FirstName, this.LastName);
+            User user = await proxy.SignUpAsync(this.Email, this.UserName, this.Password, this.FirstName, this.LastName,
+                this.BirthDate, this.PhoneNumber, this.Photo, this.City, this.Neighborhood, this.Street, this.HouseNumber);
 
             if (user != null)
             {      
