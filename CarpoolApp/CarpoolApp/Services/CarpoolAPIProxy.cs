@@ -107,13 +107,21 @@ namespace CarpoolApp.Services
             }
         }
 
-        public async Task<User> AdultSignUpAsync(string email, string userName, string pass, string fName, string lName,
-            DateTime birthDate, string phoneNum, string photo, string city, string neighborhood, string street, string houseNum)
+        public async Task<Adult> AdultSignUpAsync(Adult adult)
         {
+            //, string email, string userName, string pass, string fName, string lName,
+            //DateTime birthDate, string phoneNum, string photo, string city, string neighborhood, string street, string houseNum
+
+            //email ={ email}
+            //&userName ={ userName}
+            //&pass ={ pass}
+            //&fName ={ fName}
+            //&lName ={ lName}
+            //" +
+            //        $"&birthDate={birthDate}&phoneNum={phoneNum}&photo={photo}&city={city}&neighborhood={neighborhood}&street={street}&houseNum={houseNum}
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/AdultSignUp?email={email}&userName={userName}&pass={pass}&fName={fName}&lName={lName}" +
-                    $"&birthDate={birthDate}&phoneNum={phoneNum}&photo={photo}&city={city}&neighborhood={neighborhood}&street={street}&houseNum={houseNum}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/AdultSignUp?adult={adult}");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -122,8 +130,8 @@ namespace CarpoolApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    User u = JsonSerializer.Deserialize<User>(content, options);
-                    return u;
+                    Adult a = JsonSerializer.Deserialize<Adult>(content, options);
+                    return a;
                 }
                 else
                 {

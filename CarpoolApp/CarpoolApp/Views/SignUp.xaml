@@ -11,7 +11,7 @@
             <Entry x:Name="FirstName" Text="{Binding FirstName}" Placeholder="First Name"/>
             <Entry x:Name="LastName" Text="{Binding LastName}" Placeholder="Last Name"/>
             <Label Text="BirthDate"></Label>
-            <DatePicker x:Name="BirthDate"></DatePicker>
+            <DatePicker x:Name="BirthDate" Date="{Binding BirthDate}"></DatePicker>
             <Entry x:Name="PhoneNumber" Text="{Binding PhoneNumber}" Placeholder="Phone Number"/>
             <Entry x:Name="Photo" Text="{Binding Photo}" Placeholder="Photo"/>
             <Entry x:Name="City" Text="{Binding City}" Placeholder="City"/>

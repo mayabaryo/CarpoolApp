@@ -19,11 +19,16 @@ namespace CarpoolApp
 
         //The current logged in user
         public User CurrentUser { get; set; }
+        public Adult CurrentAdult { get; set; }
+        public Kid CurrentKid { get; set; }
+
 
         public App()
         {
             InitializeComponent();
             CurrentUser = null;
+            CurrentAdult = null;
+            CurrentKid = null;
 
             Page p = new Views.Login();
             p.Title = "Login";

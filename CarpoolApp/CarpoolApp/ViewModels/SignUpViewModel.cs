@@ -155,13 +155,35 @@ namespace CarpoolApp.ViewModels
         public async void OnAdultSignUp()
         {
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            User user = await proxy.AdultSignUpAsync(this.Email, this.UserName, this.Password, this.FirstName, this.LastName,
-                this.BirthDate, this.PhoneNumber, this.Photo, this.City, this.Neighborhood, this.Street, this.HouseNumber);
+            User user = new User()
+            {
+                Email = this.Email,
+                UserName = this.UserName,
+                UserPswd = this.Password,
+                FirstName = this.FirstName,
+                LastName = this.LastName,
+                BirthDate = this.BirthDate,
+                PhoneNum = this.PhoneNumber,
+                Photo = this.Photo,
+                City = this.City,
+                Neighborhood = this.Neighborhood,
+                Street = this.Street,
+                HouseNum = this.HouseNumber
+            };
+            Adult adult1 = new Adult()
+            {
+                IdNavigation = user
+            };
+            Adult adult = await proxy.AdultSignUpAsync(adult1);
 
-            if (user != null)
+            //this.Email, this.UserName, this.Password, this.FirstName, this.LastName,
+            //    this.BirthDate, this.PhoneNumber, this.Photo, this.City, this.Neighborhood, this.Street, this.HouseNumber
+            
+            if (adult != null)
             {      
                 App a = (App)App.Current;
-                a.CurrentUser = user;
+                //a.CurrentUser = user;
+                a.CurrentAdult = adult;
 
                 AdultPage ap = new AdultPage();
                 ap.Title = "Adult Page";
