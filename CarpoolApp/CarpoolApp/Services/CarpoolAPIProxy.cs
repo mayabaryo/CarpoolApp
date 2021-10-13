@@ -121,16 +121,20 @@ namespace CarpoolApp.Services
             //        $"&birthDate={birthDate}&phoneNum={phoneNum}&photo={photo}&city={city}&neighborhood={neighborhood}&street={street}&houseNum={houseNum}
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/AdultSignUp?adult={adult}");
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Adult>(adult, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AdultSignUp", content);
                 if (response.IsSuccessStatusCode)
                 {
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
-                        PropertyNameCaseInsensitive = true
-                    };
-                    string content = await response.Content.ReadAsStringAsync();
-                    Adult a = JsonSerializer.Deserialize<Adult>(content, options);
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    Adult a = JsonSerializer.Deserialize<Adult>(jsonObject, options);
                     return a;
                 }
                 else
