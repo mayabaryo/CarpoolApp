@@ -107,6 +107,12 @@ namespace CarpoolApp.ViewModels
         }
         public async void OnTap()
         {
+            //App theApp = (App)App.Current;
+            //SignUpViewModel vm = new SignUpViewModel();
+            //vm.ContactUpdatedEvent += OnContactAdded;
+            //Page p = new Views.AddContact(vm);
+            //await theApp.MainPage.Navigation.PushAsync(p);
+
             App a = (App)App.Current;
             SignUp su = new SignUp();
             su.Title = "Sign Up";

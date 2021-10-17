@@ -15,8 +15,22 @@ namespace CarpoolApp.Views
     {
         public SignUp()
         {
-            this.BindingContext = new SignUpViewModel();
+            SignUpViewModel vm = new SignUpViewModel();
+            this.BindingContext = vm;
+            vm.SetImageSourceEvent += OnSetImageSource;
             InitializeComponent();
+        }
+
+        //public SignUp(SignUpViewModel context)
+        //{
+        //    this.BindingContext = context;
+        //    context.SetImageSourceEvent += OnSetImageSource;
+        //    InitializeComponent();
+        //}
+
+        public void OnSetImageSource(ImageSource imgSource)
+        {
+            theImage.Source = imgSource;
         }
     }
 }

@@ -13,7 +13,13 @@ using CarpoolApp.Views;
 
 namespace CarpoolApp.ViewModels
 {
-    class SignUpViewModel : INotifyPropertyChanged
+    public static class ERROR_MESSAGES
+    {
+        public const string REQUIRED_FIELD = "זהו שדה חובה";
+        public const string BAD_EMAIL = "מייל לא תקין";
+    }
+
+    public class SignUpViewModel : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
