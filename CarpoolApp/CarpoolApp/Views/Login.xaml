@@ -5,7 +5,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome to Carpool!"></Label>
-            <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email"   
+            <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email or UserName"   
                            Keyboard="Email"/>
             <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password" IsPassword="True"/>
             <Button Text="Login" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding LoginCommand}"></Button>

@@ -4,6 +4,21 @@
              x:Class="CarpoolApp.Views.SignUp">
     <ContentPage.Content>
         <StackLayout>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="150" />
+                </Grid.RowDefinitions>
+                <Image x:Name="theImage" Source="{Binding Photo}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"/>
+                <ImageButton Source="photogallery.png" HorizontalOptions="End" BackgroundColor="White" Grid.Column="0" Grid.Row="0" Command="{Binding PickImageCommand}"/>
+                <ImageButton Source="camera.png" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" BackgroundColor="White" Command="{Binding CameraImageCommand}"/>
+            </Grid>
+            
             <Label Text="Enter Your Details"></Label>
             <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email" Keyboard="Email"/>
             <Entry x:Name="UserName" Text="{Binding UserName}" Placeholder="User Name"/>
@@ -13,7 +28,9 @@
             <Label Text="BirthDate"></Label>
             <DatePicker x:Name="BirthDate" Date="{Binding BirthDate}"></DatePicker>
             <Entry x:Name="PhoneNumber" Text="{Binding PhoneNumber}" Placeholder="Phone Number"/>
+            
             <Entry x:Name="Photo" Text="{Binding Photo}" Placeholder="Photo"/>
+            
             <Entry x:Name="City" Text="{Binding City}" Placeholder="City"/>
             <Entry x:Name="Neighborhood" Text="{Binding Neighborhood}" Placeholder="Neighborhood"/>
             <Entry x:Name="Street" Text="{Binding Street}" Placeholder="Street"/>

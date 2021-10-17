@@ -105,6 +105,8 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("Photo");
             }
         }
+        private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
+
         private string city;
         public string City
         {
@@ -170,20 +172,20 @@ namespace CarpoolApp.ViewModels
                 Street = this.Street,
                 HouseNum = this.HouseNumber
             };
-            Adult adult1 = new Adult()
+            Adult adult = new Adult()
             {
                 IdNavigation = user
             };
-            Adult adult = await proxy.AdultSignUpAsync(adult1);
+            Adult newAdult = await proxy.AdultSignUpAsync(adult);
 
             //this.Email, this.UserName, this.Password, this.FirstName, this.LastName,
             //    this.BirthDate, this.PhoneNumber, this.Photo, this.City, this.Neighborhood, this.Street, this.HouseNumber
             
-            if (adult != null)
+            if (newAdult != null)
             {      
                 App a = (App)App.Current;
                 //a.CurrentUser = user;
-                a.CurrentAdult = adult;
+                a.CurrentAdult = newAdult;
 
                 AdultPage ap = new AdultPage();
                 ap.Title = "Adult Page";
@@ -194,6 +196,49 @@ namespace CarpoolApp.ViewModels
             {
                 //await App.Current.MainPage.Navigation.PopModalAsync();
                 await App.Current.MainPage.DisplayAlert("Error", "Sign Up failed! please try again!", "OK");
+            }
+        }
+
+
+
+        //The following command handle the pick photo button
+        FileResult imageFileResult;
+        public event Action<ImageSource> SetImageSourceEvent;
+        public ICommand PickImageCommand => new Command(OnPickImage);
+        public async void OnPickImage()
+        {
+            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
+            {
+                Title = "Pick a photo"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+
+        //The following command handle the take photo button
+        public ICommand CameraImageCommand => new Command(OnCameraImage);
+        public async void OnCameraImage()
+        {
+            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = "Take a photo"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
             }
         }
     }
