@@ -104,7 +104,12 @@ namespace CarpoolApp.ViewModels
         private string photo;
         public string Photo
         {
-            get { return photo; }
+            get 
+            {
+                if (string.IsNullOrEmpty(this.photo))
+                    return DEFAULT_PHOTO_SRC;
+                return photo; 
+            }
             set
             {
                 photo = value;

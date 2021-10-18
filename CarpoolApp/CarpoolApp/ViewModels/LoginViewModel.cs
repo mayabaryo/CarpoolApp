@@ -77,7 +77,7 @@ namespace CarpoolApp.ViewModels
         public async void OnLogin()
         {
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            User user = await proxy.LoginAsync(this.Email,/* this.UserName,*/ this.Password);
+            User user = await proxy.LoginAsync(this.Email, this.Password);
 
             if (user != null)
             {
