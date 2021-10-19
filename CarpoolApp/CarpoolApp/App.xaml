@@ -3,6 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CarpoolApp.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <Style x:Key="title" TargetType="Label">
+                <Setter Property="FontFamily" Value="Amatic"></Setter>
+                <Setter Property="FontSize" Value="32"></Setter>
+            </Style>
 
+            <Style x:Key="smallerTitle" TargetType="Label">
+                <Setter Property="FontFamily" Value="Amatic"></Setter>
+                <Setter Property="FontSize" Value="28"></Setter>
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            </Style>
+
+            <Style x:Key="entry" TargetType="Entry">
+                <Setter Property="FontFamily" Value="Epilogue-ExtraLight"></Setter>
+                <Setter Property="FontSize" Value="14"></Setter>
+            </Style>
+
+            <Style x:Key="logInSignUp" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#B9C6CB"></Setter>
+                <Setter Property="HasShadow" Value="true"></Setter>
+                <Setter Property="CornerRadius" Value="25"></Setter>
+            </Style>
+
+            <Style x:Key="labelNameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="labelErrorStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

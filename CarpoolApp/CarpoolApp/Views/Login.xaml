@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CarpoolApp.Views.Login">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Style="{StaticResource logInSignUp}">
             <Label Text="Welcome to Carpool!"></Label>
             <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email or UserName"   
                            Keyboard="Email"/>

@@ -79,6 +79,8 @@ namespace CarpoolApp.Services
             this.basePhotosUri = basePhotosUri;
         }
 
+        public string GetBasePhotoUri() { return this.basePhotosUri; }
+
         public async Task<User> LoginAsync(string email,/* string userName,*/ string pass)
         {
             try
@@ -109,16 +111,6 @@ namespace CarpoolApp.Services
 
         public async Task<Adult> AdultSignUpAsync(Adult adult)
         {
-            //, string email, string userName, string pass, string fName, string lName,
-            //DateTime birthDate, string phoneNum, string photo, string city, string neighborhood, string street, string houseNum
-
-            //email ={ email}
-            //&userName ={ userName}
-            //&pass ={ pass}
-            //&fName ={ fName}
-            //&lName ={ lName}
-            //" +
-            //        $"&birthDate={birthDate}&phoneNum={phoneNum}&photo={photo}&city={city}&neighborhood={neighborhood}&street={street}&houseNum={houseNum}
             try
             {
                 JsonSerializerOptions options = new JsonSerializerOptions
@@ -146,6 +138,29 @@ namespace CarpoolApp.Services
             {
                 Console.WriteLine(e.Message);
                 return null;
+            }
+        }
+
+        //Upload file to server (only images!)
+        public async Task<bool> UploadImage(Models.FileInfo fileInfo, string targetFileName)
+        {
+            try
+            {
+                var multipartFormDataContent = new MultipartFormDataContent();
+                var fileContent = new ByteArrayContent(File.ReadAllBytes(fileInfo.Name));
+                multipartFormDataContent.Add(fileContent, "file", targetFileName);
+                HttpResponseMessage response = await client.PostAsync($"{this.baseUri}/UploadImage", multipartFormDataContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
             }
         }
 
