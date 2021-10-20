@@ -20,6 +20,8 @@ namespace CarpoolApp.ViewModels
         public const string BAD_EMAIL = "Invalid email";
         public const string SHORT_PASS = "The password must contain at least 6 characters";
         public const string BAD_PHONE = "Invalid phone number (must contain 10 digits)";
+        public const string BAD_DATE = "You must be over 18 years old to Sign Up";
+
     }
 
     public class SignUpViewModel : INotifyPropertyChanged
@@ -366,11 +368,8 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateBirthDate()
         {
-            int nowYear = DateTime.Now.Year;
-            int nowMonth = DateTime.Now.Month;
-            int nowDay = DateTime.Now.Day;
-
-            this.ShowBirthDateError = BirthDate != null; /*DateTime.IsNullOrEmpty(BirthDate) || DateTime.Now-BirthDate*/
+            TimeSpan ts = DateTime.Now - this.BirthDate;
+            this.ShowBirthDateError = ts.TotalDays > (18 * 365);
         }
         #endregion
 
@@ -623,7 +622,7 @@ namespace CarpoolApp.ViewModels
             this.PasswordError = ERROR_MESSAGES.SHORT_PASS;
             this.NameError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.LastNameError = ERROR_MESSAGES.REQUIRED_FIELD;
-            this.BirthDateError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.BirthDateError = ERROR_MESSAGES.BAD_DATE;
             this.PhoneNumError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.CityError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.NeighborhoodError = ERROR_MESSAGES.REQUIRED_FIELD;
@@ -672,7 +671,7 @@ namespace CarpoolApp.ViewModels
             ValidatePassword();
             ValidateName();
             ValidateLastName();
-            //ValidateBirthDate();
+            ValidateBirthDate();
             ValidatePhoneNum();
             ValidateCity();
             ValidateNeighborhood();
@@ -681,7 +680,7 @@ namespace CarpoolApp.ViewModels
 
             //check if any validation failed
             if (ShowEmailError || ShowUserNameError || ShowPasswordError || ShowNameError
-                || ShowLastNameError /*|| ShowBirthDateError*/ || ShowPhoneNumError|| ShowCityError
+                || ShowLastNameError || ShowBirthDateError || ShowPhoneNumError|| ShowCityError
                 || ShowNeighborhoodError || ShowStreetError || ShowHouseNumError)
                 return false;
             return true;
