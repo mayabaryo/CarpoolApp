@@ -19,9 +19,9 @@ namespace CarpoolApp.ViewModels
         public const string REQUIRED_FIELD = "This is a required field";
         public const string BAD_EMAIL = "Invalid email";
         public const string SHORT_PASS = "The password must contain at least 6 characters";
-        public const string BAD_PHONE = "Invalid phone number (must contain 10 digits)";
-        public const string BAD_DATE = "You must be over 18 years old to Sign Up";
-
+        public const string BAD_PHONE = "Invalid phone number";
+        public const string BAD_DATE = "You must be over 18 years old to sign up";
+        public const string BAD_HOUSE_NUM = "Invalid house number";
     }
 
     public class SignUpViewModel : INotifyPropertyChanged
@@ -317,14 +317,14 @@ namespace CarpoolApp.ViewModels
             this.ShowPhoneNumError = string.IsNullOrEmpty(PhoneNum);
             if (!this.ShowPhoneNumError)
             {
-                if (this.PhoneNum.Length != 10)
+                if (!Regex.IsMatch(this.PhoneNum, @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"))
                 {
                     this.ShowPhoneNumError = true;
                     this.PhoneNumError = ERROR_MESSAGES.BAD_PHONE;
                 }
             }
             else
-                this.PasswordError = ERROR_MESSAGES.REQUIRED_FIELD;
+                this.PhoneNumError = ERROR_MESSAGES.REQUIRED_FIELD;
         }
         #endregion
 
@@ -366,10 +366,11 @@ namespace CarpoolApp.ViewModels
             }
         }
 
+        private const int MIN_AGE = 18;
         private void ValidateBirthDate()
         {
             TimeSpan ts = DateTime.Now - this.BirthDate;
-            this.ShowBirthDateError = ts.TotalDays > (18 * 365);
+            this.ShowBirthDateError = ts.TotalDays < (MIN_AGE * 365);
         }
         #endregion
 
@@ -533,9 +534,9 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private string houseNum;
+        private int houseNum;
 
-        public string HouseNum
+        public int HouseNum
         {
             get => houseNum;
             set
@@ -558,11 +559,81 @@ namespace CarpoolApp.ViewModels
             }
         }
 
+        
         private void ValidateHouseNum()
         {
-            this.ShowHouseNumError = string.IsNullOrEmpty(HouseNum);
+            this.ShowHouseNumError = this.HouseNum == 0;
+            int i;
+            string num = this.HouseNum.ToString();
+            if (!this.ShowHouseNumError)
+            {
+                if (!int.TryParse(num, out i) || int.Parse(num) <= 0/*!Regex.IsMatch(num, @"^[-+]?[0-9]*\.?[0-9]+$")*/)
+                {
+                    this.ShowHouseNumError = true;
+                    this.HouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
+                }
+            }
+            else
+                this.HouseNumError = ERROR_MESSAGES.REQUIRED_FIELD;
         }
         #endregion
+
+        #region StringHouseNum
+        private bool showStringHouseNumError;
+
+        public bool ShowStringHouseNumError
+        {
+            get => showStringHouseNumError;
+            set
+            {
+                showStringHouseNumError = value;
+                OnPropertyChanged("ShowStringHouseNumError");
+            }
+        }
+
+        private string stringHouseNum;
+
+        public string StringHouseNum
+        {
+            get => stringHouseNum;
+            set
+            {
+                stringHouseNum = value;
+                ValidateStringHouseNum();
+                OnPropertyChanged("StringHouseNum");
+            }
+        }
+
+        private string stringHouseNumError;
+
+        public string StringHouseNumError
+        {
+            get => stringHouseNumError;
+            set
+            {
+                stringHouseNumError = value;
+                OnPropertyChanged("StringHouseNumError");
+            }
+        }
+
+
+        private void ValidateStringHouseNum()
+        {
+            this.ShowStringHouseNumError = string.IsNullOrEmpty(this.StringHouseNum);
+            int i;
+            if (!this.ShowStringHouseNumError)
+            {
+                if (!int.TryParse(this.StringHouseNum, out i) || int.Parse(this.StringHouseNum) <= 0 /*!Regex.IsMatch(this.StringHouseNum, @"^[-+]?[0-9]*\.?[0-9]+$")*/)
+                {
+                    this.ShowStringHouseNumError = true;
+                    this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
+                }
+            }
+            else
+                this.StringHouseNumError = ERROR_MESSAGES.REQUIRED_FIELD;
+        }
+        #endregion
+
 
         //private User theUser;
         private Adult theAdult;
@@ -582,26 +653,19 @@ namespace CarpoolApp.ViewModels
                     UserPswd = "",
                     FirstName = "",
                     LastName = "",
-                    BirthDate = default,
+                    BirthDate = DateTime.Now,
                     PhoneNum = "",
                     City = "",
                     Neighborhood = "",
                     Street = "",
-                    HouseNum = ""
+                    HouseNum = default
                 };
+                StringHouseNum = "";
+
                 a = new Adult()
                 {
                     IdNavigation = u
                 };
-
-                //a = new User()
-                //{
-                //    UserId = theApp.CurrentUser.Id,
-                //    FirstName = "",
-                //    LastName = "",
-                //    Email = "",
-                //    ContactPhones = new List<Models.ContactPhone>()
-                //};
 
                 //Setup default image photo
                 this.UserImgSrc = DEFAULT_PHOTO_SRC;
@@ -628,6 +692,7 @@ namespace CarpoolApp.ViewModels
             this.NeighborhoodError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.HouseNumError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
 
             this.ShowEmailError = false;
             this.ShowUserNameError = false;
@@ -640,12 +705,9 @@ namespace CarpoolApp.ViewModels
             this.ShowNeighborhoodError = false;
             this.ShowStreetError = false;
             this.ShowHouseNumError = false;
+            this.ShowStringHouseNumError = false;
 
-            //this.ContactPhones = new ObservableCollection<Models.ContactPhone>(uc.ContactPhones);
             this.SaveDataCommand = new Command(() => SaveData());
-            //this.Name = a.FirstName;
-            //this.LastName = a.LastName;
-            //this.Email = a.Email;
 
             this.Email = a.IdNavigation.Email;
             this.UserName = a.IdNavigation.UserName;
@@ -658,8 +720,6 @@ namespace CarpoolApp.ViewModels
             this.Neighborhood = a.IdNavigation.Neighborhood;
             this.Street = a.IdNavigation.Street;
             this.HouseNum = a.IdNavigation.HouseNum;
-
-            //this.theAdult.IdNavigation = this.theUser;
         }
 
         //This function validate the entire form upon submit!
@@ -676,12 +736,12 @@ namespace CarpoolApp.ViewModels
             ValidateCity();
             ValidateNeighborhood();
             ValidateStreet();
-            ValidateHouseNum();
+            ValidateStringHouseNum();
 
             //check if any validation failed
             if (ShowEmailError || ShowUserNameError || ShowPasswordError || ShowNameError
                 || ShowLastNameError || ShowBirthDateError || ShowPhoneNumError|| ShowCityError
-                || ShowNeighborhoodError || ShowStreetError || ShowHouseNumError)
+                || ShowNeighborhoodError || ShowStreetError || ShowStringHouseNumError)
                 return false;
             return true;
         }
@@ -706,6 +766,7 @@ namespace CarpoolApp.ViewModels
         {
             if (ValidateForm())
             {
+                this.theAdult.IdNavigation.Photo = this.UserImgSrc;
                 this.theAdult.IdNavigation.Email = this.Email;
                 this.theAdult.IdNavigation.UserName = this.UserName;
                 this.theAdult.IdNavigation.UserPswd = this.Password;
@@ -716,9 +777,7 @@ namespace CarpoolApp.ViewModels
                 this.theAdult.IdNavigation.City = this.City;
                 this.theAdult.IdNavigation.Neighborhood = this.Neighborhood;
                 this.theAdult.IdNavigation.Street = this.Street;
-                this.theAdult.IdNavigation.HouseNum = this.HouseNum;
-
-                //this.theAdult.IdNavigation = this.theUser;
+                this.theAdult.IdNavigation.HouseNum = int.Parse(this.StringHouseNum);
 
                 ServerStatus = "Connecting to server...";
                 await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
@@ -746,10 +805,16 @@ namespace CarpoolApp.ViewModels
                     {
                         this.ContactUpdatedEvent(newAdult, this.theAdult);
                     }
-                    //close the message and add contact windows!
 
+                    //close the message and add contact windows!
                     await App.Current.MainPage.Navigation.PopAsync();
                     await App.Current.MainPage.Navigation.PopModalAsync();
+
+                    App a = (App)App.Current;
+                    AdultPage ap = new AdultPage();
+                    ap.Title = "Adult Page";
+                    a.MainPage = ap;
+                    //await App.Current.MainPage.Navigation.PushAsync(ap);
                 }
             }
             else
@@ -853,139 +918,5 @@ namespace CarpoolApp.ViewModels
                     SetImageSourceEvent(imgSource);
             }
         }
-
-
-        ////Adult Details
-        //#region Adult Details
-        //private string email;
-        //public string Email
-        //{
-        //    get { return email; }
-        //    set
-        //    {
-        //        email = value;
-        //        OnPropertyChanged("Email");
-        //    }
-        //}
-        //private string userName;
-        //public string UserName
-        //{
-        //    get { return userName; }
-        //    set
-        //    {
-        //        userName = value;
-        //        OnPropertyChanged("UserName");
-        //    }
-        //}
-        //private string password;
-        //public string Password
-        //{
-        //    get { return password; }
-        //    set
-        //    {
-        //        password = value;
-        //        OnPropertyChanged("Password");
-        //    }
-        //}
-        //private string firstName;
-        //public string FirstName
-        //{
-        //    get { return firstName; }
-        //    set
-        //    {
-        //        firstName = value;
-        //        OnPropertyChanged("FirstName");
-        //    }
-        //}
-        //private string lasttName;
-        //public string LastName
-        //{
-        //    get { return lasttName; }
-        //    set
-        //    {
-        //        lasttName = value;
-        //        OnPropertyChanged("LastName");
-        //    }
-        //}
-        //private DateTime birthDate;
-        //public DateTime BirthDate
-        //{
-        //    get { return birthDate; }
-        //    set
-        //    {
-        //        birthDate = value;
-        //        OnPropertyChanged("BirthDate");
-        //    }
-        //}
-        //private string phoneNumber;
-        //public string PhoneNumber
-        //{
-        //    get { return phoneNumber; }
-        //    set
-        //    {
-        //        phoneNumber = value;
-        //        OnPropertyChanged("PhoneNumber");
-        //    }
-        //}
-        //private string photo;
-        //public string Photo
-        //{
-        //    get 
-        //    {
-        //        if (string.IsNullOrEmpty(this.photo))
-        //            return DEFAULT_PHOTO_SRC;
-        //        return photo; 
-        //    }
-        //    set
-        //    {
-        //        photo = value;
-        //        OnPropertyChanged("Photo");
-        //    }
-        //}
-        //private const string DEFAULT_PHOTO_SRC = "defaultphoto.jpg";
-
-        //private string city;
-        //public string City
-        //{
-        //    get { return city; }
-        //    set
-        //    {
-        //        city = value;
-        //        OnPropertyChanged("City");
-        //    }
-        //}
-        //private string neighborhood;
-        //public string Neighborhood
-        //{
-        //    get { return neighborhood; }
-        //    set
-        //    {
-        //        neighborhood = value;
-        //        OnPropertyChanged("Neighborhood");
-        //    }
-        //}
-        //private string street;
-        //public string Street
-        //{
-        //    get { return street; }
-        //    set
-        //    {
-        //        street = value;
-        //        OnPropertyChanged("Street");
-        //    }
-        //}
-        //private string houseNumber;
-        //public string HouseNumber
-        //{
-        //    get { return houseNumber; }
-        //    set
-        //    {
-        //        houseNumber = value;
-        //        OnPropertyChanged("HouseNumber");
-        //    }
-        //}
-        //#endregion
-
-        //public ICommand AdultSignUpCommand { protected set; get; }
     }
 }

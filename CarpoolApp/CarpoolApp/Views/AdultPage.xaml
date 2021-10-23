@@ -5,7 +5,7 @@
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Adult Page"></Label>
+            <Label Text="Adult Page" Style="{StaticResource title}"></Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

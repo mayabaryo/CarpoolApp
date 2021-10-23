@@ -18,7 +18,7 @@ namespace CarpoolApp.Models
         public string City { get; set; }
         public string Neighborhood { get; set; }
         public string Street { get; set; }
-        public string HouseNum { get; set; }
+        public int HouseNum { get; set; }
 
         public virtual Adult Adult { get; set; }
         public virtual Kid Kid { get; set; }
