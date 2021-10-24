@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CarpoolApp.Views.Login">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Style="{StaticResource Stack}">
             <Label Text="Welcome to Carpool!" Style="{StaticResource title}"></Label>
 
             <Frame Style="{StaticResource logInSignUp}">
                 <StackLayout>
-                    <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email or UserName" Keyboard="Email"
+                    <Entry x:Name="Email" MaxLength="30" Text="{Binding Email}" Placeholder="Email or UserName" Keyboard="Email"
                            Style="{StaticResource entry}"/>
-                    <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password" IsPassword="True"
+                    <Entry x:Name="Password" MaxLength="30" Text="{Binding Password}" Placeholder="Password" IsPassword="True"
                            Style="{StaticResource entry}"/>
                 </StackLayout>
             </Frame>

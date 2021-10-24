@@ -5,6 +5,13 @@ using CarpoolApp.Models;
 using CarpoolApp.Views;
 using System.Collections.Generic;
 
+[assembly: ExportFont("AmaticSC-Regular.ttf", Alias = "Amatic")]
+[assembly: ExportFont("epilogue.extralight.ttf", Alias = "Epilogue-ExtraLight")]
+[assembly: ExportFont("epilogue.regular.ttf", Alias = "Epilogue")]
+[assembly: ExportFont("Raleway-ExtraLight.ttf", Alias = "Raleway-ExtraLight")]
+[assembly: ExportFont("sweet-n-sticky.regular.ttf", Alias = "Sweet-N-Sticky")]
+[assembly: ExportFont("Tangerine-Regular.ttf", Alias = "Tangerine")]
+
 namespace CarpoolApp
 {
     public partial class App : Application

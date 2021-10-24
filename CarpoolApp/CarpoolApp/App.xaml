@@ -39,12 +39,13 @@
 
 
 
-            <Style TargetType="StackLayout" x:Key="LoginStack">
+            <Style TargetType="StackLayout" x:Key="Stack">
                 <Setter Property="Orientation" Value="Vertical"/>
                 <Setter Property="Padding" Value="30"/>
                 <Setter Property="Spacing" Value="40"/>
-                <Setter Property="FlowDirection" Value="RightToLeft"/>
+                <!-- <Setter Property="FlowDirection" Value="RightToLeft"/> -->
             </Style>
+            
             <Style TargetType="Label" x:Key="FormTitle">
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="FontSize" Value="Large"/>
