@@ -680,6 +680,7 @@ namespace CarpoolApp.ViewModels
                 this.UserImgSrc = proxy.GetBasePhotoUri() + a.Id + $".jpg?{r.Next()}";
             }
 
+
             this.theAdult = a;
             this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
             this.UserNameError = ERROR_MESSAGES.REQUIRED_FIELD;
