@@ -691,7 +691,7 @@ namespace CarpoolApp.ViewModels
             this.CityError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.NeighborhoodError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
-            this.HouseNumError = ERROR_MESSAGES.REQUIRED_FIELD;
+            //this.HouseNumError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
 
             this.ShowEmailError = false;
@@ -704,7 +704,7 @@ namespace CarpoolApp.ViewModels
             this.ShowCityError = false;
             this.ShowNeighborhoodError = false;
             this.ShowStreetError = false;
-            this.ShowHouseNumError = false;
+            //this.ShowHouseNumError = false;
             this.ShowStringHouseNumError = false;
 
             this.SaveDataCommand = new Command(() => SaveData());
