@@ -26,21 +26,21 @@ namespace CarpoolApp
 
         //The current logged in user
         public User CurrentUser { get; set; }
-        public Adult CurrentAdult { get; set; }
-        public Kid CurrentKid { get; set; }
+        //public Adult CurrentAdult { get; set; }
+        //public Kid CurrentKid { get; set; }
 
 
         public App()
         {
             InitializeComponent();
             CurrentUser = null;
-            CurrentAdult = null;
-            CurrentKid = null;
+            //CurrentAdult = null;
+            //CurrentKid = null;
 
             Page p = new Views.Login();
-            p.Title = "Login";
+            p.Title = "התחברות";
             MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
-
+            //bdb2ff
             //MainPage = new MainPage();
         }
 

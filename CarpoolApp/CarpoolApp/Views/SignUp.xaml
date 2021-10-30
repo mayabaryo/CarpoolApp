@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CarpoolApp.Views.SignUp">
+             x:Class="CarpoolApp.Views.SignUp"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout Style="{StaticResource Stack}">
             <ScrollView>
@@ -32,10 +33,10 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="Email" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="אימייל" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding EmailError}" IsVisible="{Binding ShowEmailError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="Email" MaxLength="30" Text="{Binding Email}" Style="{StaticResource entry}"/>
+                            <Entry Placeholder="אימייל" MaxLength="30" Text="{Binding Email}" Style="{StaticResource entry}"/>
 
                             <!-- User Name-->
                             <Grid>
@@ -46,10 +47,10 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="User Name" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="שם משתמש" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding UserNameError}" IsVisible="{Binding ShowUserNameError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="User Name" MaxLength="30" Text="{Binding UserName}" Style="{StaticResource entry}"/>
+                            <Entry Placeholder="שם משתמש" MaxLength="30" Text="{Binding UserName}" Style="{StaticResource entry}"/>
 
                             <!-- Password-->
                             <Grid>
@@ -60,10 +61,10 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="Password" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="סיסמה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding PasswordError}" IsVisible="{Binding ShowPasswordError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="Password" MaxLength="30" IsPassword="True" Text="{Binding Password}" Style="{StaticResource entry}"/>
+                            <Entry Placeholder="סיסמה" MaxLength="30" IsPassword="True" Text="{Binding Password}" Style="{StaticResource entry}"/>
 
                             <!-- First Name -->
                             <Grid>
@@ -74,10 +75,10 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="First Name" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="שם פרטי" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding NameError}" IsVisible="{Binding ShowNameError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="First Name" MaxLength="30" Text="{Binding Name}" Style="{StaticResource entry}"/>
+                            <Entry Placeholder="שם פרטי" MaxLength="30" Text="{Binding Name}" Style="{StaticResource entry}"/>
 
                             <!-- Last Name -->
                             <Grid>
@@ -88,10 +89,10 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="Last Name" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="שם משפחה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding LastNameError}" IsVisible="{Binding ShowLastNameError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="Last Name" MaxLength="30" Text="{Binding LastName}" Style="{StaticResource entry}"/>
+                            <Entry Placeholder="שם משפחה" MaxLength="30" Text="{Binding LastName}" Style="{StaticResource entry}"/>
 
                             <!-- Birth Date -->
                             <Grid>
@@ -102,7 +103,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="Birth Date" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="תאריך לידה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding BirthDateError}" IsVisible="{Binding ShowBirthDateError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
                             <DatePicker Date="{Binding BirthDate}" Style="{StaticResource entry}"/>
@@ -116,10 +117,10 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="Phone Number" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="טלפון" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding PhoneNumError}" IsVisible="{Binding ShowPhoneNumError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="Phone Number" MaxLength="30" Text="{Binding PhoneNum}" Style="{StaticResource entry}"/>
+                            <Entry Placeholder="טלפון" MaxLength="30" Text="{Binding PhoneNum}" Style="{StaticResource entry}"/>
 
                             <!-- City -->
                             <Grid>
@@ -130,10 +131,10 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="City" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="עיר" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding CityError}" IsVisible="{Binding ShowCityError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="City" MaxLength="30" Text="{Binding City}" Style="{StaticResource entry}"/>
+                            <Entry Placeholder="עיר" MaxLength="30" Text="{Binding City}" Style="{StaticResource entry}"/>
 
                             <!-- Neighborhood -->
                             <Grid>
@@ -144,10 +145,10 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="Neighborhood" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="שכונה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding NeighborhoodError}" IsVisible="{Binding ShowNeighborhoodError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="Neighborhood" MaxLength="30" Text="{Binding Neighborhood}" Style="{StaticResource entry}"/>
+                            <Entry Placeholder="שכונה" MaxLength="30" Text="{Binding Neighborhood}" Style="{StaticResource entry}"/>
 
                             <!-- Street -->
                             <Grid>
@@ -158,10 +159,10 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="Street" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="רחוב" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding StreetError}" IsVisible="{Binding ShowStreetError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="Street" MaxLength="30" Text="{Binding Street}" Style="{StaticResource entry}"/>
+                            <Entry Placeholder="רחוב" MaxLength="30" Text="{Binding Street}" Style="{StaticResource entry}"/>
 
                             <!-- HouseNumber -->
                             <Grid>
@@ -172,33 +173,14 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Text="HouseNumber" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="מספר בית" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding StringHouseNumError}" IsVisible="{Binding ShowStringHouseNumError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="HouseNumber" MaxLength="30" Text="{Binding StringHouseNum}" Style="{StaticResource entry}"/>
-
-                            <!--
-                    <Label Text="Enter Your Details"></Label>
-                    <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email" Keyboard="Email"/>
-                    <Entry x:Name="UserName" Text="{Binding UserName}" Placeholder="User Name"/>
-                    <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password" IsPassword="True"/>
-                    <Entry x:Name="FirstName" Text="{Binding FirstName}" Placeholder="First Name"/>
-                    <Entry x:Name="LastName" Text="{Binding LastName}" Placeholder="Last Name"/>
-                    <Label Text="BirthDate"></Label>
-                    <DatePicker x:Name="BirthDate" Date="{Binding BirthDate}"></DatePicker>
-                    <Entry x:Name="PhoneNumber" Text="{Binding PhoneNumber}" Placeholder="Phone Number"/>
-
-                    <Entry x:Name="Photo" Text="{Binding Photo}" Placeholder="Photo"/>
-
-                    <Entry x:Name="City" Text="{Binding City}" Placeholder="City"/>
-                    <Entry x:Name="Neighborhood" Text="{Binding Neighborhood}" Placeholder="Neighborhood"/>
-                    <Entry x:Name="Street" Text="{Binding Street}" Placeholder="Street"/>
-                    <Entry x:Name="HouseNumber" Text="{Binding HouseNumber}" Placeholder="House Number"/>
-                    -->
+                            <Entry Placeholder="מספר בית" MaxLength="30" Text="{Binding StringHouseNum}" Style="{StaticResource entry}"/>
 
                         </StackLayout>
                     </Frame>
-                    <Button Text="Sign Up" Style="{StaticResource Button}" Command="{Binding SaveDataCommand}"></Button>
+                    <Button Text="הירשם" Style="{StaticResource Button}" Command="{Binding SaveDataCommand}"></Button>
                 </StackLayout>
             </ScrollView>
         </StackLayout>

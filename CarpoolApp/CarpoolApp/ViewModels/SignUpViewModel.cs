@@ -16,12 +16,12 @@ namespace CarpoolApp.ViewModels
 {
     public static class ERROR_MESSAGES
     {
-        public const string REQUIRED_FIELD = "This is a required field";
-        public const string BAD_EMAIL = "Invalid email";
-        public const string SHORT_PASS = "The password must contain at least 6 characters";
-        public const string BAD_PHONE = "Invalid phone number";
-        public const string BAD_DATE = "You must be over 18 years old to sign up";
-        public const string BAD_HOUSE_NUM = "Invalid house number";
+        public const string REQUIRED_FIELD = "זהו שדה חובה";
+        public const string BAD_EMAIL = "אימייל לא תקין";
+        public const string SHORT_PASS = "הסיסמה חייבת להכיל לפחות 6 תווים";
+        public const string BAD_PHONE = "טלפון לא תקין";
+        public const string BAD_DATE = "עלייך להיות מעל גיל 18";
+        public const string BAD_HOUSE_NUM = "מספר בית לא תקין";
     }
 
     public class SignUpViewModel : INotifyPropertyChanged
@@ -780,50 +780,72 @@ namespace CarpoolApp.ViewModels
                 this.theAdult.IdNavigation.Street = this.Street;
                 this.theAdult.IdNavigation.HouseNum = int.Parse(this.StringHouseNum);
 
-                ServerStatus = "Connecting to server...";
+                ServerStatus = "מתחבר לשרת...";
                 await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
                 CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-                Adult newAdult = await proxy.AdultSignUpAsync(this.theAdult);
-                if (newAdult == null)
+
+                bool isEmailExist = await proxy.EmailExistAsync(this.theAdult.IdNavigation.Email);
+                bool isUserNameExist = await proxy.UserNameExistAsync(this.theAdult.IdNavigation.UserName);
+
+                if (!isEmailExist && !isUserNameExist)
                 {
-                    await App.Current.MainPage.DisplayAlert("Error", "Sign Up faild", "OK");
-                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    Adult newAdult = await proxy.AdultSignUpAsync(this.theAdult);
+                    if (newAdult == null)
+                    {
+                        await App.Current.MainPage.Navigation.PopModalAsync();
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה", "אישור", FlowDirection.RightToLeft);
+                    }
+                    else
+                    {
+                        if (this.imageFileResult != null)
+                        {
+                            ServerStatus = "מעלה תמונה...";
+
+                            bool success = await proxy.UploadImage(new FileInfo()
+                            {
+                                Name = this.imageFileResult.FullPath
+                            }, $"{newAdult.Id}.jpg");
+                        }
+                        ServerStatus = "שומר נתונים...";
+
+                        //if someone registered to get the contact added event, fire the event
+                        if (this.ContactUpdatedEvent != null)
+                        {
+                            this.ContactUpdatedEvent(newAdult, this.theAdult);
+                        }
+
+                        //close the message and add contact windows!
+                        await App.Current.MainPage.Navigation.PopAsync();
+                        await App.Current.MainPage.Navigation.PopModalAsync();
+
+                        await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
+
+                        App theApp = (App)App.Current;
+                        Page p = new AdultPage();
+                        p.Title = $"שלום {theApp.CurrentUser.UserName}";
+                        theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+                    }
                 }
                 else
                 {
-                    if (this.imageFileResult != null)
-                    {
-                        ServerStatus = "Uploading photo";
+                    if (isEmailExist && isUserNameExist)
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "האימייל ושם המשתמש שהקלדת כבר קיימים במערכת, בבקשה תבחר אימייל ושם משתמש חדשים ונסה שוב", "אישור", FlowDirection.RightToLeft);
 
-                        bool success = await proxy.UploadImage(new FileInfo()
-                        {
-                            Name = this.imageFileResult.FullPath
-                        }, $"{newAdult.Id}.jpg");
-                    }
-                    ServerStatus = "Saving data...";
-                    //if someone registered to get the contact added event, fire the event
-                    if (this.ContactUpdatedEvent != null)
-                    {
-                        this.ContactUpdatedEvent(newAdult, this.theAdult);
-                    }
+                    else if (isEmailExist)
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "האימייל שהקלדת כבר קיים במערכת, בבקשה תבחר אימייל חדש ונסה שוב", "אישור", FlowDirection.RightToLeft);
+                    
+                    else
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "שם המשתמש שהקלדת כבר קיים במערכת, בבקשה תבחר שם משתמש חדש ונסה שוב", "אישור", FlowDirection.RightToLeft);
 
-                    //close the message and add contact windows!
-                    await App.Current.MainPage.Navigation.PopAsync();
                     await App.Current.MainPage.Navigation.PopModalAsync();
-
-                    App a = (App)App.Current;
-                    AdultPage ap = new AdultPage();
-                    ap.Title = "Adult Page";
-                    a.MainPage = ap;
-                    //await App.Current.MainPage.Navigation.PushAsync(ap);
                 }
             }
             else
-                await App.Current.MainPage.DisplayAlert("Save data", "There is a problen with the data, please try again", "OK");
+                await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
         }
 
 
-        
+
         //public SignUpViewModel()
         //{
         //    SaveDataCommand = new Command(SaveData);
@@ -857,7 +879,7 @@ namespace CarpoolApp.ViewModels
 
         //    //this.Email, this.UserName, this.Password, this.FirstName, this.LastName,
         //    //    this.BirthDate, this.PhoneNumber, this.Photo, this.City, this.Neighborhood, this.Street, this.HouseNumber
-            
+
         //    if (newAdult != null)
         //    {      
         //        App a = (App)App.Current;
@@ -887,7 +909,7 @@ namespace CarpoolApp.ViewModels
         {
             FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
             {
-                Title = "Pick a photo"
+                Title = "בחר תמונה"
             });
 
             if (result != null)
@@ -907,7 +929,7 @@ namespace CarpoolApp.ViewModels
         {
             var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
             {
-                Title = "Take a photo"
+                Title = "צלם תמונה"
             });
 
             if (result != null)

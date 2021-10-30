@@ -109,6 +109,44 @@ namespace CarpoolApp.Services
             }
         }
 
+        public async Task<bool> EmailExistAsync(string email)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync($"{this.baseUri}/IsEmailExist?email={email}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> UserNameExistAsync(string userName)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync($"{this.baseUri}/IsUserNameExist?userName={userName}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
         public async Task<Adult> AdultSignUpAsync(Adult adult)
         {
             try
@@ -128,6 +166,38 @@ namespace CarpoolApp.Services
                     jsonObject = await response.Content.ReadAsStringAsync();
                     Adult a = JsonSerializer.Deserialize<Adult>(jsonObject, options);
                     return a;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<Kid> KidSignUpAsync(Kid kid)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Kid>(kid, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/KidSignUp", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    Kid k = JsonSerializer.Deserialize<Kid>(jsonObject, options);
+                    return k;
                 }
                 else
                 {
@@ -181,39 +251,6 @@ namespace CarpoolApp.Services
                     string content = await response.Content.ReadAsStringAsync();
                     User u = JsonSerializer.Deserialize<User>(content, options);
                     return u;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-        public async Task<string> GetStringAsync()
-        {
-            try
-            {
-                string s = $"{this.baseUri}/GetString";
-                //System.Net.ServicePointManager.SecurityProtocol =
-                //    System.Net.SecurityProtocolType.Tls12 |
-                //    System.Net.SecurityProtocolType.Tls11 |
-                //    System.Net.SecurityProtocolType.Tls;
-                HttpResponseMessage response = await this.client.GetAsync(s);
-                if (response.IsSuccessStatusCode)
-                {
-                    //JsonSerializerOptions options = new JsonSerializerOptions
-                    //{
-                    //    ReferenceHandler = ReferenceHandler.Preserve,
-                    //    PropertyNameCaseInsensitive = true
-                    //};
-                    string content = await response.Content.ReadAsStringAsync();
-                    //string eString = JsonSerializer.Deserialize<string>(content, options);
-                    return content;
                 }
                 else
                 {

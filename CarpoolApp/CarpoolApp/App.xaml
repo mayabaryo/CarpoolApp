@@ -17,12 +17,19 @@
             </Style>
 
             <Style x:Key="entry" TargetType="Entry">
-                <Setter Property="FontFamily" Value="Epilogue-ExtraLight"></Setter>
+                <Setter Property="FontFamily" Value="Fill"></Setter>
                 <Setter Property="FontSize" Value="14"></Setter>
             </Style>
 
+            <Style x:Key="Link" TargetType="Label">
+                <Setter Property="FontFamily" Value="Fill"></Setter>
+                <Setter Property="FontSize" Value="14"></Setter>
+                <Setter Property="TextColor" Value="Blue"></Setter>
+                <Setter Property="TextDecorations" Value="Underline"></Setter>
+            </Style>
+
             <Style x:Key="logInSignUp" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="#B9C6CB"></Setter>
+                <Setter Property="BackgroundColor" Value="#dfe7fd"></Setter>
                 <Setter Property="HasShadow" Value="true"></Setter>
                 <Setter Property="CornerRadius" Value="10"></Setter>
             </Style>
@@ -33,7 +40,7 @@
             <Style x:Key="labelErrorStyle" TargetType="Label">
                 <Setter Property="HorizontalOptions" Value="End" />
                 <Setter Property="VerticalOptions" Value="End" />
-                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="TextColor" Value="#e63946" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
 

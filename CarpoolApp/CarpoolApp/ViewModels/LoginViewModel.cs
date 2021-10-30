@@ -63,61 +63,86 @@ namespace CarpoolApp.ViewModels
             TapCommand = new Command(OnTap);
         }
 
-        //private string serverStatus;
-        //public string ServerStatus
-        //{
-        //    get { return serverStatus; }
-        //    set
-        //    {
-        //        serverStatus = value;
-        //        OnPropertyChanged("ServerStatus");
-        //    }
-        //}
+        private string serverStatus;
+        public string ServerStatus
+        {
+            get { return serverStatus; }
+            set
+            {
+                serverStatus = value;
+                OnPropertyChanged("ServerStatus");
+            }
+        }
 
         public async void OnLogin()
         {
+            ServerStatus = "מתחבר לשרת...";
+            await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             User user = await proxy.LoginAsync(this.Email, this.Password);
-
-            if (user != null)
+            if (user == null)
             {
-                App a = (App)App.Current;
-                a.CurrentUser = user;
-
-                if (true)
-                {
-                    AdultPage ap = new AdultPage();
-                    ap.Title = "Adult Page";
-                    //a.MainPage = ap;
-                    await App.Current.MainPage.Navigation.PushAsync(ap);
-                }
-                else
-                {
-                    KidPage kp = new KidPage();
-                    kp.Title = "Kid Page";
-                    //a.MainPage = kp;
-                    await App.Current.MainPage.Navigation.PushAsync(kp);
-                }
+                await App.Current.MainPage.Navigation.PopModalAsync();
+                await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "אישור", FlowDirection.RightToLeft);
             }
             else
             {
-                //await App.Current.MainPage.Navigation.PopModalAsync();
-                await App.Current.MainPage.DisplayAlert("Error", "Login failed! please try another email or password!", "OK");
+                ServerStatus = "קורא נתונים...";
+                App theApp = (App)App.Current;
+                theApp.CurrentUser = user;
+                Page p;
+
+                if (true)
+                    p = new Views.AdultPage();
+
+                else
+                    p = new Views.KidPage();
+
+                p.Title = $"שלום {user.UserName}";
+                theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
             }
         }
         public async void OnTap()
         {
-            //App theApp = (App)App.Current;
-            //SignUpViewModel vm = new SignUpViewModel();
-            //vm.ContactUpdatedEvent += OnContactAdded;
-            //Page p = new Views.AddContact(vm);
-            //await theApp.MainPage.Navigation.PushAsync(p);
-
-            App a = (App)App.Current;
-            SignUp su = new SignUp();
-            su.Title = "Sign Up";
-            await App.Current.MainPage.Navigation.PushAsync(su);
+            SignUp page = new SignUp();
+            page.Title = "Sign Up";
+            await App.Current.MainPage.Navigation.PushAsync(page);
         }
+
+
+
+        //public async void OnLogin()
+        //{
+        //    CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+        //    User user = await proxy.LoginAsync(this.Email, this.Password);
+
+        //    if (user != null)
+        //    {
+        //        App a = (App)App.Current;
+        //        a.CurrentUser = user;
+
+        //        if (true)
+        //        {
+        //            AdultPage ap = new AdultPage();
+        //            ap.Title = "Adult Page";
+        //            a.MainPage = ap;
+        //            //await App.Current.MainPage.Navigation.PushAsync(ap);
+        //        }
+        //        else
+        //        {
+        //            KidPage kp = new KidPage();
+        //            kp.Title = "Kid Page";
+        //            a.MainPage = kp;
+        //            //await App.Current.MainPage.Navigation.PushAsync(kp);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //await App.Current.MainPage.Navigation.PopModalAsync();
+        //        await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "בסדר");
+        //    }
+        //}
+
 
 
 
@@ -160,31 +185,22 @@ namespace CarpoolApp.ViewModels
         //    }
         //}
 
-        public ICommand AdultSignUpPage => new Command(ASignUp);
-        public async void ASignUp()
-        {
-            App a = (App)App.Current;
-            AdultSignUp page = new AdultSignUp();
-            page.Title = "Adult Sign Up";
-            await App.Current.MainPage.Navigation.PushAsync(page);
-        }
-        public ICommand ManagerSignUpPage => new Command(MSignUp);
-        public async void MSignUp()
-        {
-            App a = (App)App.Current;
-            ManagerSignUp page = new ManagerSignUp();
-            page.Title = "Manager Sign Up";
-            await App.Current.MainPage.Navigation.PushAsync(page);
-        }
 
-
-
-
-        public ICommand GetString => new Command(GetS);
-        public async void GetS()
-        {
-            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            this.Email = await proxy.GetStringAsync();
-        }
+        //public ICommand AdultSignUpPage => new Command(ASignUp);
+        //public async void ASignUp()
+        //{
+        //    App a = (App)App.Current;
+        //    AdultSignUp page = new AdultSignUp();
+        //    page.Title = "Adult Sign Up";
+        //    await App.Current.MainPage.Navigation.PushAsync(page);
+        //}
+        //public ICommand ManagerSignUpPage => new Command(MSignUp);
+        //public async void MSignUp()
+        //{
+        //    App a = (App)App.Current;
+        //    ManagerSignUp page = new ManagerSignUp();
+        //    page.Title = "Manager Sign Up";
+        //    await App.Current.MainPage.Navigation.PushAsync(page);
+        //}
     }
 }

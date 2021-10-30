@@ -23,5 +23,26 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        public ICommand HomePageCommand { protected set; get; }
+        public ICommand AddKidPageCommand { protected set; get; }
+        public AdultPageViewModel()
+        {
+            HomePageCommand = new Command(OnHome);
+            AddKidPageCommand = new Command(OnAddKid);
+        }
+
+        public async void OnHome()
+        {
+            App theApp = (App)App.Current;
+            AdultPage page = new AdultPage();
+            page.Title = $"שלום {theApp.CurrentUser.UserName}";
+            await App.Current.MainPage.Navigation.PushAsync(page);
+        }
+        public async void OnAddKid()
+        {
+            AddKid page = new AddKid();
+            page.Title = "הוסף ילד";
+            await App.Current.MainPage.Navigation.PushAsync(page);
+        }
     }
 }

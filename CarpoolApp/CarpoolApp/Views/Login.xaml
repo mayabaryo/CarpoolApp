@@ -1,27 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CarpoolApp.Views.Login">
+             x:Class="CarpoolApp.Views.Login"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout Style="{StaticResource Stack}">
             <Label Text="Welcome to Carpool!" Style="{StaticResource title}"></Label>
 
             <Frame Style="{StaticResource logInSignUp}">
                 <StackLayout>
-                    <Entry x:Name="Email" MaxLength="30" Text="{Binding Email}" Placeholder="Email or UserName" Keyboard="Email"
+                    <Entry x:Name="Email" MaxLength="30" Text="{Binding Email}" Placeholder="אימייל או שם משתמש" Keyboard="Email"
                            Style="{StaticResource entry}"/>
-                    <Entry x:Name="Password" MaxLength="30" Text="{Binding Password}" Placeholder="Password" IsPassword="True"
+                    <Entry x:Name="Password" MaxLength="30" Text="{Binding Password}" Placeholder="סיסמה" IsPassword="True"
                            Style="{StaticResource entry}"/>
                 </StackLayout>
             </Frame>
 
-            <Button Text="Login" Style="{StaticResource Button}" Command="{Binding LoginCommand}"></Button>
+            <Button Text="התחבר" Style="{StaticResource Button}" Command="{Binding LoginCommand}"></Button>
 
             <Label>
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Don't have an account? " />
-                        <Span Text="Sign Up!" TextColor="Blue" TextDecorations="Underline">
+                        <Span Text="אין לך חשבון? " />
+                        <Span Text="הירשם!" Style="{StaticResource Link}">
                             <Span.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding TapCommand}" />
                             </Span.GestureRecognizers>
@@ -29,12 +30,6 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-
-            <!--<Label Text="Don't have an account? Sign Up!" ></Label>
-            <Button Text="Sign Up As Adult" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding AdultSignUpPage}"></Button>
-            <Button Text="Sign Up As Activity Manager" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding ManagerSignUpPage}"></Button>
-            <Label Text="{Binding Email}" FontSize="Large" FontAttributes="Bold"></Label>
-            <Button Text="Login" FontSize="Large" FontAttributes="Bold" BackgroundColor="#CAAFEA" Command="{Binding GetString}"></Button>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

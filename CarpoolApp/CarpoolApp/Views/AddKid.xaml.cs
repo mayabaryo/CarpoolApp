@@ -11,11 +11,11 @@ using CarpoolApp.ViewModels;
 namespace CarpoolApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AdultSignUp : ContentPage
+    public partial class AddKid : ContentPage
     {
-        public AdultSignUp()
+        public AddKid()
         {
-            this.BindingContext = new AdultSignUpViewModel();
+            this.BindingContext = new AddKidViewModel();
             InitializeComponent();
         }
     }
