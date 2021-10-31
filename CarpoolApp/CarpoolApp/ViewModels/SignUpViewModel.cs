@@ -818,12 +818,12 @@ namespace CarpoolApp.ViewModels
                         await App.Current.MainPage.Navigation.PopAsync();
                         await App.Current.MainPage.Navigation.PopModalAsync();
 
-                        await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
-
                         App theApp = (App)App.Current;
                         Page p = new AdultPage();
                         p.Title = $"שלום {theApp.CurrentUser.UserName}";
                         theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+
+                        await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
                     }
                 }
                 else
