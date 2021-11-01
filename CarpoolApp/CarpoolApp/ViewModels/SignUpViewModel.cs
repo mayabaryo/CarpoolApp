@@ -816,13 +816,15 @@ namespace CarpoolApp.ViewModels
 
                         //close the message and add contact windows!
                         await App.Current.MainPage.Navigation.PopAsync();
-                        await App.Current.MainPage.Navigation.PopModalAsync();
 
                         App theApp = (App)App.Current;
+                        theApp.CurrentUser = newAdult.IdNavigation;
+
                         Page p = new AdultPage();
                         p.Title = $"שלום {theApp.CurrentUser.UserName}";
                         theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
-
+                        
+                        await App.Current.MainPage.Navigation.PopModalAsync();
                         await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
                     }
                 }
