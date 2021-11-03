@@ -624,6 +624,10 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        private Adult theAdult;
+
+
+        public Command SaveDataCommand { protected set; get; }
         public ICommand HomePageCommand { protected set; get; }
         public ICommand AddKidPageCommand { protected set; get; }
         public AdultPageViewModel()
@@ -631,25 +635,205 @@ namespace CarpoolApp.ViewModels
             App theApp = (App)App.Current;
             User currentUser = theApp.CurrentUser;
 
-            User u = new User()
-            {
-                //Id = theApp.CurrentUser.Id,
-                Email = currentUser.Email,
-                UserName = currentUser.UserName,
-                UserPswd = currentUser.UserPswd,
-                FirstName = currentUser.FirstName,
-                LastName = currentUser.LastName,
-                BirthDate = currentUser.BirthDate,
-                PhoneNum = currentUser.PhoneNum,
-                City = currentUser.City,
-                Neighborhood = currentUser.Neighborhood,
-                Street = currentUser.Street,
-                HouseNum = currentUser.HouseNum
-            };
-            //StringHouseNum = "";
+            this.Email = currentUser.Email;
+            this.UserName = currentUser.UserName;
+            this.Password = currentUser.UserPswd;
+            this.Name = currentUser.FirstName;
+            this.LastName = currentUser.LastName;
+            this.BirthDate = currentUser.BirthDate;
+            this.PhoneNum = currentUser.PhoneNum;
+            this.City = currentUser.City;
+            this.Neighborhood = currentUser.Neighborhood;
+            this.Street = currentUser.Street;
+            this.HouseNum = currentUser.HouseNum;
+            this.StringHouseNum = HouseNum.ToString();
+            this.UserImgSrc = currentUser.Photo;
 
+            this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
+            this.UserNameError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.PasswordError = ERROR_MESSAGES.SHORT_PASS;
+            this.NameError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.LastNameError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.BirthDateError = ERROR_MESSAGES.BAD_DATE;
+            this.PhoneNumError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.CityError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.NeighborhoodError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
+            //this.HouseNumError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
+
+            this.ShowEmailError = false;
+            this.ShowUserNameError = false;
+            this.ShowPasswordError = false;
+            this.ShowNameError = false;
+            this.ShowLastNameError = false;
+            this.ShowBirthDateError = false;
+            this.ShowPhoneNumError = false;
+            this.ShowCityError = false;
+            this.ShowNeighborhoodError = false;
+            this.ShowStreetError = false;
+            //this.ShowHouseNumError = false;
+            this.ShowStringHouseNumError = false;
+
+            //User u = new User()
+            //{
+            //    //Id = theApp.CurrentUser.Id,
+            //    Email = currentUser.Email,
+            //    UserName = currentUser.UserName,
+            //    UserPswd = currentUser.UserPswd,
+            //    FirstName = currentUser.FirstName,
+            //    LastName = currentUser.LastName,
+            //    BirthDate = currentUser.BirthDate,
+            //    PhoneNum = currentUser.PhoneNum,
+            //    City = currentUser.City,
+            //    Neighborhood = currentUser.Neighborhood,
+            //    Street = currentUser.Street,
+            //    HouseNum = currentUser.HouseNum
+            //};
+            ////StringHouseNum = "";
+
+            this.SaveDataCommand = new Command(() => SaveData());
             HomePageCommand = new Command(OnHome);
             AddKidPageCommand = new Command(OnAddKid);
+        }
+
+        private bool ValidateForm()
+        {
+            //Validate all fields first
+            //ValidateEmail();
+            //ValidateUserName();
+            ValidatePassword();
+            ValidateName();
+            ValidateLastName();
+            ValidateBirthDate();
+            ValidatePhoneNum();
+            ValidateCity();
+            ValidateNeighborhood();
+            ValidateStreet();
+            ValidateStringHouseNum();
+
+            //check if any validation failed
+            if (/*ShowEmailError || ShowUserNameError || */ShowPasswordError || ShowNameError
+                || ShowLastNameError || ShowBirthDateError || ShowPhoneNumError || ShowCityError
+                || ShowNeighborhoodError || ShowStreetError || ShowStringHouseNumError)
+                return false;
+            return true;
+        }
+
+        private string serverStatus;
+        public string ServerStatus
+        {
+            get { return serverStatus; }
+            set
+            {
+                serverStatus = value;
+                OnPropertyChanged("ServerStatus");
+            }
+        }
+
+        private async void SaveData()
+        {
+            if (ValidateForm())
+            {
+                this.theAdult.IdNavigation.Photo = this.UserImgSrc;
+                this.theAdult.IdNavigation.Email = this.Email;
+                this.theAdult.IdNavigation.UserName = this.UserName;
+                this.theAdult.IdNavigation.UserPswd = this.Password;
+                this.theAdult.IdNavigation.FirstName = this.Name;
+                this.theAdult.IdNavigation.LastName = this.LastName;
+                this.theAdult.IdNavigation.BirthDate = this.BirthDate;
+                this.theAdult.IdNavigation.PhoneNum = this.PhoneNum;
+                this.theAdult.IdNavigation.City = this.City;
+                this.theAdult.IdNavigation.Neighborhood = this.Neighborhood;
+                this.theAdult.IdNavigation.Street = this.Street;
+                this.theAdult.IdNavigation.HouseNum = int.Parse(this.StringHouseNum);
+
+                ServerStatus = "מתחבר לשרת...";
+                await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
+                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+
+                Adult newAdult = await proxy.AdultSignUpAsync(this.theAdult);
+                if (newAdult == null)
+                {
+                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה", "אישור", FlowDirection.RightToLeft);
+                }
+                else
+                {
+                    if (this.imageFileResult != null)
+                    {
+                        ServerStatus = "מעלה תמונה...";
+
+                        bool success = await proxy.UploadImage(new FileInfo()
+                        {
+                            Name = this.imageFileResult.FullPath
+                        }, $"{newAdult.Id}.jpg");
+                    }
+                    ServerStatus = "שומר נתונים...";
+
+                    ////if someone registered to get the contact added event, fire the event
+                    //if (this.ContactUpdatedEvent != null)
+                    //{
+                    //    this.ContactUpdatedEvent(newAdult, this.theAdult);
+                    //}
+
+                    //close the message and add contact windows!
+                    await App.Current.MainPage.Navigation.PopAsync();
+
+                    App theApp = (App)App.Current;
+                    theApp.CurrentUser = newAdult.IdNavigation;
+
+                    Page p = new AdultPage();
+                    p.Title = $"שלום {theApp.CurrentUser.UserName}";
+                    theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+
+                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
+                }
+                await App.Current.MainPage.Navigation.PopModalAsync();
+            }
+            else
+                await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
+        }
+
+        FileResult imageFileResult;
+        public event Action<ImageSource> SetImageSourceEvent;
+        public ICommand PickImageCommand => new Command(OnPickImage);
+        public async void OnPickImage()
+        {
+            FileResult result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions()
+            {
+                Title = "בחר תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
+        }
+
+        //The following command handle the take photo button
+        public ICommand CameraImageCommand => new Command(OnCameraImage);
+        public async void OnCameraImage()
+        {
+            var result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions()
+            {
+                Title = "צלם תמונה"
+            });
+
+            if (result != null)
+            {
+                this.imageFileResult = result;
+                var stream = await result.OpenReadAsync();
+                ImageSource imgSource = ImageSource.FromStream(() => stream);
+                if (SetImageSourceEvent != null)
+                    SetImageSourceEvent(imgSource);
+            }
         }
 
         public async void OnHome()
