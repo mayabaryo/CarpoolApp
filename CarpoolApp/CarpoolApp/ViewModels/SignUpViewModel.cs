@@ -943,5 +943,17 @@ namespace CarpoolApp.ViewModels
                     SetImageSourceEvent(imgSource);
             }
         }
+
+
+
+        public ICommand GetCitiesCommand => new Command(OnGetCities);
+        public async void OnGetCities()
+        {
+            AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
+            object objList = await proxy.GetCitiesAsync();
+
+            //List<string> cities = new List<string>();
+            
+        }
     }
 }
