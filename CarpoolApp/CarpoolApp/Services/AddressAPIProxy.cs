@@ -11,6 +11,7 @@ using System.Text.Encodings.Web;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using System.IO;
+using System.Reflection;
 
 namespace CarpoolApp.Services
 {
@@ -77,7 +78,43 @@ namespace CarpoolApp.Services
             this.basePhotosUri = basePhotosUri;
         }
 
-        public async Task<List<object>> GetCitiesAsync()
+        public List<string> GetCitiesList(object obj)
+        {
+            //Type myType = myObject.GetType();
+            //IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
+
+            //foreach (PropertyInfo prop in props)
+            //{
+            //    object propValue = prop.GetValue(myObject, null);
+
+            //    // Do something with propValue
+            //}
+
+
+            List<string> cities = new List<string>();
+
+            Type type = obj.GetType();
+            IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
+
+            List<object> propValueList = new List<object>();
+
+            //PropertyInfo property = props[0];
+            object propValue = props[0].GetValue(obj, null);
+
+            Type propValueType = propValue.GetType();
+            IList<PropertyInfo> propsValue = new List<PropertyInfo>(propValueType.GetProperties());
+
+
+            //foreach (PropertyInfo prop in props)
+            //{
+            //    object propValue = prop.GetValue(obj, null);
+
+            //    propValueList.Add(propValue);
+            //}
+
+            return cities;
+        }
+        public async Task<List<string>> GetCitiesAsync()
         {
             try
             {
@@ -90,9 +127,9 @@ namespace CarpoolApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    List<object> objList = JsonSerializer.Deserialize<List<object>>(content, options);
+                    object obj = JsonSerializer.Deserialize<object>(content, options);
 
-                    return objList;
+                    return GetCitiesList(obj);
                 }
                 else
                 {

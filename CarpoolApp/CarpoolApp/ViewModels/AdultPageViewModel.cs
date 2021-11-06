@@ -11,6 +11,7 @@ using Xamarin.Essentials;
 using System.Linq;
 using CarpoolApp.Views;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace CarpoolApp.ViewModels
 {
@@ -630,6 +631,8 @@ namespace CarpoolApp.ViewModels
         public Command SaveDataCommand { protected set; get; }
         public ICommand HomePageCommand { protected set; get; }
         public ICommand AddKidPageCommand { protected set; get; }
+        public ICommand LogOutCommand { protected set; get; }
+
         public AdultPageViewModel()
         {
             App theApp = (App)App.Current;
@@ -695,6 +698,7 @@ namespace CarpoolApp.ViewModels
             this.SaveDataCommand = new Command(() => SaveData());
             HomePageCommand = new Command(OnHome);
             AddKidPageCommand = new Command(OnAddKid);
+            LogOutCommand = new Command(OnLogOut);
         }
 
         private bool ValidateForm()
@@ -841,13 +845,29 @@ namespace CarpoolApp.ViewModels
             App theApp = (App)App.Current;
             AdultPage page = new AdultPage();
             page.Title = $"שלום {theApp.CurrentUser.UserName}";
-            await App.Current.MainPage.Navigation.PushAsync(page);
+
+            await App.Current.MainPage.Navigation.PopToRootAsync();
+            //while (App.Current. != App.Current.MainPage)
+            //await App.Current.MainPage.Navigation.PushAsync(page);
         }
         public async void OnAddKid()
         {
             AddKid page = new AddKid();
             page.Title = "הוסף ילד";
             await App.Current.MainPage.Navigation.PushAsync(page);
+        }
+        public async void OnLogOut()
+        {
+            bool answer = await App.Current.MainPage.DisplayAlert("התנתקות", "האם ברצונך להתנתק?", "התנתק", "ביטול", FlowDirection.RightToLeft);
+            if (answer)
+            {
+                App theApp = (App)App.Current;
+                theApp.CurrentUser = null;
+
+                Page page = new Login();
+                page.Title = "התחברות";
+                App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+            }
         }
     }
 }

@@ -7,6 +7,12 @@
         <StackLayout Style="{StaticResource Stack}">
             <ScrollView>
                 <StackLayout>
+
+                    <Entry Placeholder="הכנס עיר" Text="{Binding City}" Style="{StaticResource entry}"/>
+                    <CollectionView BindingContext="{Binding CityList}"></CollectionView>
+                    <Button Text="ערים" Command="{Binding GetCitiesCommand}"></Button>
+
+
                     <!-- Photo -->
                     <Grid>
                         <Grid.ColumnDefinitions>

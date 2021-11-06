@@ -90,16 +90,16 @@ namespace CarpoolApp.ViewModels
                 ServerStatus = "קורא נתונים...";
                 App theApp = (App)App.Current;
                 theApp.CurrentUser = user;
-                Page p;
+                Page page;
 
                 if (true)
-                    p = new Views.AdultPage();
+                    page = new Views.AdultPage();
 
                 else
-                    p = new Views.KidPage();
+                    page = new Views.KidPage();
 
-                p.Title = $"שלום {user.UserName}";
-                theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+                page.Title = $"שלום {user.UserName}";
+                App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
             }
         }
         public async void OnTap()
