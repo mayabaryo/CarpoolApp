@@ -17,7 +17,8 @@ namespace CarpoolApp.Services
 {
     class AddressAPIProxy
     {
-        private const string CLOUD_URL = "https://data.gov.il/api/3/action/datastore_search"; //API url when going on the cloud
+        private const string CLOUD_URL = "https://raw.githubusercontent.com"; //API url when going on the cloud
+        //https://data.gov.il/api/3/action/datastore_search
         private const string CLOUD_PHOTOS_URL = "TBD";
 
         private HttpClient client;
@@ -80,6 +81,8 @@ namespace CarpoolApp.Services
 
         public List<string> GetCitiesList(object obj)
         {
+            List<string> cities = new List<string>();
+
             //Type myType = myObject.GetType();
             //IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
 
@@ -91,26 +94,27 @@ namespace CarpoolApp.Services
             //}
 
 
-            List<string> cities = new List<string>();
+            //List<object> propValueList = new List<object>();
 
             Type type = obj.GetType();
             IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
 
-            List<object> propValueList = new List<object>();
+            foreach (PropertyInfo prop in props)
+            {
+                object propValue = prop.GetValue(obj, null);
 
-            //PropertyInfo property = props[0];
-            object propValue = props[0].GetValue(obj, null);
-
-            Type propValueType = propValue.GetType();
-            IList<PropertyInfo> propsValue = new List<PropertyInfo>(propValueType.GetProperties());
+                //propValueList.Add(propValue);
+            }
 
 
-            //foreach (PropertyInfo prop in props)
-            //{
-            //    object propValue = prop.GetValue(obj, null);
+            ////PropertyInfo property = props[0];
+            //object propValue = props[0].GetValue(obj, null);
 
-            //    propValueList.Add(propValue);
-            //}
+            //Type propValueType = propValue.GetType();
+            //IList<PropertyInfo> propsValue = new List<PropertyInfo>(propValueType.GetProperties());
+
+
+            
 
             return cities;
         }
@@ -118,7 +122,8 @@ namespace CarpoolApp.Services
         {
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500");
+                 //?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/royts/israel-cities/master/israel-cities.json");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
