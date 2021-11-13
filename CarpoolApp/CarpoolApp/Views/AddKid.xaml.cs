@@ -15,8 +15,15 @@ namespace CarpoolApp.Views
     {
         public AddKid()
         {
-            this.BindingContext = new AddKidViewModel();
+            AddKidViewModel vm = new AddKidViewModel();
+            this.BindingContext = vm;
+            vm.SetImageSourceEvent += OnSetImageSource;
             InitializeComponent();
+        }
+
+        public void OnSetImageSource(ImageSource imgSource)
+        {
+            theImage.Source = imgSource;
         }
     }
 }

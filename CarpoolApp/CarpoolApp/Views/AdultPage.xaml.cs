@@ -15,8 +15,15 @@ namespace CarpoolApp.Views
     {
         public AdultPage()
         {
-            this.BindingContext = new AdultPageViewModel();
+            AdultPageViewModel vm = new AdultPageViewModel();
+            this.BindingContext = vm;
+            vm.SetImageSourceEvent += OnSetImageSource;
             InitializeComponent();
+        }
+
+        public void OnSetImageSource(ImageSource imgSource)
+        {
+            theImage.Source = imgSource;
         }
     }
 }

@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using System.IO;
 using System.Reflection;
+using CarpoolApp.DTO;
 
 namespace CarpoolApp.Services
 {
@@ -79,9 +80,18 @@ namespace CarpoolApp.Services
             this.basePhotosUri = basePhotosUri;
         }
 
-        public List<string> GetCitiesList(object obj)
+        public List<string> GetCitiesNameList(List<City> cities)
         {
-            List<string> cities = new List<string>();
+            List<string> citiesName = new List<string>();
+
+            foreach(City city in cities)
+            {
+                citiesName.Add(city.name);
+            }
+            //citiesName[0].Remove(0);
+            citiesName.Remove(citiesName[0]);
+
+            return citiesName;
 
             //Type myType = myObject.GetType();
             //IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
@@ -96,27 +106,22 @@ namespace CarpoolApp.Services
 
             //List<object> propValueList = new List<object>();
 
-            Type type = obj.GetType();
-            IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
+            //Type type = obj.GetType();
+            //IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
 
-            foreach (PropertyInfo prop in props)
-            {
-                object propValue = prop.GetValue(obj, null);
+            //foreach (PropertyInfo prop in props)
+            //{
+            //    object propValue = prop.GetValue(obj, null);
 
-                //propValueList.Add(propValue);
-            }
+            //    //propValueList.Add(propValue);
+            //}
 
 
             ////PropertyInfo property = props[0];
             //object propValue = props[0].GetValue(obj, null);
 
             //Type propValueType = propValue.GetType();
-            //IList<PropertyInfo> propsValue = new List<PropertyInfo>(propValueType.GetProperties());
-
-
-            
-
-            return cities;
+            //IList<PropertyInfo> propsValue = new List<PropertyInfo>(propValueType.GetProperties());     
         }
         public async Task<List<string>> GetCitiesAsync()
         {
@@ -132,9 +137,9 @@ namespace CarpoolApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    object obj = JsonSerializer.Deserialize<object>(content, options);
+                    List<City> cities = JsonSerializer.Deserialize<List<City>>(content, options);
 
-                    return GetCitiesList(obj);
+                    return GetCitiesNameList(cities);
                 }
                 else
                 {

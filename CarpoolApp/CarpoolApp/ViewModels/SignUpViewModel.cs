@@ -643,12 +643,11 @@ namespace CarpoolApp.ViewModels
             set
             {
                 cityList = value;
-                OnPropertyChanged("CitiesList");
+                OnPropertyChanged("CityList");
             }
         }
         #endregion
 
-        //private User theUser;
         private Adult theAdult;
 
         public SignUpViewModel(Adult a = null)
@@ -958,12 +957,11 @@ namespace CarpoolApp.ViewModels
         }
 
 
-
         public ICommand GetCitiesCommand => new Command(OnGetCities);
         public async void OnGetCities()
         {
             AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
-            CityList = await proxy.GetCitiesAsync();
+            this.CityList = await proxy.GetCitiesAsync();
 
             //List<string> cities = new List<string>();
             
