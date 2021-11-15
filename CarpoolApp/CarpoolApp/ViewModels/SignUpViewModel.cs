@@ -11,6 +11,8 @@ using Xamarin.Essentials;
 using System.Linq;
 using CarpoolApp.Views;
 using System.Text.RegularExpressions;
+using CarpoolApp.DTO;
+using System.Collections.ObjectModel;
 
 namespace CarpoolApp.ViewModels
 {
@@ -433,6 +435,33 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        #region CitySearch
+        private string citySearch;
+        public string CitySearch
+        {
+            get => citySearch;
+            set
+            {
+                citySearch = value;
+
+                OnPropertyChanged("CitySearch");
+            }
+        }
+        #endregion
+
+        //#region FoundCities
+        //private ObservableCollection<City> foundCities;
+        //public ObservableCollection<City> FoundCities
+        //{
+        //    get => foundCities;
+        //    set
+        //    {
+        //        foundCities = value;
+        //        OnPropertyChanged("FoundCities");
+        //    }
+        //}
+        //#endregion
+
         #region Neighborhood
         private bool showNeighborhoodError;
 
@@ -829,15 +858,7 @@ namespace CarpoolApp.ViewModels
                         //close the message and add contact windows!
 
                         App theApp = (App)App.Current;
-                        try
-                        {
-                            theApp.CurrentUser = (newAdult.IdNavigation);
-                        }
-                        catch (Exception e)
-                        {
-                            string s = e.InnerException.ToString();
-                        }
-                        await App.Current.MainPage.Navigation.PopModalAsync();
+                        theApp.CurrentUser = newAdult.IdNavigation;
 
                         Page p = new AdultPage();
                         p.Title = $"שלום {theApp.CurrentUser.UserName}";
@@ -970,7 +991,26 @@ namespace CarpoolApp.ViewModels
             this.CityList = await proxy.GetCitiesAsync();
 
             //List<string> cities = new List<string>();
-            
         }
+
+
+        //public Command SearchCityCommand { protected set; get; }
+        //public async void SearchCity()
+        //{
+        //    FoundMovies = new ObservableCollection<Movie>();
+
+        //    if (MovieSearch != null && MovieSearch != "")
+        //    {
+        //        SearchContainer<SearchMovie> results = await client.SearchMovieAsync(MovieSearch);
+
+        //        foreach (SearchMovie result in results.Results)
+        //        {
+        //            Movie movie = await client.GetMovieAsync(result.Id);
+        //            Uri uri = client.GetImageUrl("w342", movie.PosterPath);
+        //            movie.PosterPath = uri.AbsoluteUri;
+        //            FoundMovies.Add(movie);
+        //        }
+        //    };
+        //}
     }
 }

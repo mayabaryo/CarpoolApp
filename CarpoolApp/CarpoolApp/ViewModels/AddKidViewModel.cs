@@ -638,10 +638,10 @@ namespace CarpoolApp.ViewModels
         //private User theUser;
         private Kid theKid;
 
-        public AddKidViewModel(Kid k = null)
+        public AddKidViewModel(Kid kid = null)
         {
             //create a new user contact if this is an add operation
-            if (k == null)
+            if (kid == null)
             {
                 App theApp = (App)App.Current;
 
@@ -662,7 +662,7 @@ namespace CarpoolApp.ViewModels
                 };
                 StringHouseNum = "";
 
-                k = new Kid()
+                kid = new Kid()
                 {
                     IdNavigation = u
                 };
@@ -677,11 +677,11 @@ namespace CarpoolApp.ViewModels
                 CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
                 //Create a source with cache busting!
                 Random r = new Random();
-                this.UserImgSrc = proxy.GetBasePhotoUri() + k.Id + $".jpg?{r.Next()}";
+                this.UserImgSrc = proxy.GetBasePhotoUri() + kid.Id + $".jpg?{r.Next()}";
             }
 
 
-            this.theKid = k;
+            this.theKid = kid;
             this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
             this.UserNameError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.PasswordError = ERROR_MESSAGES.SHORT_PASS;
@@ -710,17 +710,17 @@ namespace CarpoolApp.ViewModels
 
             this.SaveDataCommand = new Command(() => SaveData());
 
-            this.Email = k.IdNavigation.Email;
-            this.UserName = k.IdNavigation.UserName;
-            this.Password = k.IdNavigation.UserPswd;
-            this.Name = k.IdNavigation.FirstName;
-            this.LastName = k.IdNavigation.LastName;
-            this.BirthDate = k.IdNavigation.BirthDate;
-            this.PhoneNum = k.IdNavigation.PhoneNum;
-            this.City = k.IdNavigation.City;
-            this.Neighborhood = k.IdNavigation.Neighborhood;
-            this.Street = k.IdNavigation.Street;
-            this.HouseNum = k.IdNavigation.HouseNum;
+            this.Email = kid.IdNavigation.Email;
+            this.UserName = kid.IdNavigation.UserName;
+            this.Password = kid.IdNavigation.UserPswd;
+            this.Name = kid.IdNavigation.FirstName;
+            this.LastName = kid.IdNavigation.LastName;
+            this.BirthDate = kid.IdNavigation.BirthDate;
+            this.PhoneNum = kid.IdNavigation.PhoneNum;
+            this.City = kid.IdNavigation.City;
+            this.Neighborhood = kid.IdNavigation.Neighborhood;
+            this.Street = kid.IdNavigation.Street;
+            this.HouseNum = kid.IdNavigation.HouseNum;
         }
 
         //This function validate the entire form upon submit!

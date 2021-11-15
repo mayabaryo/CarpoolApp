@@ -7,6 +7,11 @@ namespace CarpoolApp.Models
 {
     public partial class Carpool
     {
+        public Carpool()
+        {
+            KidsInCarpools = new HashSet<KidsInCarpool>();
+        }
+
         public int Id { get; set; }
         public int AdultId { get; set; }
         public DateTime CarpoolTime { get; set; }
@@ -17,5 +22,6 @@ namespace CarpoolApp.Models
         public virtual Activity Activity { get; set; }
         public virtual Adult Adult { get; set; }
         public virtual CarpoolStatus CarpoolStatus { get; set; }
+        public virtual ICollection<KidsInCarpool> KidsInCarpools { get; set; }
     }
 }

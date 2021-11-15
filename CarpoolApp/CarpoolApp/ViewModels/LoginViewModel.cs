@@ -23,6 +23,7 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        #region Email
         private string email;
         public string Email
         {
@@ -33,6 +34,9 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("Email");
             }
         }
+        #endregion
+
+        #region UserName
         private string userName;
         public string UserName
         {
@@ -43,6 +47,9 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("UserName");
             }
         }
+        #endregion
+
+        #region Password
         private string password;
         public string Password
         {
@@ -53,6 +60,7 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("Password");
             }
         }
+        #endregion
 
         public ICommand LoginCommand { protected set; get; }
         public ICommand TapCommand { protected set; get; }
@@ -90,9 +98,10 @@ namespace CarpoolApp.ViewModels
                 ServerStatus = "קורא נתונים...";
                 App theApp = (App)App.Current;
                 theApp.CurrentUser = user;
+
                 Page page;
 
-                if (true)
+                if (user.Kid == null)
                     page = new Views.AdultPage();
 
                 else
@@ -102,105 +111,12 @@ namespace CarpoolApp.ViewModels
                 App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
             }
         }
+
         public async void OnTap()
         {
             SignUp page = new SignUp();
             page.Title = "Sign Up";
             await App.Current.MainPage.Navigation.PushAsync(page);
         }
-
-
-
-        //public async void OnLogin()
-        //{
-        //    CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-        //    User user = await proxy.LoginAsync(this.Email, this.Password);
-
-        //    if (user != null)
-        //    {
-        //        App a = (App)App.Current;
-        //        a.CurrentUser = user;
-
-        //        if (true)
-        //        {
-        //            AdultPage ap = new AdultPage();
-        //            ap.Title = "Adult Page";
-        //            a.MainPage = ap;
-        //            //await App.Current.MainPage.Navigation.PushAsync(ap);
-        //        }
-        //        else
-        //        {
-        //            KidPage kp = new KidPage();
-        //            kp.Title = "Kid Page";
-        //            a.MainPage = kp;
-        //            //await App.Current.MainPage.Navigation.PushAsync(kp);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        //await App.Current.MainPage.Navigation.PopModalAsync();
-        //        await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "בסדר");
-        //    }
-        //}
-
-
-
-
-        //public async void OnSubmit()
-        //{
-        //    ServerStatus = "מתחבר לשרת...";
-        //    await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
-        //    CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-        //    User user = await proxy.LoginAsync(Email, Password);
-        //    if (user == null)
-        //    {
-        //        await App.Current.MainPage.Navigation.PopModalAsync();
-        //        await App.Current.MainPage.DisplayAlert("שגיאה", "התחברות נכשלה, בדוק שם משתמש וסיסמה ונסה שוב", "בסדר");
-        //    }
-        //    else
-        //    {
-        //        ServerStatus = "קורא נתונים...";
-        //        App theApp = (App)App.Current;
-        //        theApp.CurrentUser = user;
-        //        bool success = await LoadPhoneTypes(theApp);
-        //        if (!success)
-        //        {
-        //            await App.Current.MainPage.Navigation.PopModalAsync();
-        //            await App.Current.MainPage.DisplayAlert("שגיאה", "קריאת נתונים נכשלה. נסה שוב מאוחר יותר", "בסדר");
-        //        }
-        //        else
-        //        {
-        //            //Initiate all phone types refrence to the same objects of PhoneTypes
-        //            foreach (UserContact uc in user.UserContacts)
-        //            {
-        //                foreach (Models.ContactPhone cp in uc.ContactPhones)
-        //                    cp.PhoneType = theApp.PhoneTypes.Where(pt => pt.TypeId == cp.PhoneTypeId).FirstOrDefault();
-        //            }
-
-        //            Page p = new NavigationPage(new Views.ContactsList());
-        //            App.Current.MainPage = p;
-        //        }
-
-
-        //    }
-        //}
-
-
-        //public ICommand AdultSignUpPage => new Command(ASignUp);
-        //public async void ASignUp()
-        //{
-        //    App a = (App)App.Current;
-        //    AdultSignUp page = new AdultSignUp();
-        //    page.Title = "Adult Sign Up";
-        //    await App.Current.MainPage.Navigation.PushAsync(page);
-        //}
-        //public ICommand ManagerSignUpPage => new Command(MSignUp);
-        //public async void MSignUp()
-        //{
-        //    App a = (App)App.Current;
-        //    ManagerSignUp page = new ManagerSignUp();
-        //    page.Title = "Manager Sign Up";
-        //    await App.Current.MainPage.Navigation.PushAsync(page);
-        //}
     }
 }
