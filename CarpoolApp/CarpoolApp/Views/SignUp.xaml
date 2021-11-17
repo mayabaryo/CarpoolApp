@@ -8,11 +8,16 @@
             <ScrollView>
                 <StackLayout>
 
+                    <SearchBar x:Name="searchBar" 
+                       Placeholder="Type a Search Term" 
+                       Text="{Binding SearchTerm}"
+                       />
+
                     <SearchBar Placeholder="Search for a city..." Text="{Binding CitySearch}"
                                 PlaceholderColor="{DynamicResource secondaryText}" SearchCommand="{Binding SearchCityCommand}"  />
 
                     <Entry Placeholder="הכנס עיר" Text="{Binding City}" Style="{StaticResource entry}"/>
-                    <CollectionView ItemsSource="{Binding CityList}"></CollectionView>
+                    <CollectionView ItemsSource="{Binding FilteredCities}"></CollectionView>
                     <Button Text="ערים" Command="{Binding GetCitiesCommand}"></Button>
 
 

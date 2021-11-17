@@ -36,6 +36,46 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        private List<string> allCities;
+        private ObservableCollection<string> filteredCities;
+        public ObservableCollection<string> FilteredCities
+        {
+            get
+            {
+                return this.filteredCities;
+            }
+            set
+            {
+                if (this.filteredCities != value)
+                {
+
+                    this.filteredCities = value;
+                    OnPropertyChanged("FilteredCities");
+                }
+            }
+        }
+
+        private string searchTerm;
+        public string SearchTerm
+        {
+            get
+            {
+                return this.searchTerm;
+            }
+            set
+            {
+                if (this.searchTerm != value)
+                {
+
+                    this.searchTerm = value;
+                    OnTextChanged(value);
+                    OnPropertyChanged("SearchTerm");
+                }
+            }
+        }
+
+
+
         #region FirstName
         private bool showNameError;
 
@@ -679,8 +719,27 @@ namespace CarpoolApp.ViewModels
 
         private Adult theAdult;
 
+        private async void InitContacts()
+        {
+            //IsRefreshing = true;
+            //App theApp = (App)App.Current;
+            //this.allCities = this.CityList; /*theApp.CurrentUser.UserContacts;*/
+
+            AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
+            this.allCities = await proxy.GetCitiesAsync();
+
+            //Copy list to the filtered list
+            this.FilteredCities = new ObservableCollection<string>(this.allCities);
+            SearchTerm = String.Empty;
+            //IsRefreshing = false;
+        }
+
         public SignUpViewModel(Adult a = null)
         {
+            this.SearchTerm = String.Empty;
+            InitContacts();
+
+
             //create a new user contact if this is an add operation
             if (a == null)
             {
@@ -885,7 +944,38 @@ namespace CarpoolApp.ViewModels
                 await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
         }
 
+        #region Search
+        public void OnTextChanged(string search)
+        {
+            //Filter the list of contacts based on the search term
+            if (this.allCities == null)
+                return;
+            if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
+            {
+                foreach (string city in this.allCities)
+                {
+                    if (!this.FilteredCities.Contains(city))
+                        this.FilteredCities.Add(city);
+                }
+            }
+            else
+            {
+                foreach (string city in this.allCities)
+                {
+                    string contactString = city; /*$"{uc.FirstName}|{uc.LastName}|{uc.Email}";*/
 
+                    if (!this.FilteredCities.Contains(city) &&
+                        contactString.Contains(search))
+                        this.FilteredCities.Add(city);
+                    else if (this.FilteredCities.Contains(city) &&
+                        !contactString.Contains(search))
+                        this.FilteredCities.Remove(city);
+                }
+            }
+
+            this.FilteredCities = new ObservableCollection<string>(this.FilteredCities);
+        }
+        #endregion
 
         //public SignUpViewModel()
         //{
