@@ -452,6 +452,7 @@ namespace CarpoolApp.ViewModels
             set
             {
                 city = value;
+                OnTextChanged(value);
                 ValidateCity();
                 OnPropertyChanged("City");
             }
@@ -730,13 +731,13 @@ namespace CarpoolApp.ViewModels
 
             //Copy list to the filtered list
             this.FilteredCities = new ObservableCollection<string>(this.allCities);
-            SearchTerm = String.Empty;
+            City = String.Empty;
             //IsRefreshing = false;
         }
 
         public SignUpViewModel(Adult a = null)
         {
-            this.SearchTerm = String.Empty;
+            this.City = String.Empty;
             InitContacts();
 
 
@@ -1082,6 +1083,27 @@ namespace CarpoolApp.ViewModels
 
             //List<string> cities = new List<string>();
         }
+
+        #region SelectedCity
+        public ICommand SelectedCity => new Command<string>(OnSelectedCity);
+        public void OnSelectedCity(string city)
+        {
+            if (city != null)
+            {
+                this.City = city;
+
+                //App theApp = (App)App.Current;
+                //AddContactViewModel vm = new AddContactViewModel(uc);
+                //vm.ContactUpdatedEvent += OnContactAdded;
+                //Page p = new Views.AddContact(vm);
+                //await theApp.MainPage.Navigation.PushAsync(p);
+                //if (ClearSelection != null)
+                //    ClearSelection();
+            }
+        }
+
+        //public event Action ClearSelection;
+        #endregion
 
 
         //public Command SearchCityCommand { protected set; get; }
