@@ -18,7 +18,7 @@
 
                     <Entry Placeholder="הכנס עיר" Text="{Binding City}" Style="{StaticResource entry}"/>
                     <CollectionView EmptyView="לא נמצאו ערים" x:Name="collectionName" ItemsSource="{Binding FilteredCities}"
-                                    SelectionChangedCommand="{Binding SelectedCity}" SelectionChangedCommandParameter="{Binding  Source={x:Reference collectionName}, Path=SelectedItem}"></CollectionView>
+                                    SelectionChangedCommand="{Binding Source={x:Reference collectionName}, Path=BindingContext.SelectedCity}" SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}"></CollectionView>
                     <Button Text="ערים" Command="{Binding GetCitiesCommand}"></Button>
 
 
@@ -32,7 +32,9 @@
                             <RowDefinition Height="30" />
                             <RowDefinition Height="150" />
                         </Grid.RowDefinitions>
-                        <Image x:Name="theImage" Source="{Binding UserImgSrc}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"/>
+                        <Frame BorderColor="white"  CornerRadius="100" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" IsClippedToBounds="True" Padding="0" HeightRequest="100" WidthRequest="100">
+                            <Image x:Name="theImage" Source="{Binding UserImgSrc}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0"/>
+                        </Frame>
                         <ImageButton Source="photogallery.png" HorizontalOptions="End" BackgroundColor="White" Grid.Column="0" Grid.Row="0" Command="{Binding PickImageCommand}"/>
                         <ImageButton Source="camera.png" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" BackgroundColor="White" Command="{Binding CameraImageCommand}"/>
                     </Grid>

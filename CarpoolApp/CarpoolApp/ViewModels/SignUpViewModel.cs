@@ -720,7 +720,7 @@ namespace CarpoolApp.ViewModels
 
         private Adult theAdult;
 
-        private async void InitContacts()
+        private async void InitCities()
         {
             //IsRefreshing = true;
             //App theApp = (App)App.Current;
@@ -731,6 +731,7 @@ namespace CarpoolApp.ViewModels
 
             //Copy list to the filtered list
             this.FilteredCities = new ObservableCollection<string>(this.allCities);
+            this.FilteredCities.Clear();
             City = String.Empty;
             //IsRefreshing = false;
         }
@@ -738,7 +739,7 @@ namespace CarpoolApp.ViewModels
         public SignUpViewModel(Adult a = null)
         {
             this.City = String.Empty;
-            InitContacts();
+            InitCities();
 
 
             //create a new user contact if this is an add operation
@@ -953,11 +954,12 @@ namespace CarpoolApp.ViewModels
                 return;
             if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
             {
-                foreach (string city in this.allCities)
-                {
-                    if (!this.FilteredCities.Contains(city))
-                        this.FilteredCities.Add(city);
-                }
+                this.FilteredCities.Clear();
+                //foreach (string city in this.allCities)
+                //{
+                //    if (!this.FilteredCities.Contains(city))
+                //        this.FilteredCities.Add(city);
+                //}
             }
             else
             {
@@ -974,7 +976,7 @@ namespace CarpoolApp.ViewModels
                 }
             }
 
-            this.FilteredCities = new ObservableCollection<string>(this.FilteredCities);
+            //this.FilteredCities = new ObservableCollection<string>(this.FilteredCities);
         }
         #endregion
 
