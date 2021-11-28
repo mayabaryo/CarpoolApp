@@ -444,6 +444,32 @@ namespace CarpoolApp.ViewModels
             }
         }
 
+        //This property holds the selected city on the collection of cities
+        private string selectedCityItem;
+
+        public string SelectedCityItem
+        {
+            get => selectedCityItem;
+            set
+            {
+                selectedCityItem = value;
+                OnPropertyChanged("SelectedCityItem");
+            }
+        }
+
+        //ShowCities
+        private bool showCities;
+
+        public bool ShowCities
+        {
+            get => showCities;
+            set
+            {
+                showCities = value;
+                OnPropertyChanged("ShowCities");
+            }
+        }
+
         private string city;
 
         public string City
@@ -949,6 +975,8 @@ namespace CarpoolApp.ViewModels
         #region Search
         public void OnTextChanged(string search)
         {
+            if (this.City != this.SelectedCityItem)
+                this.ShowCities = true;
             //Filter the list of contacts based on the search term
             if (this.allCities == null)
                 return;
@@ -1090,9 +1118,12 @@ namespace CarpoolApp.ViewModels
         public ICommand SelectedCity => new Command<string>(OnSelectedCity);
         public void OnSelectedCity(string city)
         {
+            
             if (city != null)
             {
+                this.ShowCities = false;
                 this.City = city;
+                //this.FilteredCities.Clear();
 
                 //App theApp = (App)App.Current;
                 //AddContactViewModel vm = new AddContactViewModel(uc);

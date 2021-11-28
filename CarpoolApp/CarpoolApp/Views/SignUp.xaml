@@ -17,8 +17,8 @@
                                 PlaceholderColor="{DynamicResource secondaryText}" SearchCommand="{Binding SearchCityCommand}"  /> -->
 
                     <Entry Placeholder="הכנס עיר" Text="{Binding City}" Style="{StaticResource entry}"/>
-                    <CollectionView EmptyView="לא נמצאו ערים" x:Name="collectionName" ItemsSource="{Binding FilteredCities}"
-                                    SelectionChangedCommand="{Binding Source={x:Reference collectionName}, Path=BindingContext.SelectedCity}" SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}"></CollectionView>
+                    <CollectionView EmptyView="לא נמצאו ערים" x:Name="collectionName" ItemsSource="{Binding FilteredCities}" SelectedItem="{Binding SelectedCityItem}" SelectionMode="Single"
+                                   IsVisible="{Binding ShowCities}" SelectionChangedCommand="{Binding Source={x:Reference collectionName}, Path=BindingContext.SelectedCity}" SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}"></CollectionView>
                     <Button Text="ערים" Command="{Binding GetCitiesCommand}"></Button>
 
 
