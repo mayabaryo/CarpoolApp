@@ -88,46 +88,15 @@ namespace CarpoolApp.Services
             {
                 citiesName.Add(city.name);
             }
-            //citiesName[0].Remove(0);
             citiesName.Remove(citiesName[0]);
 
-            return citiesName;
-
-            //Type myType = myObject.GetType();
-            //IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
-
-            //foreach (PropertyInfo prop in props)
-            //{
-            //    object propValue = prop.GetValue(myObject, null);
-
-            //    // Do something with propValue
-            //}
-
-
-            //List<object> propValueList = new List<object>();
-
-            //Type type = obj.GetType();
-            //IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
-
-            //foreach (PropertyInfo prop in props)
-            //{
-            //    object propValue = prop.GetValue(obj, null);
-
-            //    //propValueList.Add(propValue);
-            //}
-
-
-            ////PropertyInfo property = props[0];
-            //object propValue = props[0].GetValue(obj, null);
-
-            //Type propValueType = propValue.GetType();
-            //IList<PropertyInfo> propsValue = new List<PropertyInfo>(propValueType.GetProperties());     
+            return citiesName;    
         }
         public async Task<List<string>> GetCitiesAsync()
         {
+            ///royts/israel-cities/master/israel-cities.json
             try
             {
-                 //?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500
                 HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/royts/israel-cities/master/israel-cities.json");
                 if (response.IsSuccessStatusCode)
                 {
@@ -153,11 +122,23 @@ namespace CarpoolApp.Services
             }
         }
 
-        public async Task<object> GetStreetsAsync(string city)
+        public List<string> GetStreetsNameList(List<Street> streets/*, string city*/)
         {
+            List<string> streetsName = new List<string>();
+
+            foreach (Street street in streets)
+            {
+                streetsName.Add(street.street_name);
+            }
+
+            return streetsName;
+        }
+        public async Task<List<string>> GetStreetsAsync(/*string city*/)
+        {
+            //?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500
             try
             {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}?resource_id=a7296d1a-f8c9-4b70-96c2-6ebb4352f8e3&limit=01000&q={city}");
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GabMic/israeli-cities-and-streets-list/master/israeli_street_and_cities_names.json");
                 if (response.IsSuccessStatusCode)
                 {
                     JsonSerializerOptions options = new JsonSerializerOptions
@@ -166,9 +147,9 @@ namespace CarpoolApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
-                    object objList = JsonSerializer.Deserialize<object>(content, options);
+                    List<Street> streets = JsonSerializer.Deserialize<List<Street>>(content, options);
 
-                    return objList;
+                    return GetStreetsNameList(streets/*, city*/);
                 }
                 else
                 {

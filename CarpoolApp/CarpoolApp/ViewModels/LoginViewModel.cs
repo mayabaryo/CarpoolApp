@@ -115,7 +115,7 @@ namespace CarpoolApp.ViewModels
         public async void OnTap()
         {
             SignUp page = new SignUp();
-            page.Title = "Sign Up";
+            page.Title = "הרשמה";
             await App.Current.MainPage.Navigation.PushAsync(page);
         }
     }

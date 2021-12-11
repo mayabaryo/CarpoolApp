@@ -66,7 +66,6 @@ namespace CarpoolApp.Services
             return proxy;
         }
 
-
         private CarpoolAPIProxy(string baseUri, string basePhotosUri)
         {
             //Set client handler to support cookies!!
@@ -81,7 +80,7 @@ namespace CarpoolApp.Services
 
         public string GetBasePhotoUri() { return this.basePhotosUri; }
 
-        public async Task<User> LoginAsync(string email,/* string userName,*/ string pass)
+        public async Task<User> LoginAsync(string email, string pass)
         {
             try
             {
@@ -96,6 +95,38 @@ namespace CarpoolApp.Services
                     string content = await response.Content.ReadAsStringAsync();
                     User u = JsonSerializer.Deserialize<User>(content, options);
                     return u;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<User> UpdateUser(User user)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<User>(user, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/UpdateUser", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    User ret = JsonSerializer.Deserialize<User>(jsonObject, options);
+                    return ret;
                 }
                 else
                 {
@@ -231,36 +262,6 @@ namespace CarpoolApp.Services
             {
                 Console.WriteLine(e.Message);
                 return false;
-            }
-        }
-
-        public async Task<User> KidSignUpAsync(string email, string userName, string pass, string fName, string lName,
-            DateTime birthDate, string phoneNum, string photo, string city, string neighborhood, string street, string houseNum)
-        {
-            try
-            {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/KidSignUp?email={email}&userName={userName}&pass={pass}&fName={fName}&lName={lName}" +
-                    $"&birthDate={birthDate}&phoneNum={phoneNum}&photo={photo}&city={city}&neighborhood={neighborhood}&street={street}&houseNum={houseNum}");
-                if (response.IsSuccessStatusCode)
-                {
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
-                        PropertyNameCaseInsensitive = true
-                    };
-                    string content = await response.Content.ReadAsStringAsync();
-                    User u = JsonSerializer.Deserialize<User>(content, options);
-                    return u;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
             }
         }
     }

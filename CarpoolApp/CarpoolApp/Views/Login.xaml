@@ -5,8 +5,9 @@
              >
     <ContentPage.Content>
         <StackLayout Style="{StaticResource Stack}">
-            <Label Text="Welcome to Carpool" Style="{StaticResource title}"></Label>
-
+            <!--<Label Text="ברוכים הבאים" Style="{StaticResource title}"></Label>-->
+            <Image Source="carpoolLogo2.PNG"></Image>
+            
             <Frame Style="{StaticResource logInSignUp}">
                 <StackLayout>
                     <Entry x:Name="Email" MaxLength="30" Text="{Binding Email}" Placeholder="אימייל או שם משתמש" Keyboard="Email"
@@ -21,8 +22,8 @@
             <Label>
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="אין לך חשבון? " />
-                        <Span Text="הירשם!" Style="{StaticResource Link}">
+                        <!-- <Span Text="אין לך חשבון? " /> -->
+                        <Span Text="אין לך חשבון?" Style="{StaticResource Link}">
                             <Span.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding TapCommand}" />
                             </Span.GestureRecognizers>

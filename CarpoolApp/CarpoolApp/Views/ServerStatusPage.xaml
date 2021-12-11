@@ -4,7 +4,7 @@
              x:Class="CarpoolApp.Views.ServerStatusPage">
     <ContentPage.Content>
         <StackLayout>
-            <Image Source="loadingGif.gif"></Image>
+            <Image Source="loading.gif"></Image>
             <Label Text="{Binding ServerStatus}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
