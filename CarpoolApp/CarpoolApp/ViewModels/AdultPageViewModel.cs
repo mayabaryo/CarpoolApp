@@ -691,13 +691,9 @@ namespace CarpoolApp.ViewModels
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             //Create a source with cache busting!
             Random r = new Random();
-            this.UserImgSrc = proxy.GetBasePhotoUri() + currentUser.Id; /*+ $".jpg?{r.Next()}"*/
+            this.UserImgSrc = currentUser.PhotoURL + $"?{r.Next()}";
 
-            //Now check if an image exist for the contact (photo). If not, set the default image!
-            var sourcePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", DEFAULT_PHOTO);
-            var targetPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", $"{currentUser.Id}.jpg");
-            //System.IO.File.Copy(sourcePath, targetPath);
-            this.UserImgSrc = targetPath;
+            
 
             this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
             this.UserNameError = ERROR_MESSAGES.REQUIRED_FIELD;

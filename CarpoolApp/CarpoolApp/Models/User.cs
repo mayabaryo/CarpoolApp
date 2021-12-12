@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CarpoolApp.Services;
 
 namespace CarpoolApp.Models
 {
@@ -22,5 +23,15 @@ namespace CarpoolApp.Models
 
         public virtual Adult Adult { get; set; }
         public virtual Kid Kid { get; set; }
+
+        //Added only to client side
+        public string PhotoURL 
+        { 
+            get
+            {
+                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+                return $"{proxy.GetBasePhotoUri()}{this.Id}.jpg";
+            }
+        }
     }
 }

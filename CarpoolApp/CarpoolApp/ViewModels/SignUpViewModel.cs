@@ -36,6 +36,9 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        //set the user default photo image name
+        public const string DEFAULT_PHOTO = "defaultphoto.jpg";
+
         private List<string> allCities;
         private ObservableCollection<string> filteredCities;
         public ObservableCollection<string> FilteredCities
@@ -914,6 +917,13 @@ namespace CarpoolApp.ViewModels
                             bool success = await proxy.UploadImage(new FileInfo()
                             {
                                 Name = this.imageFileResult.FullPath
+                            }, $"{newAdult.Id}.jpg");
+                        }
+                        else
+                        {
+                            bool success = await proxy.UploadImage(new FileInfo()
+                            {
+                                Name = DEFAULT_PHOTO
                             }, $"{newAdult.Id}.jpg");
                         }
                         ServerStatus = "שומר נתונים...";
