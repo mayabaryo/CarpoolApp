@@ -36,8 +36,6 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        //set the user default photo image name
-        public const string DEFAULT_PHOTO = "defaultphoto.jpg";
 
         private List<string> allCities;
         private ObservableCollection<string> filteredCities;
@@ -806,9 +804,12 @@ namespace CarpoolApp.ViewModels
             InitCities();
             //InitStreets(); 
 
+            //set the path url to the contact photo
+            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             //Setup default image photo
-            this.UserImgSrc = DEFAULT_PHOTO_SRC;
-                this.imageFileResult = null; //mark that no picture was chosen
+            this.UserImgSrc = proxy.GetBasePhotoUri() + DEFAULT_PHOTO_SRC;
+
+            this.imageFileResult = null; //mark that no picture was chosen
 
             this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
             this.UserNameError = ERROR_MESSAGES.REQUIRED_FIELD;
@@ -919,13 +920,13 @@ namespace CarpoolApp.ViewModels
                                 Name = this.imageFileResult.FullPath
                             }, $"{newAdult.Id}.jpg");
                         }
-                        else
-                        {
-                            bool success = await proxy.UploadImage(new FileInfo()
-                            {
-                                Name = DEFAULT_PHOTO
-                            }, $"{newAdult.Id}.jpg");
-                        }
+                        //else
+                        //{
+                        //    bool success = await proxy.UploadImage(new FileInfo()
+                        //    {
+                        //        Name = DEFAULT_PHOTO
+                        //    }, $"{newAdult.Id}.jpg");
+                        //}
                         ServerStatus = "שומר נתונים...";
 
                         App theApp = (App)App.Current;
