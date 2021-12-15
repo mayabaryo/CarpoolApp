@@ -901,7 +901,7 @@ namespace CarpoolApp.ViewModels
 
             //this.Email = currentUser.Email;
             //this.UserName = currentUser.UserName;
-            //this.UserImgSrc = currentUser.Photo;
+            this.UserImgSrc = currentUser.PhotoURL;
             this.Password = currentUser.UserPswd;
             this.Name = currentUser.FirstName;
             this.LastName = currentUser.LastName;
@@ -925,7 +925,7 @@ namespace CarpoolApp.ViewModels
 
             //this.Email = currentUser.Email;
             //this.UserName = currentUser.UserName;
-            //this.UserImgSrc = currentUser.Photo;
+            this.UserImgSrc = currentUser.PhotoURL;
             this.Password = currentUser.UserPswd;
             this.Name = currentUser.FirstName;
             this.LastName = currentUser.LastName;

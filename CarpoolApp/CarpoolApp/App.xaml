@@ -34,6 +34,25 @@
                 <Setter Property="CornerRadius" Value="10"></Setter>
             </Style>
 
+            <Style x:Key="ImageFrame" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="white"></Setter>
+                <Setter Property="CornerRadius" Value="100"></Setter>
+                <Setter Property="IsClippedToBounds" Value="True"></Setter>
+                <Setter Property="Padding" Value="0"></Setter>
+                <Setter Property="HeightRequest" Value="150"></Setter>
+                <Setter Property="WidthRequest" Value="150"></Setter>
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"></Setter>
+            </Style>
+
+            <Style x:Key="Image" TargetType="Image">
+                <Setter Property="Aspect" Value="AspectFill"></Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="Margin" Value="0"></Setter>
+                <Setter Property="HeightRequest" Value="150"></Setter>
+                <Setter Property="WidthRequest" Value="150"></Setter>
+            </Style>
+
             <Style x:Key="labelNameStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="Small" />
             </Style>
