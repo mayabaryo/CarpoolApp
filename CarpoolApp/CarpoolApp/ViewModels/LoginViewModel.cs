@@ -102,7 +102,7 @@ namespace CarpoolApp.ViewModels
                 Page page;
 
                 if (user.Kid == null)
-                    page = new Views.AdultPage();
+                    page = new Views.AdultMainTab();
 
                 else
                     page = new Views.KidPage();

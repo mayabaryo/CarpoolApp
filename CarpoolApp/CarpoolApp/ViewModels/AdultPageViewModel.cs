@@ -655,8 +655,8 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        //set the user default photo image name
-        public const string DEFAULT_PHOTO = "defaultphoto.jpg";
+        ////set the user default photo image name
+        //public const string DEFAULT_PHOTO = "defaultphoto.jpg";
 
         //private Adult theAdult;
 
@@ -685,16 +685,12 @@ namespace CarpoolApp.ViewModels
             this.HouseNum = currentUser.HouseNum;
             this.StringHouseNum = HouseNum.ToString();
 
-            //this.UserImgSrc = currentUser.Photo;
-
             //set the path url to the contact photo
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             //Create a source with cache busting!
             Random r = new Random();
             this.UserImgSrc = currentUser.PhotoURL + $"?{r.Next()}";
-
             
-
             this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
             this.UserNameError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.PasswordError = ERROR_MESSAGES.SHORT_PASS;
@@ -705,7 +701,6 @@ namespace CarpoolApp.ViewModels
             this.CityError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.NeighborhoodError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
-            //this.HouseNumError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
 
             this.ShowEmailError = false;
@@ -718,25 +713,7 @@ namespace CarpoolApp.ViewModels
             this.ShowCityError = false;
             this.ShowNeighborhoodError = false;
             this.ShowStreetError = false;
-            //this.ShowHouseNumError = false;
             this.ShowStringHouseNumError = false;
-
-            //User u = new User()
-            //{
-            //    //Id = theApp.CurrentUser.Id,
-            //    Email = currentUser.Email,
-            //    UserName = currentUser.UserName,
-            //    UserPswd = currentUser.UserPswd,
-            //    FirstName = currentUser.FirstName,
-            //    LastName = currentUser.LastName,
-            //    BirthDate = currentUser.BirthDate,
-            //    PhoneNum = currentUser.PhoneNum,
-            //    City = currentUser.City,
-            //    Neighborhood = currentUser.Neighborhood,
-            //    Street = currentUser.Street,
-            //    HouseNum = currentUser.HouseNum
-            //};
-            ////StringHouseNum = "";
 
             this.SaveDataCommand = new Command(() => SaveData());
             ClearCommand = new Command(OnClear);
@@ -811,78 +788,21 @@ namespace CarpoolApp.ViewModels
                         bool success = await proxy.UploadImage(new Models.FileInfo()
                         {
                             Name = this.imageFileResult.FullPath
-                        }, $"{newUser.Id}.jpg");
+                        }, $"{user.Id}.jpg");
+
+                        //if (!success)
+                        //{
+                        //    if (SetImageSourceEvent != null)
+                        //        SetImageSourceEvent(theApp.CurrentUser.PhotoURL);
+                        //    await App.Current.MainPage.DisplayAlert("עדכון", "יש בעיה בהעלאת התמונה", "אישור", FlowDirection.RightToLeft);
+                        //}
                     }
                     ServerStatus = "שומר נתונים...";
-
-
-
-                    //close the message and add contact windows!
-                    //await App.Current.MainPage.Navigation.PopAsync();
-
-
 
                     theApp.CurrentUser = user;
                     await App.Current.MainPage.Navigation.PopModalAsync();
                     await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
                 }
-
-                //    this.theAdult.IdNavigation.Photo = this.UserImgSrc;
-                //    this.theAdult.IdNavigation.Email = this.Email;
-                //    this.theAdult.IdNavigation.UserName = this.UserName;
-                //    this.theAdult.IdNavigation.UserPswd = this.Password;
-                //    this.theAdult.IdNavigation.FirstName = this.Name;
-                //    this.theAdult.IdNavigation.LastName = this.LastName;
-                //    this.theAdult.IdNavigation.BirthDate = this.BirthDate;
-                //    this.theAdult.IdNavigation.PhoneNum = this.PhoneNum;
-                //    this.theAdult.IdNavigation.City = this.City;
-                //    this.theAdult.IdNavigation.Neighborhood = this.Neighborhood;
-                //    this.theAdult.IdNavigation.Street = this.Street;
-                //    this.theAdult.IdNavigation.HouseNum = int.Parse(this.StringHouseNum);
-
-                //    ServerStatus = "מתחבר לשרת...";
-                //    await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
-                //    CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-
-                //    Adult newAdult = await proxy.AdultSignUpAsync(this.theAdult);
-                //    if (newAdult == null)
-                //    {
-                //        await App.Current.MainPage.Navigation.PopModalAsync();
-                //        await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה", "אישור", FlowDirection.RightToLeft);
-                //    }
-                //    else
-                //    {
-                //        if (this.imageFileResult != null)
-                //        {
-                //            ServerStatus = "מעלה תמונה...";
-
-                //            bool success = await proxy.UploadImage(new FileInfo()
-                //            {
-                //                Name = this.imageFileResult.FullPath
-                //            }, $"{newAdult.Id}.jpg");
-                //        }
-                //        ServerStatus = "שומר נתונים...";
-
-                //        ////if someone registered to get the contact added event, fire the event
-                //        //if (this.ContactUpdatedEvent != null)
-                //        //{
-                //        //    this.ContactUpdatedEvent(newAdult, this.theAdult);
-                //        //}
-
-                //        //close the message and add contact windows!
-                //        await App.Current.MainPage.Navigation.PopAsync();
-
-                //        App theApp = (App)App.Current;
-                //        theApp.CurrentUser = newAdult.IdNavigation;
-
-                //        Page p = new AdultPage();
-                //        p.Title = $"שלום {theApp.CurrentUser.UserName}";
-                //        theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
-
-                //        await App.Current.MainPage.Navigation.PopModalAsync();
-                //        await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
-                //    }
-                //    await App.Current.MainPage.Navigation.PopModalAsync();
             }
             else
                 await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
@@ -899,9 +819,7 @@ namespace CarpoolApp.ViewModels
             App theApp = (App)App.Current;
             User currentUser = theApp.CurrentUser;
 
-            //this.Email = currentUser.Email;
-            //this.UserName = currentUser.UserName;
-            this.UserImgSrc = currentUser.PhotoURL;
+            //this.UserImgSrc = currentUser.PhotoURL;
             this.Password = currentUser.UserPswd;
             this.Name = currentUser.FirstName;
             this.LastName = currentUser.LastName;
@@ -912,6 +830,8 @@ namespace CarpoolApp.ViewModels
             this.Street = currentUser.Street;
             this.HouseNum = currentUser.HouseNum;
             this.StringHouseNum = HouseNum.ToString();
+            if (SetImageSourceEvent != null)
+                SetImageSourceEvent(currentUser.PhotoURL);
 
             IsRefreshing = false;
         }
@@ -923,8 +843,6 @@ namespace CarpoolApp.ViewModels
             App theApp = (App)App.Current;
             User currentUser = theApp.CurrentUser;
 
-            //this.Email = currentUser.Email;
-            //this.UserName = currentUser.UserName;
             this.UserImgSrc = currentUser.PhotoURL;
             this.Password = currentUser.UserPswd;
             this.Name = currentUser.FirstName;
@@ -936,6 +854,8 @@ namespace CarpoolApp.ViewModels
             this.Street = currentUser.Street;
             this.HouseNum = currentUser.HouseNum;
             this.StringHouseNum = HouseNum.ToString();
+            //if (SetImageSourceEvent != null)
+            //    SetImageSourceEvent(currentUser.PhotoURL);
         }
         #endregion
 

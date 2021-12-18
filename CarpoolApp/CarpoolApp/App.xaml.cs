@@ -40,6 +40,9 @@ namespace CarpoolApp
             Page p = new Views.Login();
             p.Title = "התחברות";
             MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+
+            //MainPage = new NavigationPage(new Views.AdultMainTab());
+
             //bdb2ff
             //MainPage = new MainPage();
         }

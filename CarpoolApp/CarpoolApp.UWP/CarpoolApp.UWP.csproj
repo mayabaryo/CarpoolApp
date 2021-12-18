@@ -131,15 +131,26 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="Pictures\camera.png" />
-    <Content Include="Pictures\carpoolLogo1.PNG" />
-    <Content Include="Pictures\carpoolLogo2.PNG" />
-    <Content Include="Pictures\carpoolLogo3.PNG" />
-    <Content Include="Pictures\defaultphoto.jpg" />
-    <Content Include="Pictures\home.png" />
-    <Content Include="Pictures\loadinCar.gif" />
-    <Content Include="Pictures\loading.gif" />
-    <Content Include="Pictures\photogallery.png" />
+    <Content Include="photos\accountIcon.png" />
+    <Content Include="photos\camera.png" />
+    <Content Include="photos\cameraIcon.png" />
+    <Content Include="photos\carpoolLogo1.PNG" />
+    <Content Include="photos\carpoolLogo2.PNG" />
+    <Content Include="photos\carpoolLogo3.PNG" />
+    <Content Include="photos\celebrationIcon.png" />
+    <Content Include="photos\clearIcon.png" />
+    <Content Include="photos\defaultphoto.jpg" />
+    <Content Include="photos\faceIcon.png" />
+    <Content Include="photos\galleryIcon.png" />
+    <Content Include="photos\groupIcon.png" />
+    <Content Include="photos\home.png" />
+    <Content Include="photos\homeIcon.png" />
+    <Content Include="photos\loadinCar.gif" />
+    <Content Include="photos\loading.gif" />
+    <Content Include="photos\logoutIcon.png" />
+    <Content Include="photos\photogallery.png" />
+    <Content Include="photos\taxiIcon.png" />
+    <Content Include="photos\tickIcon.png" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>

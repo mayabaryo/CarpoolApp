@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:fonts="clr-namespace:Fonts"
+            xmlns:local="clr-namespace:CarpoolApp.Views"
+            x:Class="CarpoolApp.Views.AdultMainTab"
+            xmlns:windows="clr-namespace:Xamarin.Forms.PlatformConfiguration.WindowsSpecific;assembly=Xamarin.Forms.Core"
+            windows:TabbedPage.HeaderIconsEnabled="true"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            Title="Tabs Example"
+            SelectedTabColor="Red"
+            UnselectedTabColor="Black"
+            >
+
+    <!--Pages can be added as references or inline-->
+
+    <windows:TabbedPage.HeaderIconsSize>
+        <Size>
+            <x:Arguments>
+                <x:Double>48</x:Double>
+                <x:Double>48</x:Double>
+            </x:Arguments>
+        </Size>
+    </windows:TabbedPage.HeaderIconsSize>
+    <local:AdultPage>
+        <local:AdultPage.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MyRegularFonts" Glyph="{x:Static fonts:IconSolidFonts.HouseUser}"/>
+        </local:AdultPage.IconImageSource>
+    </local:AdultPage>
+    <local:AddKid Title="Blog">
+        <local:AddKid.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.HouseChimneyUser}"/>
+        </local:AddKid.IconImageSource>
+    </local:AddKid>
+
+</TabbedPage>
