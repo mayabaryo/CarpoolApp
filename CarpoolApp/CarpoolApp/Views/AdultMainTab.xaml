@@ -25,10 +25,10 @@
     </windows:TabbedPage.HeaderIconsSize>
     <local:AdultPage>
         <local:AdultPage.IconImageSource>
-            <FontImageSource Color="Black" FontFamily="MyRegularFonts" Glyph="{x:Static fonts:IconSolidFonts.HouseUser}"/>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.HouseUser}"/>
         </local:AdultPage.IconImageSource>
     </local:AdultPage>
-    <local:AddKid Title="Blog">
+    <local:AddKid Title="Add Kid">
         <local:AddKid.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.HouseChimneyUser}"/>
         </local:AddKid.IconImageSource>
