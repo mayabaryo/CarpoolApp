@@ -210,7 +210,7 @@ namespace CarpoolApp.Services
             }
         }
 
-        public async Task<Kid> KidSignUpAsync(Kid kid)
+        public async Task<Kid> KidSignUpAsync(KidsOfAdult kidsOfAdult)
         {
             try
             {
@@ -220,7 +220,7 @@ namespace CarpoolApp.Services
                     Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
                     PropertyNameCaseInsensitive = true
                 };
-                string jsonObject = JsonSerializer.Serialize<Kid>(kid, options);
+                string jsonObject = JsonSerializer.Serialize<KidsOfAdult>(kidsOfAdult, options);
                 StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/KidSignUp", content);
@@ -229,6 +229,38 @@ namespace CarpoolApp.Services
                     jsonObject = await response.Content.ReadAsStringAsync();
                     Kid k = JsonSerializer.Deserialize<Kid>(jsonObject, options);
                     return k;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public async Task<Adult> AddAdultAsync(Adult adult)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Adult>(adult, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddAdult", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    Adult a = JsonSerializer.Deserialize<Adult>(jsonObject, options);
+                    return a;
                 }
                 else
                 {

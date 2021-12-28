@@ -11,12 +11,10 @@ using Xamarin.Essentials;
 using System.Linq;
 using CarpoolApp.Views;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
-using System.IO;
 
 namespace CarpoolApp.ViewModels
 {
-    class AdultPageViewModel : INotifyPropertyChanged
+    class AddAdultViewModel : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -358,7 +356,7 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private const int MIN_AGE = 18;
+        private const int MIN_AGE = 5;
         private void ValidateBirthDate()
         {
             TimeSpan ts = DateTime.Now - this.BirthDate;
@@ -626,7 +624,7 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region ServerStatus
+        #region serverStatus
         private string serverStatus;
         public string ServerStatus
         {
@@ -639,60 +637,16 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region Refresh
-        private bool isRefreshing;
-        public bool IsRefreshing
-        {
-            get => isRefreshing;
-            set
-            {
-                if (this.isRefreshing != value)
-                {
-                    this.isRefreshing = value;
-                    OnPropertyChanged(nameof(IsRefreshing));
-                }
-            }
-        }
-        #endregion
-
-        ////set the user default photo image name
-        //public const string DEFAULT_PHOTO = "defaultphoto.jpg";
-
-        //private Adult theAdult;
-
-        public Command SaveDataCommand { protected set; get; }
-        public ICommand ClearCommand { protected set; get; }
-        public ICommand HomePageCommand { protected set; get; }
-        public ICommand AddKidPageCommand { protected set; get; }
-        public ICommand AddAdultPageCommand { protected set; get; }
-
-        public ICommand LogOutCommand { protected set; get; }
-
         #region Constructor
-        public AdultPageViewModel()
+        public AddAdultViewModel()
         {
-            App theApp = (App)App.Current;
-            User currentUser = theApp.CurrentUser;
-
-            this.Email = currentUser.Email;
-            this.UserName = currentUser.UserName;
-            this.Password = currentUser.UserPswd;
-            this.Name = currentUser.FirstName;
-            this.LastName = currentUser.LastName;
-            this.BirthDate = currentUser.BirthDate;
-            this.PhoneNum = currentUser.PhoneNum;
-            this.City = currentUser.City;
-            this.Neighborhood = currentUser.Neighborhood;
-            this.Street = currentUser.Street;
-            this.HouseNum = currentUser.HouseNum;
-            this.StringHouseNum = HouseNum.ToString();
-
             //set the path url to the contact photo
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            //Create a source with cache busting!
-            Random r = new Random();
-            this.UserImgSrc = currentUser.PhotoURL + $"?{r.Next()}";
-            
+            //Setup default image photo
+            this.UserImgSrc = proxy.GetBasePhotoUri() + DEFAULT_PHOTO_SRC;
+
+            this.imageFileResult = null; //mark that no picture was chosen
+
             this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
             this.UserNameError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.PasswordError = ERROR_MESSAGES.SHORT_PASS;
@@ -718,18 +672,19 @@ namespace CarpoolApp.ViewModels
             this.ShowStringHouseNumError = false;
 
             this.SaveDataCommand = new Command(() => SaveData());
-            ClearCommand = new Command(OnClear);
-            HomePageCommand = new Command(OnHome);
-            AddKidPageCommand = new Command(OnAddKid);
-            AddAdultPageCommand = new Command(OnAddAdult);
-            LogOutCommand = new Command(OnLogOut);
+
+            DateTime calendarDate = new DateTime(2000, 10, 10);
+            this.BirthDate = calendarDate;
         }
         #endregion
 
+        //This function validate the entire form upon submit!
         #region ValidateForm
         private bool ValidateForm()
         {
             //Validate all fields first
+            ValidateEmail();
+            ValidateUserName();
             ValidatePassword();
             ValidateName();
             ValidateLastName();
@@ -741,8 +696,8 @@ namespace CarpoolApp.ViewModels
             ValidateStringHouseNum();
 
             //check if any validation failed
-            if (ShowPasswordError || ShowNameError|| ShowLastNameError
-                || ShowBirthDateError || ShowPhoneNumError || ShowCityError
+            if (ShowEmailError || ShowUserNameError || ShowPasswordError || ShowNameError
+                || ShowLastNameError || ShowBirthDateError || ShowPhoneNumError || ShowCityError
                 || ShowNeighborhoodError || ShowStreetError || ShowStringHouseNumError)
                 return false;
             return true;
@@ -750,17 +705,14 @@ namespace CarpoolApp.ViewModels
         #endregion
 
         #region SaveData
+        public Command SaveDataCommand { protected set; get; }
         private async void SaveData()
         {
             if (ValidateForm())
             {
-                ServerStatus = "מתחבר לשרת...";
-                await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
-
-                App theApp = (App)App.Current;
-                User newUser = new User()
+                User user = new User()
                 {
-                    Id = theApp.CurrentUser.Id,
+                    Photo = this.UserImgSrc,
                     Email = this.Email,
                     UserName = this.UserName,
                     UserPswd = this.Password,
@@ -774,40 +726,56 @@ namespace CarpoolApp.ViewModels
                     HouseNum = int.Parse(this.StringHouseNum)
                 };
 
-                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-                User user = await proxy.UpdateUser(newUser);
-
-                if (user == null)
+                Adult theAdult = new Adult()
                 {
-                    await App.Current.MainPage.Navigation.PopModalAsync();
-                    await App.Current.MainPage.DisplayAlert("שגיאה", "העדכון נכשל", "אישור", FlowDirection.RightToLeft);
+                    IdNavigation = user
+                };
+
+                ServerStatus = "מתחבר לשרת...";
+                await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
+                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+
+                bool isEmailExist = await proxy.EmailExistAsync(theAdult.IdNavigation.Email);
+                bool isUserNameExist = await proxy.UserNameExistAsync(theAdult.IdNavigation.UserName);
+
+                if (!isEmailExist && !isUserNameExist)
+                {
+                    Adult newAdult = await proxy.AddAdultAsync(theAdult);
+                    if (newAdult == null)
+                    {
+                        await App.Current.MainPage.Navigation.PopModalAsync();
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה", "אישור", FlowDirection.RightToLeft);
+                    }
+                    else
+                    {
+                        if (this.imageFileResult != null)
+                        {
+                            ServerStatus = "מעלה תמונה...";
+
+                            bool success = await proxy.UploadImage(new FileInfo()
+                            {
+                                Name = this.imageFileResult.FullPath
+                            }, $"{newAdult.Id}.jpg");
+                        }
+                        ServerStatus = "שומר נתונים...";
+
+                        await App.Current.MainPage.Navigation.PopModalAsync();
+                        await App.Current.MainPage.Navigation.PopToRootAsync();
+                        await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
+                    }
                 }
                 else
                 {
-                    if (this.imageFileResult != null)
-                    {
-                        ServerStatus = "מעלה תמונה...";
+                    if (isEmailExist && isUserNameExist)
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "האימייל ושם המשתמש שהקלדת כבר קיימים במערכת, בבקשה תבחר אימייל ושם משתמש חדשים ונסה שוב", "אישור", FlowDirection.RightToLeft);
 
-                        bool success = await proxy.UploadImage(new Models.FileInfo()
-                        {
-                            Name = this.imageFileResult.FullPath
-                        }, $"{user.Id}.jpg");
+                    else if (isEmailExist)
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "האימייל שהקלדת כבר קיים במערכת, בבקשה תבחר אימייל חדש ונסה שוב", "אישור", FlowDirection.RightToLeft);
 
-                        //if (!success)
-                        //{
-                        //    if (SetImageSourceEvent != null)
-                        //        SetImageSourceEvent(theApp.CurrentUser.PhotoURL);
-                        //    await App.Current.MainPage.DisplayAlert("עדכון", "יש בעיה בהעלאת התמונה", "אישור", FlowDirection.RightToLeft);
-                        //}
-                    }
-                    ServerStatus = "שומר נתונים...";
+                    else
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "שם המשתמש שהקלדת כבר קיים במערכת, בבקשה תבחר שם משתמש חדש ונסה שוב", "אישור", FlowDirection.RightToLeft);
 
-                    theApp.CurrentUser = user;
                     await App.Current.MainPage.Navigation.PopModalAsync();
-                    Page page = new AdultMainTab();
-                    page.Title = $"שלום {user.UserName}";
-                    App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
-                    await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
                 }
             }
             else
@@ -815,58 +783,9 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region RefreshCommand
-        public ICommand RefreshCommand => new Command(OnRefresh);
-
-        public void OnRefresh()
-        {
-            IsRefreshing = true;
-
-            App theApp = (App)App.Current;
-            User currentUser = theApp.CurrentUser;
-
-            //this.UserImgSrc = currentUser.PhotoURL;
-            this.Password = currentUser.UserPswd;
-            this.Name = currentUser.FirstName;
-            this.LastName = currentUser.LastName;
-            this.BirthDate = currentUser.BirthDate;
-            this.PhoneNum = currentUser.PhoneNum;
-            this.City = currentUser.City;
-            this.Neighborhood = currentUser.Neighborhood;
-            this.Street = currentUser.Street;
-            this.HouseNum = currentUser.HouseNum;
-            this.StringHouseNum = HouseNum.ToString();
-            if (SetImageSourceEvent != null)
-                SetImageSourceEvent(currentUser.PhotoURL);
-
-            IsRefreshing = false;
-        }
-        #endregion
-
-        #region OnClear
-        public void OnClear()
-        {
-            App theApp = (App)App.Current;
-            User currentUser = theApp.CurrentUser;
-
-            this.UserImgSrc = currentUser.PhotoURL;
-            this.Password = currentUser.UserPswd;
-            this.Name = currentUser.FirstName;
-            this.LastName = currentUser.LastName;
-            this.BirthDate = currentUser.BirthDate;
-            this.PhoneNum = currentUser.PhoneNum;
-            this.City = currentUser.City;
-            this.Neighborhood = currentUser.Neighborhood;
-            this.Street = currentUser.Street;
-            this.HouseNum = currentUser.HouseNum;
-            this.StringHouseNum = HouseNum.ToString();
-            //if (SetImageSourceEvent != null)
-            //    SetImageSourceEvent(currentUser.PhotoURL);
-        }
-        #endregion
-
         FileResult imageFileResult;
         public event Action<ImageSource> SetImageSourceEvent;
+
         #region PickImage
         public ICommand PickImageCommand => new Command(OnPickImage);
         public async void OnPickImage()
@@ -905,53 +824,6 @@ namespace CarpoolApp.ViewModels
                 ImageSource imgSource = ImageSource.FromStream(() => stream);
                 if (SetImageSourceEvent != null)
                     SetImageSourceEvent(imgSource);
-            }
-        }
-        #endregion
-
-        #region OnHome
-        public async void OnHome()
-        {
-            App theApp = (App)App.Current;
-            AdultPage page = new AdultPage();
-            page.Title = $"שלום {theApp.CurrentUser.UserName}";
-
-            await App.Current.MainPage.Navigation.PopToRootAsync();
-            //while (App.Current. != App.Current.MainPage)
-            //await App.Current.MainPage.Navigation.PushAsync(page);
-        }
-        #endregion
-
-        #region OnAddKid
-        public async void OnAddKid()
-        {
-            AddKid page = new AddKid();
-            page.Title = "הוסף ילד";
-            await App.Current.MainPage.Navigation.PushAsync(page);
-        }
-        #endregion
-
-        #region OnAddAdult
-        public async void OnAddAdult()
-        {
-            AddAdult page = new AddAdult();
-            page.Title = "הוסף מבוגר";
-            await App.Current.MainPage.Navigation.PushAsync(page);
-        }
-        #endregion
-
-        #region OnLogOut
-        public async void OnLogOut()
-        {
-            bool answer = await App.Current.MainPage.DisplayAlert("התנתקות", "האם ברצונך להתנתק?", "התנתק", "ביטול", FlowDirection.RightToLeft);
-            if (answer)
-            {
-                App theApp = (App)App.Current;
-                theApp.CurrentUser = null;
-
-                Page page = new Login();
-                page.Title = "התחברות";
-                App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
             }
         }
         #endregion

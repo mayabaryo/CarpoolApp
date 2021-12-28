@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarpoolApp.Views.AdultProfile"
+             FlowDirection="RightToLeft">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="בית" Order="Primary" Priority="0" IconImageSource="homeIcon.png" Command="{Binding HomePageCommand}"></ToolbarItem>
+        <ToolbarItem Text="הוספת ילד" Order="Secondary" Priority="0" Command="{Binding AddKidPageCommand}"></ToolbarItem>
+        <ToolbarItem Text="הוספת פעילות" Order="Secondary" Priority="1" Command="{Binding AddActivityPageCommand}"></ToolbarItem>
+        <ToolbarItem Text="הצטרפות לפעילות" Order="Secondary" Priority="2" Command="{Binding AddCarpoolPageCommand}"></ToolbarItem>
+        <ToolbarItem Text="צפייה בפעילויות" Order="Secondary" Priority="3" Command="{Binding ActivitiesPageCommand}"></ToolbarItem>
+        <ToolbarItem Text="צפייה בהסעות" Order="Secondary" Priority="4" Command="{Binding CarpoolsPageCommand}"></ToolbarItem>
+        <ToolbarItem Text="התנתק" Order="Primary" Priority="1" IconImageSource="logoutIcon.png" Command="{Binding LogOutCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout Style="{StaticResource Stack}">
+            <ScrollView>
+                <StackLayout>
+                    <!-- Photo -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150" />
+                        </Grid.RowDefinitions>
+                        <Frame Grid.Column="1" Grid.Row="0" Style="{StaticResource ImageFrame}">
+                            <Image x:Name="theImage" Source="{Binding UserImgSrc}" Style="{StaticResource Image}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Frame Style="{StaticResource logInSignUp}">
+                        <StackLayout>
+                            <!-- Email-->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Text="אימייל" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="{Binding Email}" Grid.Column="1" Style="{StaticResource entry}"/>
+                            </Grid>
+
+                            <!-- User Name-->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Text="שם משתמש" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="{Binding UserName}" Grid.Column="1" Style="{StaticResource entry}"/>
+                            </Grid>
+
+                            <!-- First Name -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Text="שם פרטי" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="{Binding Name}" Grid.Column="1" Style="{StaticResource entry}"/>
+                            </Grid>
+
+                            <!-- Last Name -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Text="שם משפחה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="{Binding LastName}" Grid.Column="1" Style="{StaticResource entry}"/>
+                            </Grid>
+
+                            <!-- Birth Date -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Text="תאריך לידה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="{Binding BirthDate}" Grid.Column="1" Style="{StaticResource entry}"/>
+                            </Grid>
+
+                            <!-- Phone Number -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Text="טלפון" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="{Binding PhoneNum}" Grid.Column="1" Style="{StaticResource entry}"/>
+                            </Grid>
+
+                            <!-- City -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Text="עיר" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="{Binding City}" Grid.Column="1" Style="{StaticResource entry}"/>
+                            </Grid>
+
+                            <!-- Neighborhood -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Text="שכונה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="{Binding Neighborhood}" Grid.Column="1" Style="{StaticResource entry}"/>
+                            </Grid>
+
+                            <!-- Street -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Text="רחוב" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="{Binding Street}" Grid.Column="1" Style="{StaticResource entry}"/>
+                            </Grid>
+
+                            <!-- HouseNumber -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Text="מספר בית" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                <Label Text="{Binding HouseNum}" Grid.Column="1" Style="{StaticResource entry}"/>
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                    <Button Text="עדכון פרטים" Style="{StaticResource Button}" Command="{Binding UpdateCommand}"></Button>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

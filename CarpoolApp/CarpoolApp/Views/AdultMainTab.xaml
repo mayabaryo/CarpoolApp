@@ -23,11 +23,11 @@
             </x:Arguments>
         </Size>
     </windows:TabbedPage.HeaderIconsSize>
-    <local:AdultPage>
-        <local:AdultPage.IconImageSource>
+    <local:AdultProfile>
+        <local:AdultProfile.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.HouseUser}"/>
-        </local:AdultPage.IconImageSource>
-    </local:AdultPage>
+        </local:AdultProfile.IconImageSource>
+    </local:AdultProfile>
     <local:AddKid Title="Add Kid">
         <local:AddKid.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.HouseChimneyUser}"/>
