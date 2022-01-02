@@ -9,8 +9,8 @@
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom"
             Title="Tabs Example"
-            SelectedTabColor="Red"
-            UnselectedTabColor="Black"
+            SelectedTabColor="#9fa0ff"
+            UnselectedTabColor="#e0c3fc"
             >
 
     <!--Pages can be added as references or inline-->
@@ -23,14 +23,14 @@
             </x:Arguments>
         </Size>
     </windows:TabbedPage.HeaderIconsSize>
-    <local:AdultProfile>
+    <local:AdultProfile Title="הפרופיל שלי">
         <local:AdultProfile.IconImageSource>
-            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.HouseUser}"/>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.User}"/>
         </local:AdultProfile.IconImageSource>
     </local:AdultProfile>
-    <local:AddKid Title="Add Kid">
+    <local:AddKid Title="הוספת ילד">
         <local:AddKid.IconImageSource>
-            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.HouseChimneyUser}"/>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.UserPlus}"/>
         </local:AddKid.IconImageSource>
     </local:AddKid>
 
