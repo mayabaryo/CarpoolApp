@@ -24,6 +24,7 @@ namespace CarpoolApp.ViewModels
         public const string BAD_PHONE = "טלפון לא תקין";
         public const string BAD_DATE = "עלייך להיות מעל גיל 18";
         public const string BAD_HOUSE_NUM = "מספר בית לא תקין";
+        public const string BAD_CITY = "עיר אינה תקינה";
     }
 
     public class SignUpViewModel : INotifyPropertyChanged
@@ -498,7 +499,8 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateCity()
         {
-            this.ShowCityError = string.IsNullOrEmpty(City);
+            string city = this.allCities.Where(c => c == this.City).FirstOrDefault();
+            this.ShowCityError = string.IsNullOrEmpty(city);
         }
         #endregion
 
@@ -800,7 +802,7 @@ namespace CarpoolApp.ViewModels
         #region Constructor
         public SignUpViewModel()
         {
-            this.City = String.Empty;
+            //this.City = String.Empty;
             InitCities();
             //InitStreets(); 
 
@@ -818,7 +820,7 @@ namespace CarpoolApp.ViewModels
             this.LastNameError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.BirthDateError = ERROR_MESSAGES.BAD_DATE;
             this.PhoneNumError = ERROR_MESSAGES.REQUIRED_FIELD;
-            this.CityError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.CityError = ERROR_MESSAGES.BAD_CITY;
             this.NeighborhoodError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
