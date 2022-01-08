@@ -24,7 +24,8 @@ namespace CarpoolApp.ViewModels
         public const string BAD_PHONE = "טלפון לא תקין";
         public const string BAD_DATE = "עלייך להיות מעל גיל 18";
         public const string BAD_HOUSE_NUM = "מספר בית לא תקין";
-        public const string BAD_CITY = "עיר אינה תקינה";
+        public const string BAD_CITY = "עיר לא תקינה";
+        public const string BAD_STREET = "רחוב לא תקין";
     }
 
     public class SignUpViewModel : INotifyPropertyChanged
@@ -447,7 +448,6 @@ namespace CarpoolApp.ViewModels
 
         //This property holds the selected city on the collection of cities
         private string selectedCityItem;
-
         public string SelectedCityItem
         {
             get => selectedCityItem;
@@ -460,7 +460,6 @@ namespace CarpoolApp.ViewModels
 
         //ShowCities
         private bool showCities;
-
         public bool ShowCities
         {
             get => showCities;
@@ -499,24 +498,34 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateCity()
         {
-            string city = this.allCities.Where(c => c == this.City).FirstOrDefault();
-            this.ShowCityError = string.IsNullOrEmpty(city);
-        }
-        #endregion
-
-        #region CitySearch
-        private string citySearch;
-        public string CitySearch
-        {
-            get => citySearch;
-            set
+            this.ShowCityError = string.IsNullOrEmpty(this.City);
+            if (!this.ShowCityError)
             {
-                citySearch = value;
-
-                OnPropertyChanged("CitySearch");
+                string city = this.allCities.Where(c => c == this.City).FirstOrDefault();
+                if (string.IsNullOrEmpty(city))
+                {
+                    this.ShowCityError = true;
+                    this.CityError = ERROR_MESSAGES.BAD_CITY;
+                }
             }
+            else
+                this.CityError = ERROR_MESSAGES.REQUIRED_FIELD;
         }
         #endregion
+
+        //#region CitySearch
+        //private string citySearch;
+        //public string CitySearch
+        //{
+        //    get => citySearch;
+        //    set
+        //    {
+        //        citySearch = value;
+
+        //        OnPropertyChanged("CitySearch");
+        //    }
+        //}
+        //#endregion
 
         #region Neighborhood
         private bool showNeighborhoodError;
@@ -628,7 +637,18 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateStreet()
         {
-            this.ShowStreetError = string.IsNullOrEmpty(Street);
+            this.ShowStreetError = string.IsNullOrEmpty(this.Street);
+            //if (!this.ShowStreetError)
+            //{
+            //    string street = this.allStreets.Where(s => s == this.Street).FirstOrDefault();
+            //    if (string.IsNullOrEmpty(street))
+            //    {
+            //        this.ShowStreetError = true;
+            //        this.StreetError = ERROR_MESSAGES.BAD_STREET;
+            //    }
+            //}
+            //else
+            //    this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
         }
         #endregion
 
@@ -786,17 +806,17 @@ namespace CarpoolApp.ViewModels
         #endregion
 
         #region InitStreets
-        //private async void InitStreets()
-        //{
-        //    AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
-        //    this.allStreets = await proxy.GetStreetsAsync();
+        private async void InitStreets()
+        {
+            AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
+            this.allStreets = await proxy.GetStreetsAsync();
 
-        //    //Copy list to the filtered list
-        //    this.FilteredStreets = new ObservableCollection<string>(this.allStreets);
-        //    this.FilteredStreets.Clear();
-        //    Street = String.Empty;
-        //    //IsRefreshing = false;
-        //}
+            //Copy list to the filtered list
+            this.FilteredStreets = new ObservableCollection<string>(this.allStreets);
+            this.FilteredStreets.Clear();
+            Street = String.Empty;
+            //IsRefreshing = false;
+        }
         #endregion
 
         #region Constructor
@@ -804,7 +824,7 @@ namespace CarpoolApp.ViewModels
         {
             //this.City = String.Empty;
             InitCities();
-            //InitStreets(); 
+            //InitStreets();
 
             //set the path url to the contact photo
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
@@ -822,7 +842,7 @@ namespace CarpoolApp.ViewModels
             this.PhoneNumError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.CityError = ERROR_MESSAGES.BAD_CITY;
             this.NeighborhoodError = ERROR_MESSAGES.REQUIRED_FIELD;
-            this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.StreetError = ERROR_MESSAGES.BAD_STREET;
             this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
 
             this.ShowEmailError = false;
@@ -889,7 +909,8 @@ namespace CarpoolApp.ViewModels
                     City = this.City,
                     Neighborhood = this.Neighborhood,
                     Street = this.Street,
-                    HouseNum = int.Parse(this.StringHouseNum)
+                    HouseNum = int.Parse(this.StringHouseNum),
+                    Adult = new Adult()
                 };
                 Adult theAdult = new Adult()
                 {
@@ -934,7 +955,7 @@ namespace CarpoolApp.ViewModels
                         App theApp = (App)App.Current;
                         theApp.CurrentUser = newAdult.IdNavigation;
 
-                        Page p = new AdultPage();
+                        Page p = new AdultMainTab();
                         p.Title = $"שלום {theApp.CurrentUser.UserName}";
                         theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
                         

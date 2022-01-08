@@ -723,7 +723,8 @@ namespace CarpoolApp.ViewModels
                     City = this.City,
                     Neighborhood = this.Neighborhood,
                     Street = this.Street,
-                    HouseNum = int.Parse(this.StringHouseNum)
+                    HouseNum = int.Parse(this.StringHouseNum),
+                    Adult = new Adult()
                 };
 
                 Adult theAdult = new Adult()

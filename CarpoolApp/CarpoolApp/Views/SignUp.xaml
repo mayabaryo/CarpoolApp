@@ -156,7 +156,7 @@
                                 <Label Text="עיר" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                 <Label Text="{Binding CityError}" IsVisible="{Binding ShowCityError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
-                            <Entry Placeholder="הכנס עיר" Text="{Binding City}" Style="{StaticResource entry}"/>
+                            <SearchBar Placeholder="חפש עיר" Text="{Binding City}" Style="{StaticResource entry}"/>
                             <CollectionView EmptyView="לא נמצאו ערים"  x:Name="cities" ItemsSource="{Binding FilteredCities}" SelectedItem="{Binding SelectedCityItem}" SelectionMode="Single"
                                    IsVisible="{Binding ShowCities}" SelectionChangedCommand="{Binding Source={x:Reference cities}, Path=BindingContext.SelectedCity}" SelectionChangedCommandParameter="{Binding Source={x:Reference cities}, Path=SelectedItem}"></CollectionView>
                             <!-- <Entry Placeholder="עיר" MaxLength="30" Text="{Binding City}" Style="{StaticResource entry}"/> -->                            
@@ -188,6 +188,11 @@
                                 <Label Text="{Binding StreetError}" IsVisible="{Binding ShowStreetError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
                             <Entry Placeholder="רחוב" MaxLength="30" Text="{Binding Street}" Style="{StaticResource entry}"/>
+                            <!--
+                            <Entry Placeholder="הכנס רחוב" Text="{Binding Street}" Style="{StaticResource entry}"/>
+                            <CollectionView EmptyView="לא נמצאו רחובות"  x:Name="streets" ItemsSource="{Binding FilteredStreets}" SelectedItem="{Binding SelectedStreetItem}" SelectionMode="Single"
+                                   IsVisible="{Binding ShowStreets}" SelectionChangedCommand="{Binding Source={x:Reference streets}, Path=BindingContext.SelectedStreet}" SelectionChangedCommandParameter="{Binding Source={x:Reference streets}, Path=SelectedItem}"></CollectionView>
+                            -->
 
                             <!-- HouseNumber -->
                             <Grid>
@@ -202,7 +207,6 @@
                                 <Label Text="{Binding StringHouseNumError}" IsVisible="{Binding ShowStringHouseNumError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                             </Grid>
                             <Entry Placeholder="מספר בית" MaxLength="30" Text="{Binding StringHouseNum}" Style="{StaticResource entry}"/>
-
                         </StackLayout>
                     </Frame>
                     <Button Text="הירשם" Style="{StaticResource Button}" Command="{Binding SaveDataCommand}"></Button>

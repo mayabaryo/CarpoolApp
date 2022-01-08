@@ -16,7 +16,7 @@ using System.IO;
 
 namespace CarpoolApp.ViewModels
 {
-    class AdultPageViewModel : INotifyPropertyChanged
+    class UpdateUserViewModel : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -358,11 +358,17 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private const int MIN_AGE = 18;
+        private const int ADULT_MIN_AGE = 18;
+        private const int KID_MIN_AGE = 5;
         private void ValidateBirthDate()
         {
             TimeSpan ts = DateTime.Now - this.BirthDate;
-            this.ShowBirthDateError = ts.TotalDays < (MIN_AGE * 365);
+            App theApp = (App)App.Current;
+            User currentUser = theApp.CurrentUser;
+            if (currentUser.Kid == null)
+                this.ShowBirthDateError = ts.TotalDays < (ADULT_MIN_AGE * 365);
+            else
+                this.ShowBirthDateError = ts.TotalDays < (KID_MIN_AGE * 365);
         }
         #endregion
 
@@ -669,7 +675,7 @@ namespace CarpoolApp.ViewModels
         public ICommand LogOutCommand { protected set; get; }
 
         #region Constructor
-        public AdultPageViewModel()
+        public UpdateUserViewModel()
         {
             App theApp = (App)App.Current;
             User currentUser = theApp.CurrentUser;
@@ -692,7 +698,7 @@ namespace CarpoolApp.ViewModels
             //Create a source with cache busting!
             Random r = new Random();
             this.UserImgSrc = currentUser.PhotoURL + $"?{r.Next()}";
-            
+
             this.EmailError = ERROR_MESSAGES.BAD_EMAIL;
             this.UserNameError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.PasswordError = ERROR_MESSAGES.SHORT_PASS;
@@ -741,7 +747,7 @@ namespace CarpoolApp.ViewModels
             ValidateStringHouseNum();
 
             //check if any validation failed
-            if (ShowPasswordError || ShowNameError|| ShowLastNameError
+            if (ShowPasswordError || ShowNameError || ShowLastNameError
                 || ShowBirthDateError || ShowPhoneNumError || ShowCityError
                 || ShowNeighborhoodError || ShowStreetError || ShowStringHouseNumError)
                 return false;
@@ -913,7 +919,7 @@ namespace CarpoolApp.ViewModels
         public async void OnHome()
         {
             App theApp = (App)App.Current;
-            AdultPage page = new AdultPage();
+            Page page = new AdultMainTab();
             page.Title = $"שלום {theApp.CurrentUser.UserName}";
 
             await App.Current.MainPage.Navigation.PopToRootAsync();

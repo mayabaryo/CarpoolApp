@@ -210,7 +210,7 @@ namespace CarpoolApp.Services
             }
         }
 
-        public async Task<Kid> KidSignUpAsync(KidsOfAdult kidsOfAdult)
+        public async Task<Kid> AddKidAsync(Kid kid)
         {
             try
             {
@@ -220,10 +220,10 @@ namespace CarpoolApp.Services
                     Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
                     PropertyNameCaseInsensitive = true
                 };
-                string jsonObject = JsonSerializer.Serialize<KidsOfAdult>(kidsOfAdult, options);
+                string jsonObject = JsonSerializer.Serialize<Kid>(kid, options);
                 StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/KidSignUp", content);
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddKid", content);
                 if (response.IsSuccessStatusCode)
                 {
                     jsonObject = await response.Content.ReadAsStringAsync();

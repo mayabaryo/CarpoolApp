@@ -30,12 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\TabbedPageEx.xaml.cs">
-      <DependentUpon>TabbedPageEx.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Update="Views\AddAdult.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -43,9 +37,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AdultMainTab.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\AdultPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AdultProfile.xaml">
@@ -66,10 +57,10 @@
     <EmbeddedResource Update="Views\SignUp.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TabbedPageEx.xaml">
+    <EmbeddedResource Update="Views\TabbedPageExample.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TabbedPageExample.xaml">
+    <EmbeddedResource Update="Views\UpdateUser.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

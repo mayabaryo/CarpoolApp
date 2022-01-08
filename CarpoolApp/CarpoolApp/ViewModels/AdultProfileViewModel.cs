@@ -211,12 +211,11 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-
         #region UpdateCommand
         public ICommand UpdateCommand => new Command(OnUpdate);
         public async void OnUpdate()
         {
-            AdultPage page = new AdultPage();
+            Page page = new UpdateUser();
             page.Title = "עדכון פרטים";
             await App.Current.MainPage.Navigation.PushAsync(page);
         }
@@ -227,7 +226,7 @@ namespace CarpoolApp.ViewModels
         public async void OnHome()
         {
             App theApp = (App)App.Current;
-            AdultPage page = new AdultPage();
+            Page page = new UpdateUser();
             page.Title = $"שלום {theApp.CurrentUser.UserName}";
 
             await App.Current.MainPage.Navigation.PopToRootAsync();

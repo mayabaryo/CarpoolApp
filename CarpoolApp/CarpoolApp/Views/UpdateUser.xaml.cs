@@ -11,11 +11,11 @@ using CarpoolApp.ViewModels;
 namespace CarpoolApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AdultPage : ContentPage
+    public partial class UpdateUser : ContentPage
     {
-        public AdultPage()
+        public UpdateUser()
         {
-            AdultPageViewModel vm = new AdultPageViewModel();
+            UpdateUserViewModel vm = new UpdateUserViewModel();
             this.BindingContext = vm;
             vm.SetImageSourceEvent += OnSetImageSource;
             InitializeComponent();

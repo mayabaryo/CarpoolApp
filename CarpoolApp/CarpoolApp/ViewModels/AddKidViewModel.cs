@@ -813,7 +813,8 @@ namespace CarpoolApp.ViewModels
                     City = this.City,
                     Neighborhood = this.Neighborhood,
                     Street = this.Street,
-                    HouseNum = int.Parse(this.StringHouseNum)
+                    HouseNum = int.Parse(this.StringHouseNum),
+                    Kid = new Kid()
                 };
 
                 Kid theKid = new Kid()
@@ -830,18 +831,7 @@ namespace CarpoolApp.ViewModels
 
                 if (!isEmailExist && !isUserNameExist)
                 {
-                    App theApp = (App)App.Current;
-                    User currentUser = theApp.CurrentUser;
-                    Adult adult = new Adult()
-                    {
-                        IdNavigation = currentUser
-                    };
-                    KidsOfAdult kidsOfAdult = new KidsOfAdult()
-                    {
-                        Adult = adult,
-                        Kid = theKid
-                    };
-                    Kid newKid = await proxy.KidSignUpAsync(kidsOfAdult);
+                    Kid newKid = await proxy.AddKidAsync(theKid);
                     if (newKid == null)
                     {
                         await App.Current.MainPage.Navigation.PopModalAsync();
@@ -861,7 +851,13 @@ namespace CarpoolApp.ViewModels
                         ServerStatus = "שומר נתונים...";
 
                         await App.Current.MainPage.Navigation.PopModalAsync();
-                        await App.Current.MainPage.Navigation.PopToRootAsync();
+                        //await App.Current.MainPage.Navigation.PopToRootAsync();
+
+                        App theApp = (App)App.Current;
+                        Page page = new AdultMainTab();
+                        page.Title = $"שלום {theApp.CurrentUser.UserName}";
+                        App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+                        
                         await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
                     }
                 }

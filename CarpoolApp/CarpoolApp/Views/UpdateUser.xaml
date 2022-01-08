@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CarpoolApp.Views.AdultPage"
+             x:Class="CarpoolApp.Views.UpdateUser"
              FlowDirection="RightToLeft">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="בית" Order="Primary" Priority="0" IconImageSource="homeIcon.png" Command="{Binding HomePageCommand}"></ToolbarItem>
@@ -13,7 +13,7 @@
         <ToolbarItem Text="צפייה בהסעות" Order="Secondary" Priority="5" Command="{Binding CarpoolsPageCommand}"></ToolbarItem>
         <ToolbarItem Text="התנתק" Order="Primary" Priority="1" IconImageSource="logoutIcon.png" Command="{Binding LogOutCommand}"></ToolbarItem>
     </ContentPage.ToolbarItems>
-    
+
     <ContentPage.Content>
         <StackLayout Style="{StaticResource Stack}">
             <RefreshView x:Name="refreshView" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
