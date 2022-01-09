@@ -617,7 +617,7 @@ namespace CarpoolApp.ViewModels
             set
             {
                 street = value;
-                OnStreetChanged(value);
+                //OnStreetChanged(value);
                 ValidateStreet();
                 OnPropertyChanged("Street");
             }
@@ -808,7 +808,7 @@ namespace CarpoolApp.ViewModels
         #region InitStreets
         private async void InitStreets()
         {
-            AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
+            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             this.allStreets = await proxy.GetStreetsAsync();
 
             //Copy list to the filtered list
@@ -823,6 +823,8 @@ namespace CarpoolApp.ViewModels
         public SignUpViewModel()
         {
             //this.City = String.Empty;
+            this.allStreets = new List<string>();
+            this.FilteredStreets = new ObservableCollection<string>();
             InitCities();
             //InitStreets();
 

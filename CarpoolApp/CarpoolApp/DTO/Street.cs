@@ -4,12 +4,12 @@ using System.Text;
 
 namespace CarpoolApp.DTO
 {
-    class Street
+    public class Street
     {
-        public string id { get; set; }
-        public string city_symbol { get; set; }
+        public int id { get; set; }
+        public int city_symbol { get; set; }
         public string city_name { get; set; }
-        public string street_symbol { get; set; }
+        public int street_symbol { get; set; }
         public string street_name { get; set; }
     }
 }

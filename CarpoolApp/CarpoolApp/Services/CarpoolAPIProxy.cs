@@ -11,6 +11,7 @@ using System.Text.Encodings.Web;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using System.IO;
+using CarpoolApp.DTO;
 
 namespace CarpoolApp.Services
 {
@@ -18,22 +19,28 @@ namespace CarpoolApp.Services
     {
         private const string CLOUD_URL = "TBD"; //API url when going on the cloud
         private const string CLOUD_PHOTOS_URL = "TBD";
+        private const string CLOUD_DATA_URL = "TBD";
         private const string DEV_ANDROID_EMULATOR_URL = "http://10.0.2.2:13939/CarpoolAPI"; //API url when using emulator on android
         private const string DEV_ANDROID_PHYSICAL_URL = "http://10.100.102.22:13939/CarpoolAPI"; //API url when using physucal device on android
         private const string DEV_WINDOWS_URL = "http://localhost:13939/CarpoolAPI"; //API url when using windoes on development
         private const string DEV_ANDROID_EMULATOR_PHOTOS_URL = "http://10.0.2.2:13939/Images/"; //API url when using emulator on android
         private const string DEV_ANDROID_PHYSICAL_PHOTOS_URL = "http://192.168.1.14:13939/Images/"; //API url when using physucal device on android
         private const string DEV_WINDOWS_PHOTOS_URL = "https://localhost:44319/Images/"; //API url when using windoes on development
+        private const string DEV_ANDROID_EMULATOR_DATA_URL = "http://10.0.2.2:13939/data/"; //API url when using emulator on android
+        private const string DEV_ANDROID_PHYSICAL_DATA_URL = "http://192.168.1.14:13939/data/"; //API url when using physucal device on android
+        private const string DEV_WINDOWS_DATA_URL = "https://localhost:44319/data/"; //API url when using windoes on development
 
         private HttpClient client;
         private string baseUri;
         private string basePhotosUri;
+        private string baseDataUri;
         private static CarpoolAPIProxy proxy = null;
 
         public static CarpoolAPIProxy CreateProxy()
         {
             string baseUri;
             string basePhotosUri;
+            string baseDataUri;
             if (App.IsDevEnv)
             {
                 if (Device.RuntimePlatform == Device.Android)
@@ -42,31 +49,35 @@ namespace CarpoolApp.Services
                     {
                         baseUri = DEV_ANDROID_EMULATOR_URL;
                         basePhotosUri = DEV_ANDROID_EMULATOR_PHOTOS_URL;
+                        baseDataUri = DEV_ANDROID_EMULATOR_DATA_URL;
                     }
                     else
                     {
                         baseUri = DEV_ANDROID_PHYSICAL_URL;
                         basePhotosUri = DEV_ANDROID_PHYSICAL_PHOTOS_URL;
+                        baseDataUri = DEV_ANDROID_PHYSICAL_DATA_URL;
                     }
                 }
                 else
                 {
                     baseUri = DEV_WINDOWS_URL;
                     basePhotosUri = DEV_WINDOWS_PHOTOS_URL;
+                    baseDataUri = DEV_WINDOWS_DATA_URL;
                 }
             }
             else
             {
                 baseUri = CLOUD_URL;
                 basePhotosUri = CLOUD_PHOTOS_URL;
+                baseDataUri = CLOUD_DATA_URL;
             }
 
             if (proxy == null)
-                proxy = new CarpoolAPIProxy(baseUri, basePhotosUri);
+                proxy = new CarpoolAPIProxy(baseUri, basePhotosUri, baseDataUri);
             return proxy;
         }
 
-        private CarpoolAPIProxy(string baseUri, string basePhotosUri)
+        private CarpoolAPIProxy(string baseUri, string basePhotosUri, string baseDataUri)
         {
             //Set client handler to support cookies!!
             HttpClientHandler handler = new HttpClientHandler();
@@ -76,6 +87,7 @@ namespace CarpoolApp.Services
             this.client = new HttpClient(handler, true);
             this.baseUri = baseUri;
             this.basePhotosUri = basePhotosUri;
+            this.baseDataUri = baseDataUri;
         }
 
         public string GetBasePhotoUri() { return this.basePhotosUri; }
@@ -294,6 +306,89 @@ namespace CarpoolApp.Services
             {
                 Console.WriteLine(e.Message);
                 return false;
+            }
+        }
+
+        //************** Streets and Cities JSOn file **********************************
+        public List<string> GetCitiesNameList(List<City> cities)
+        {
+            List<string> citiesName = new List<string>();
+
+            foreach (City city in cities)
+            {
+                citiesName.Add(city.name);
+            }
+            citiesName.Remove(citiesName[0]);
+
+            return citiesName;
+        }
+        public async Task<List<string>> GetCitiesAsync()
+        {
+            ///royts/israel-cities/master/israel-cities.json
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseDataUri}/cities.json");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<City> cities = JsonSerializer.Deserialize<List<City>>(content, options);
+
+                    return GetCitiesNameList(cities);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public List<string> GetStreetsNameList(List<Street> streets/*, string city*/)
+        {
+            List<string> streetsName = new List<string>();
+
+            foreach (Street street in streets)
+            {
+                streetsName.Add(street.street_name);
+            }
+
+            return streetsName;
+        }
+        public async Task<List<string>> GetStreetsAsync(/*string city*/)
+        {
+            //?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseDataUri}/streets.json?666");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    
+                    List<Street> streets = JsonSerializer.Deserialize<List<Street>>(content, options);
+                    return GetStreetsNameList(streets/*, city*/);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
             }
         }
     }

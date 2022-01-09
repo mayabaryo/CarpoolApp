@@ -4,6 +4,8 @@ using Xamarin.Forms.Xaml;
 using CarpoolApp.Models;
 using CarpoolApp.Views;
 using System.Collections.Generic;
+using CarpoolApp.Services;
+using CarpoolApp.DTO;
 
 [assembly: ExportFont("AmaticSC-Regular.ttf", Alias = "Amatic")]
 [assembly: ExportFont("epilogue.extralight.ttf", Alias = "Epilogue-ExtraLight")]
@@ -29,9 +31,12 @@ namespace CarpoolApp
         //public Adult CurrentAdult { get; set; }
         //public Kid CurrentKid { get; set; }
 
+        public List<Street> Streets { get; set; }
+        public List<Street> Cities { get; set; }
 
         public App()
         {
+            Streets = new List<Street>();
             InitializeComponent();
             CurrentUser = null;
             //CurrentAdult = null;
@@ -47,8 +52,11 @@ namespace CarpoolApp
             //MainPage = new MainPage();
         }
 
-        protected override void OnStart()
+        protected async override void OnStart()
         {
+            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+            List<string> Streets = await proxy.GetStreetsAsync();
+            List<string> Cities = await proxy.GetCitiesAsync();
         }
 
         protected override void OnSleep()
