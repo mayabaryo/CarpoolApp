@@ -9,9 +9,11 @@
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom"
             Title="Tabs Example"
-            SelectedTabColor="#9fa0ff"
-            UnselectedTabColor="#e0c3fc"
+            SelectedTabColor="#8e94f2"
+            UnselectedTabColor="#bbadff"
             >
+    <!--"#9fa0ff"-->
+    <!--"#e0c3fc"-->
 
     <!--Pages can be added as references or inline-->
 

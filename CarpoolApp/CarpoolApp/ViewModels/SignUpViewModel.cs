@@ -38,7 +38,6 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-
         private List<string> allCities;
         private ObservableCollection<string> filteredCities;
         public ObservableCollection<string> FilteredCities
@@ -80,7 +79,6 @@ namespace CarpoolApp.ViewModels
 
         #region FirstName
         private bool showNameError;
-
         public bool ShowNameError
         {
             get => showNameError;
@@ -92,7 +90,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string name;
-
         public string Name
         {
             get => name;
@@ -105,7 +102,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string nameError;
-
         public string NameError
         {
             get => nameError;
@@ -124,7 +120,6 @@ namespace CarpoolApp.ViewModels
 
         #region LastName
         private bool showLastNameError;
-
         public bool ShowLastNameError
         {
             get => showLastNameError;
@@ -136,7 +131,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string lastName;
-
         public string LastName
         {
             get => lastName;
@@ -149,7 +143,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string lastNameError;
-
         public string LastNameError
         {
             get => lastNameError;
@@ -168,7 +161,6 @@ namespace CarpoolApp.ViewModels
 
         #region Password
         private bool showPasswordError;
-
         public bool ShowPasswordError
         {
             get => showPasswordError;
@@ -180,7 +172,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string password;
-
         public string Password
         {
             get => password;
@@ -193,7 +184,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string passwordError;
-
         public string PasswordError
         {
             get => passwordError;
@@ -222,7 +212,6 @@ namespace CarpoolApp.ViewModels
 
         #region UserName
         private bool showUserNameError;
-
         public bool ShowUserNameError
         {
             get => showUserNameError;
@@ -234,7 +223,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string userName;
-
         public string UserName
         {
             get => userName;
@@ -247,7 +235,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string userNameError;
-
         public string UserNameError
         {
             get => userNameError;
@@ -266,7 +253,6 @@ namespace CarpoolApp.ViewModels
 
         #region Email
         private bool showEmailError;
-
         public bool ShowEmailError
         {
             get => showEmailError;
@@ -278,7 +264,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string email;
-
         public string Email
         {
             get => email;
@@ -291,7 +276,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string emailError;
-
         public string EmailError
         {
             get => emailError;
@@ -320,7 +304,6 @@ namespace CarpoolApp.ViewModels
 
         #region PhoneNum
         private bool showPhoneNumError;
-
         public bool ShowPhoneNumError
         {
             get => showPhoneNumError;
@@ -332,7 +315,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string phoneNum;
-
         public string PhoneNum
         {
             get => phoneNum;
@@ -345,7 +327,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string phoneNumError;
-
         public string PhoneNumError
         {
             get => phoneNumError;
@@ -374,7 +355,6 @@ namespace CarpoolApp.ViewModels
 
         #region BirthDate
         private bool showBirthDateError;
-
         public bool ShowBirthDateError
         {
             get => showBirthDateError;
@@ -386,7 +366,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private DateTime birthDate;
-
         public DateTime BirthDate
         {
             get => birthDate;
@@ -399,7 +378,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string birthDateError;
-
         public string BirthDateError
         {
             get => birthDateError;
@@ -420,7 +398,6 @@ namespace CarpoolApp.ViewModels
 
         #region UserImgSrc
         private string userImgSrc;
-
         public string UserImgSrc
         {
             get => userImgSrc;
@@ -435,7 +412,6 @@ namespace CarpoolApp.ViewModels
 
         #region City
         private bool showCityError;
-
         public bool ShowCityError
         {
             get => showCityError;
@@ -471,7 +447,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string city;
-
         public string City
         {
             get => city;
@@ -485,7 +460,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string cityError;
-
         public string CityError
         {
             get => cityError;
@@ -573,7 +547,6 @@ namespace CarpoolApp.ViewModels
 
         #region Street
         private bool showStreetError;
-
         public bool ShowStreetError
         {
             get => showStreetError;
@@ -586,7 +559,6 @@ namespace CarpoolApp.ViewModels
 
         //This property holds the selected street on the collection of streets
         private string selectedStreetItem;
-
         public string SelectedStreetItem
         {
             get => selectedStreetItem;
@@ -599,7 +571,6 @@ namespace CarpoolApp.ViewModels
 
         //ShowStreets
         private bool showStreets;
-
         public bool ShowStreets
         {
             get => showStreets;
@@ -617,14 +588,13 @@ namespace CarpoolApp.ViewModels
             set
             {
                 street = value;
-                //OnStreetChanged(value);
+                OnStreetChanged(value);
                 ValidateStreet();
                 OnPropertyChanged("Street");
             }
         }
 
         private string streetError;
-
         public string StreetError
         {
             get => streetError;
@@ -638,23 +608,22 @@ namespace CarpoolApp.ViewModels
         private void ValidateStreet()
         {
             this.ShowStreetError = string.IsNullOrEmpty(this.Street);
-            //if (!this.ShowStreetError)
-            //{
-            //    string street = this.allStreets.Where(s => s == this.Street).FirstOrDefault();
-            //    if (string.IsNullOrEmpty(street))
-            //    {
-            //        this.ShowStreetError = true;
-            //        this.StreetError = ERROR_MESSAGES.BAD_STREET;
-            //    }
-            //}
-            //else
-            //    this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
+            if (!this.ShowStreetError)
+            {
+                string street = this.allStreets.Where(s => s == this.Street).FirstOrDefault();
+                if (string.IsNullOrEmpty(street))
+                {
+                    this.ShowStreetError = true;
+                    this.StreetError = ERROR_MESSAGES.BAD_STREET;
+                }
+            }
+            else
+                this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
         }
         #endregion
 
         #region HouseNum
         private bool showHouseNumError;
-
         public bool ShowHouseNumError
         {
             get => showHouseNumError;
@@ -666,7 +635,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private int houseNum;
-
         public int HouseNum
         {
             get => houseNum;
@@ -679,7 +647,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string houseNumError;
-
         public string HouseNumError
         {
             get => houseNumError;
@@ -689,7 +656,6 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("HouseNumError");
             }
         }
-
         
         private void ValidateHouseNum()
         {
@@ -711,7 +677,6 @@ namespace CarpoolApp.ViewModels
 
         #region StringHouseNum
         private bool showStringHouseNumError;
-
         public bool ShowStringHouseNumError
         {
             get => showStringHouseNumError;
@@ -723,7 +688,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string stringHouseNum;
-
         public string StringHouseNum
         {
             get => stringHouseNum;
@@ -736,7 +700,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string stringHouseNumError;
-
         public string StringHouseNumError
         {
             get => stringHouseNumError;
@@ -746,7 +709,6 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("StringHouseNumError");
             }
         }
-
 
         private void ValidateStringHouseNum()
         {
@@ -765,19 +727,18 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region CityList
-        private List<string> cityList;
-
-        public List<string> CityList
-        {
-            get => cityList;
-            set
-            {
-                cityList = value;
-                OnPropertyChanged("CityList");
-            }
-        }
-        #endregion
+        //#region CityList
+        //private List<string> cityList;
+        //public List<string> CityList
+        //{
+        //    get => cityList;
+        //    set
+        //    {
+        //        cityList = value;
+        //        OnPropertyChanged("CityList");
+        //    }
+        //}
+        //#endregion
 
         #region ServerStatus
         private string serverStatus;
@@ -792,40 +753,45 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region InitCities
-        private async void InitCities()
-        {
-            AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
-            this.allCities = await proxy.GetCitiesAsync();
+        //#region InitCities
+        //private async void InitCities()
+        //{
+        //    AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
+        //    this.allCities = await proxy.GetCitiesAsync();
 
-            //Copy list to the filtered list
-            this.FilteredCities = new ObservableCollection<string>(this.allCities);
-            this.FilteredCities.Clear();
-            City = String.Empty;
-        }
-        #endregion
+        //    //Copy list to the filtered list
+        //    this.FilteredCities = new ObservableCollection<string>(this.allCities);
+        //    this.FilteredCities.Clear();
+        //    City = String.Empty;
+        //}
+        //#endregion
 
-        #region InitStreets
-        private async void InitStreets()
-        {
-            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            this.allStreets = await proxy.GetStreetsAsync();
+        //#region InitStreets
+        //private async void InitStreets()
+        //{
+        //    CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+        //    this.allStreets = await proxy.GetStreetsAsync();
 
-            //Copy list to the filtered list
-            this.FilteredStreets = new ObservableCollection<string>(this.allStreets);
-            this.FilteredStreets.Clear();
-            Street = String.Empty;
-            //IsRefreshing = false;
-        }
-        #endregion
+        //    //Copy list to the filtered list
+        //    this.FilteredStreets = new ObservableCollection<string>(this.allStreets);
+        //    this.FilteredStreets.Clear();
+        //    Street = String.Empty;
+        //    //IsRefreshing = false;
+        //}
+        //#endregion
 
         #region Constructor
         public SignUpViewModel()
         {
-            //this.City = String.Empty;
-            this.allStreets = new List<string>();
+            App theApp = (App)App.Current;
+
+            this.allCities = theApp.Cities;
+            this.FilteredCities = new ObservableCollection<string>();
+
+            this.allStreets = theApp.Streets;
             this.FilteredStreets = new ObservableCollection<string>();
-            InitCities();
+
+            //InitCities();
             //InitStreets();
 
             //set the path url to the contact photo
@@ -983,16 +949,20 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region Search
+        #region OnCityChanged
         public void OnCityChanged(string search)
         {
             if (this.City != this.SelectedCityItem)
+            {
                 this.ShowCities = true;
+                this.SelectedCityItem = null;
+            }
             //Filter the list of contacts based on the search term
             if (this.allCities == null)
                 return;
             if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
             {
+                this.ShowCities = false;
                 this.FilteredCities.Clear();
                 //foreach (string city in this.allCities)
                 //{
@@ -1017,17 +987,22 @@ namespace CarpoolApp.ViewModels
 
             //this.FilteredCities = new ObservableCollection<string>(this.FilteredCities);
         }
+        #endregion
 
-
+        #region OnStreetChanged
         public void OnStreetChanged(string search)
         {
             if (this.Street != this.SelectedStreetItem)
+            {
                 this.ShowStreets = true;
+                this.SelectedStreetItem = null;
+            }
             //Filter the list of contacts based on the search term
             if (this.allStreets == null)
                 return;
             if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
             {
+                this.ShowStreets = false;
                 this.FilteredStreets.Clear();
             }
             else
@@ -1036,13 +1011,48 @@ namespace CarpoolApp.ViewModels
                 {
                     string contactString = street;
 
-                    if (!this.FilteredCities.Contains(street) &&
+                    if (!this.FilteredStreets.Contains(street) &&
                         contactString.Contains(search))
-                        this.FilteredCities.Add(street);
-                    else if (this.FilteredCities.Contains(street) &&
+                        this.FilteredStreets.Add(street);
+                    else if (this.FilteredStreets.Contains(street) &&
                         !contactString.Contains(search))
-                        this.FilteredCities.Remove(street);
+                        this.FilteredStreets.Remove(street);
                 }
+            }
+        }
+        #endregion
+
+        #region SelectedCity
+        public ICommand SelectedCity => new Command<string>(OnSelectedCity);
+        public void OnSelectedCity(string city)
+        {
+            if (city != null)
+            {
+                this.ShowCities = false;
+                this.City = city;
+                //this.FilteredCities.Clear();
+
+                //App theApp = (App)App.Current;
+                //AddContactViewModel vm = new AddContactViewModel(uc);
+                //vm.ContactUpdatedEvent += OnContactAdded;
+                //Page p = new Views.AddContact(vm);
+                //await theApp.MainPage.Navigation.PushAsync(p);
+                //if (ClearSelection != null)
+                //    ClearSelection();
+            }
+        }
+
+        //public event Action ClearSelection;
+        #endregion
+
+        #region SelectedStreet
+        public ICommand SelectedStreet => new Command<string>(OnSelectedStreet);
+        public void OnSelectedStreet(string street)
+        {
+            if (street != null)
+            {
+                this.ShowStreets = false;
+                this.Street = street;
             }
         }
         #endregion
@@ -1093,39 +1103,15 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region GetCities
-        public ICommand GetCitiesCommand => new Command(OnGetCities);
-        public async void OnGetCities()
-        {
-            AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
-            this.CityList = await proxy.GetCitiesAsync();
+        //#region GetCities
+        //public ICommand GetCitiesCommand => new Command(OnGetCities);
+        //public async void OnGetCities()
+        //{
+        //    AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
+        //    this.CityList = await proxy.GetCitiesAsync();
 
-            //List<string> cities = new List<string>();
-        }
-        #endregion
-
-        #region SelectedCity
-        public ICommand SelectedCity => new Command<string>(OnSelectedCity);
-        public void OnSelectedCity(string city)
-        {
-            
-            if (city != null)
-            {
-                this.ShowCities = false;
-                this.City = city;
-                //this.FilteredCities.Clear();
-
-                //App theApp = (App)App.Current;
-                //AddContactViewModel vm = new AddContactViewModel(uc);
-                //vm.ContactUpdatedEvent += OnContactAdded;
-                //Page p = new Views.AddContact(vm);
-                //await theApp.MainPage.Navigation.PushAsync(p);
-                //if (ClearSelection != null)
-                //    ClearSelection();
-            }
-        }
-
-        //public event Action ClearSelection;
-        #endregion
+        //    //List<string> cities = new List<string>();
+        //}
+        //#endregion
     }
 }

@@ -67,7 +67,6 @@ namespace CarpoolApp.Services
             return proxy;
         }
 
-
         private AddressAPIProxy(string baseUri, string basePhotosUri)
         {
             //Set client handler to support cookies!!
@@ -80,7 +79,8 @@ namespace CarpoolApp.Services
             this.basePhotosUri = basePhotosUri;
         }
 
-        public List<string> GetCitiesNameList(List<City> cities)
+        #region GetCitiesNameList
+        private List<string> GetCitiesNameList(List<City> cities)
         {
             List<string> citiesName = new List<string>();
 
@@ -92,6 +92,9 @@ namespace CarpoolApp.Services
 
             return citiesName;    
         }
+        #endregion
+
+        #region GetCitiesAsync
         public async Task<List<string>> GetCitiesAsync()
         {
             ///royts/israel-cities/master/israel-cities.json
@@ -121,8 +124,10 @@ namespace CarpoolApp.Services
                 return null;
             }
         }
+        #endregion
 
-        public List<string> GetStreetsNameList(List<Street> streets/*, string city*/)
+        #region GetStreetsNameList
+        private List<string> GetStreetsNameList(List<Street> streets/*, string city*/)
         {
             List<string> streetsName = new List<string>();
 
@@ -133,6 +138,9 @@ namespace CarpoolApp.Services
 
             return streetsName;
         }
+        #endregion
+
+        #region GetStreetsAsync
         public async Task<List<string>> GetStreetsAsync(/*string city*/)
         {
             //?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500
@@ -162,6 +170,7 @@ namespace CarpoolApp.Services
                 return null;
             }
         }
+        #endregion
     }
 }
 

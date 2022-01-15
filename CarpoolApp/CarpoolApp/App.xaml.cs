@@ -30,13 +30,14 @@ namespace CarpoolApp
         public User CurrentUser { get; set; }
         //public Adult CurrentAdult { get; set; }
         //public Kid CurrentKid { get; set; }
-
-        public List<Street> Streets { get; set; }
-        public List<Street> Cities { get; set; }
+        public List<string> Cities { get; set; }
+        public List<string> Streets { get; set; }
 
         public App()
         {
-            Streets = new List<Street>();
+            Cities = new List<string>();
+            Streets = new List<string>();
+
             InitializeComponent();
             CurrentUser = null;
             //CurrentAdult = null;
@@ -55,8 +56,8 @@ namespace CarpoolApp
         protected async override void OnStart()
         {
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            List<string> Streets = await proxy.GetStreetsAsync();
-            List<string> Cities = await proxy.GetCitiesAsync();
+            this.Streets = await proxy.GetStreetsAsync();
+            this.Cities = await proxy.GetCitiesAsync();
         }
 
         protected override void OnSleep()

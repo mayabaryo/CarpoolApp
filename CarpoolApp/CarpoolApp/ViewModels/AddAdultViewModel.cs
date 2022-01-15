@@ -11,6 +11,8 @@ using Xamarin.Essentials;
 using System.Linq;
 using CarpoolApp.Views;
 using System.Text.RegularExpressions;
+using CarpoolApp.DTO;
+using System.Collections.ObjectModel;
 
 namespace CarpoolApp.ViewModels
 {
@@ -24,9 +26,47 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        private List<string> allCities;
+        private ObservableCollection<string> filteredCities;
+        public ObservableCollection<string> FilteredCities
+        {
+            get
+            {
+                return this.filteredCities;
+            }
+            set
+            {
+                if (this.filteredCities != value)
+                {
+
+                    this.filteredCities = value;
+                    OnPropertyChanged("FilteredCities");
+                }
+            }
+        }
+
+        private List<string> allStreets;
+        private ObservableCollection<string> filteredStreets;
+        public ObservableCollection<string> FilteredStreets
+        {
+            get
+            {
+                return this.filteredStreets;
+            }
+            set
+            {
+                if (this.filteredStreets != value)
+                {
+
+                    this.filteredStreets = value;
+                    OnPropertyChanged("FilteredStreets");
+                }
+            }
+        }
+
+
         #region FirstName
         private bool showNameError;
-
         public bool ShowNameError
         {
             get => showNameError;
@@ -38,7 +78,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string name;
-
         public string Name
         {
             get => name;
@@ -51,7 +90,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string nameError;
-
         public string NameError
         {
             get => nameError;
@@ -70,7 +108,6 @@ namespace CarpoolApp.ViewModels
 
         #region LastName
         private bool showLastNameError;
-
         public bool ShowLastNameError
         {
             get => showLastNameError;
@@ -82,7 +119,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string lastName;
-
         public string LastName
         {
             get => lastName;
@@ -95,7 +131,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string lastNameError;
-
         public string LastNameError
         {
             get => lastNameError;
@@ -114,7 +149,6 @@ namespace CarpoolApp.ViewModels
 
         #region Password
         private bool showPasswordError;
-
         public bool ShowPasswordError
         {
             get => showPasswordError;
@@ -126,7 +160,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string password;
-
         public string Password
         {
             get => password;
@@ -139,7 +172,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string passwordError;
-
         public string PasswordError
         {
             get => passwordError;
@@ -168,7 +200,6 @@ namespace CarpoolApp.ViewModels
 
         #region UserName
         private bool showUserNameError;
-
         public bool ShowUserNameError
         {
             get => showUserNameError;
@@ -180,7 +211,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string userName;
-
         public string UserName
         {
             get => userName;
@@ -193,7 +223,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string userNameError;
-
         public string UserNameError
         {
             get => userNameError;
@@ -212,7 +241,6 @@ namespace CarpoolApp.ViewModels
 
         #region Email
         private bool showEmailError;
-
         public bool ShowEmailError
         {
             get => showEmailError;
@@ -224,7 +252,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string email;
-
         public string Email
         {
             get => email;
@@ -237,7 +264,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string emailError;
-
         public string EmailError
         {
             get => emailError;
@@ -266,7 +292,6 @@ namespace CarpoolApp.ViewModels
 
         #region PhoneNum
         private bool showPhoneNumError;
-
         public bool ShowPhoneNumError
         {
             get => showPhoneNumError;
@@ -278,7 +303,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string phoneNum;
-
         public string PhoneNum
         {
             get => phoneNum;
@@ -291,7 +315,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string phoneNumError;
-
         public string PhoneNumError
         {
             get => phoneNumError;
@@ -320,7 +343,6 @@ namespace CarpoolApp.ViewModels
 
         #region BirthDate
         private bool showBirthDateError;
-
         public bool ShowBirthDateError
         {
             get => showBirthDateError;
@@ -332,7 +354,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private DateTime birthDate;
-
         public DateTime BirthDate
         {
             get => birthDate;
@@ -345,7 +366,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string birthDateError;
-
         public string BirthDateError
         {
             get => birthDateError;
@@ -356,7 +376,7 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private const int MIN_AGE = 5;
+        private const int MIN_AGE = 18;
         private void ValidateBirthDate()
         {
             TimeSpan ts = DateTime.Now - this.BirthDate;
@@ -366,7 +386,6 @@ namespace CarpoolApp.ViewModels
 
         #region UserImgSrc
         private string userImgSrc;
-
         public string UserImgSrc
         {
             get => userImgSrc;
@@ -381,7 +400,6 @@ namespace CarpoolApp.ViewModels
 
         #region City
         private bool showCityError;
-
         public bool ShowCityError
         {
             get => showCityError;
@@ -392,21 +410,44 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private string city;
+        //This property holds the selected city on the collection of cities
+        private string selectedCityItem;
+        public string SelectedCityItem
+        {
+            get => selectedCityItem;
+            set
+            {
+                selectedCityItem = value;
+                OnPropertyChanged("SelectedCityItem");
+            }
+        }
 
+        //ShowCities
+        private bool showCities;
+        public bool ShowCities
+        {
+            get => showCities;
+            set
+            {
+                showCities = value;
+                OnPropertyChanged("ShowCities");
+            }
+        }
+
+        private string city;
         public string City
         {
             get => city;
             set
             {
                 city = value;
+                OnCityChanged(value);
                 ValidateCity();
                 OnPropertyChanged("City");
             }
         }
 
         private string cityError;
-
         public string CityError
         {
             get => cityError;
@@ -419,7 +460,18 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateCity()
         {
-            this.ShowCityError = string.IsNullOrEmpty(City);
+            this.ShowCityError = string.IsNullOrEmpty(this.City);
+            if (!this.ShowCityError)
+            {
+                string city = this.allCities.Where(c => c == this.City).FirstOrDefault();
+                if (string.IsNullOrEmpty(city))
+                {
+                    this.ShowCityError = true;
+                    this.CityError = ERROR_MESSAGES.BAD_CITY;
+                }
+            }
+            else
+                this.CityError = ERROR_MESSAGES.REQUIRED_FIELD;
         }
         #endregion
 
@@ -469,7 +521,6 @@ namespace CarpoolApp.ViewModels
 
         #region Street
         private bool showStreetError;
-
         public bool ShowStreetError
         {
             get => showStreetError;
@@ -480,21 +531,44 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private string street;
+        //This property holds the selected street on the collection of streets
+        private string selectedStreetItem;
+        public string SelectedStreetItem
+        {
+            get => selectedStreetItem;
+            set
+            {
+                selectedStreetItem = value;
+                OnPropertyChanged("SelectedStreetItem");
+            }
+        }
 
+        //ShowStreets
+        private bool showStreets;
+        public bool ShowStreets
+        {
+            get => showStreets;
+            set
+            {
+                showStreets = value;
+                OnPropertyChanged("ShowStreets");
+            }
+        }
+
+        private string street;
         public string Street
         {
             get => street;
             set
             {
                 street = value;
+                OnStreetChanged(value);
                 ValidateStreet();
                 OnPropertyChanged("Street");
             }
         }
 
         private string streetError;
-
         public string StreetError
         {
             get => streetError;
@@ -507,13 +581,23 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateStreet()
         {
-            this.ShowStreetError = string.IsNullOrEmpty(Street);
+            this.ShowStreetError = string.IsNullOrEmpty(this.Street);
+            if (!this.ShowStreetError)
+            {
+                string street = this.allStreets.Where(s => s == this.Street).FirstOrDefault();
+                if (string.IsNullOrEmpty(street))
+                {
+                    this.ShowStreetError = true;
+                    this.StreetError = ERROR_MESSAGES.BAD_STREET;
+                }
+            }
+            else
+                this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
         }
         #endregion
 
         #region HouseNum
         private bool showHouseNumError;
-
         public bool ShowHouseNumError
         {
             get => showHouseNumError;
@@ -525,7 +609,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private int houseNum;
-
         public int HouseNum
         {
             get => houseNum;
@@ -538,7 +621,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string houseNumError;
-
         public string HouseNumError
         {
             get => houseNumError;
@@ -548,7 +630,6 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("HouseNumError");
             }
         }
-
 
         private void ValidateHouseNum()
         {
@@ -570,7 +651,6 @@ namespace CarpoolApp.ViewModels
 
         #region StringHouseNum
         private bool showStringHouseNumError;
-
         public bool ShowStringHouseNumError
         {
             get => showStringHouseNumError;
@@ -582,7 +662,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string stringHouseNum;
-
         public string StringHouseNum
         {
             get => stringHouseNum;
@@ -595,7 +674,6 @@ namespace CarpoolApp.ViewModels
         }
 
         private string stringHouseNumError;
-
         public string StringHouseNumError
         {
             get => stringHouseNumError;
@@ -605,7 +683,6 @@ namespace CarpoolApp.ViewModels
                 OnPropertyChanged("StringHouseNumError");
             }
         }
-
 
         private void ValidateStringHouseNum()
         {
@@ -622,9 +699,9 @@ namespace CarpoolApp.ViewModels
             else
                 this.StringHouseNumError = ERROR_MESSAGES.REQUIRED_FIELD;
         }
-        #endregion
+        #endregion        
 
-        #region serverStatus
+        #region ServerStatus
         private string serverStatus;
         public string ServerStatus
         {
@@ -640,6 +717,14 @@ namespace CarpoolApp.ViewModels
         #region Constructor
         public AddAdultViewModel()
         {
+            App theApp = (App)App.Current;
+
+            this.allCities = theApp.Cities;
+            this.FilteredCities = new ObservableCollection<string>();
+
+            this.allStreets = theApp.Streets;
+            this.FilteredStreets = new ObservableCollection<string>();
+
             //set the path url to the contact photo
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             //Setup default image photo
@@ -781,6 +866,114 @@ namespace CarpoolApp.ViewModels
             }
             else
                 await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
+        }
+        #endregion
+
+        #region OnCityChanged
+        public void OnCityChanged(string search)
+        {
+            if (this.City != this.SelectedCityItem)
+            {
+                this.ShowCities = true;
+                this.SelectedCityItem = null;
+            }
+            //Filter the list of contacts based on the search term
+            if (this.allCities == null)
+                return;
+            if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
+            {
+                this.ShowCities = false;
+                this.FilteredCities.Clear();
+                //foreach (string city in this.allCities)
+                //{
+                //    if (!this.FilteredCities.Contains(city))
+                //        this.FilteredCities.Add(city);
+                //}
+            }
+            else
+            {
+                foreach (string city in this.allCities)
+                {
+                    string contactString = city; /*$"{uc.FirstName}|{uc.LastName}|{uc.Email}";*/
+
+                    if (!this.FilteredCities.Contains(city) &&
+                        contactString.Contains(search))
+                        this.FilteredCities.Add(city);
+                    else if (this.FilteredCities.Contains(city) &&
+                        !contactString.Contains(search))
+                        this.FilteredCities.Remove(city);
+                }
+            }
+
+            //this.FilteredCities = new ObservableCollection<string>(this.FilteredCities);
+        }
+        #endregion
+
+        #region OnStreetChanged
+        public void OnStreetChanged(string search)
+        {
+            if (this.Street != this.SelectedStreetItem)
+            {
+                this.ShowStreets = true;
+                this.SelectedStreetItem = null;
+            }
+            //Filter the list of contacts based on the search term
+            if (this.allStreets == null)
+                return;
+            if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
+            {
+                this.ShowStreets = false;
+                this.FilteredStreets.Clear();
+            }
+            else
+            {
+                foreach (string street in this.allStreets)
+                {
+                    string contactString = street;
+
+                    if (!this.FilteredStreets.Contains(street) &&
+                        contactString.Contains(search))
+                        this.FilteredStreets.Add(street);
+                    else if (this.FilteredStreets.Contains(street) &&
+                        !contactString.Contains(search))
+                        this.FilteredStreets.Remove(street);
+                }
+            }
+        }
+        #endregion
+
+        #region SelectedCity
+        public ICommand SelectedCity => new Command<string>(OnSelectedCity);
+        public void OnSelectedCity(string city)
+        {
+            if (city != null)
+            {
+                this.ShowCities = false;
+                this.City = city;
+                //this.FilteredCities.Clear();
+
+                //App theApp = (App)App.Current;
+                //AddContactViewModel vm = new AddContactViewModel(uc);
+                //vm.ContactUpdatedEvent += OnContactAdded;
+                //Page p = new Views.AddContact(vm);
+                //await theApp.MainPage.Navigation.PushAsync(p);
+                //if (ClearSelection != null)
+                //    ClearSelection();
+            }
+        }
+
+        //public event Action ClearSelection;
+        #endregion
+
+        #region SelectedStreet
+        public ICommand SelectedStreet => new Command<string>(OnSelectedStreet);
+        public void OnSelectedStreet(string street)
+        {
+            if (street != null)
+            {
+                this.ShowStreets = false;
+                this.Street = street;
+            }
         }
         #endregion
 
