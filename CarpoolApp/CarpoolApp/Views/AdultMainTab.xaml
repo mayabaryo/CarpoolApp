@@ -11,7 +11,7 @@
             Title="Tabs Example"
             SelectedTabColor="#8e94f2"
             UnselectedTabColor="#bbadff"
-            >
+            FlowDirection="RightToLeft">
     <!--"#9fa0ff"-->
     <!--"#e0c3fc"-->
 
