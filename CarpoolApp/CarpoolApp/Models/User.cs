@@ -17,7 +17,6 @@ namespace CarpoolApp.Models
         public string PhoneNum { get; set; }
         public string Photo { get; set; }
         public string City { get; set; }
-        public string Neighborhood { get; set; }
         public string Street { get; set; }
         public int HouseNum { get; set; }
 

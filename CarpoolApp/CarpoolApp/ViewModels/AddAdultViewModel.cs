@@ -475,50 +475,6 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region Neighborhood
-        private bool showNeighborhoodError;
-
-        public bool ShowNeighborhoodError
-        {
-            get => showNeighborhoodError;
-            set
-            {
-                showNeighborhoodError = value;
-                OnPropertyChanged("ShowNeighborhoodError");
-            }
-        }
-
-        private string neighborhood;
-
-        public string Neighborhood
-        {
-            get => neighborhood;
-            set
-            {
-                neighborhood = value;
-                ValidateNeighborhood();
-                OnPropertyChanged("Neighborhood");
-            }
-        }
-
-        private string neighborhoodError;
-
-        public string NeighborhoodError
-        {
-            get => neighborhoodError;
-            set
-            {
-                neighborhoodError = value;
-                OnPropertyChanged("NeighborhoodError");
-            }
-        }
-
-        private void ValidateNeighborhood()
-        {
-            this.ShowNeighborhoodError = string.IsNullOrEmpty(Neighborhood);
-        }
-        #endregion
-
         #region Street
         private bool showStreetError;
         public bool ShowStreetError
@@ -740,7 +696,6 @@ namespace CarpoolApp.ViewModels
             this.BirthDateError = ERROR_MESSAGES.BAD_DATE;
             this.PhoneNumError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.CityError = ERROR_MESSAGES.REQUIRED_FIELD;
-            this.NeighborhoodError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StreetError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
 
@@ -752,7 +707,6 @@ namespace CarpoolApp.ViewModels
             this.ShowBirthDateError = false;
             this.ShowPhoneNumError = false;
             this.ShowCityError = false;
-            this.ShowNeighborhoodError = false;
             this.ShowStreetError = false;
             this.ShowStringHouseNumError = false;
 
@@ -776,14 +730,13 @@ namespace CarpoolApp.ViewModels
             ValidateBirthDate();
             ValidatePhoneNum();
             ValidateCity();
-            ValidateNeighborhood();
             ValidateStreet();
             ValidateStringHouseNum();
 
             //check if any validation failed
             if (ShowEmailError || ShowUserNameError || ShowPasswordError || ShowNameError
-                || ShowLastNameError || ShowBirthDateError || ShowPhoneNumError || ShowCityError
-                || ShowNeighborhoodError || ShowStreetError || ShowStringHouseNumError)
+                || ShowLastNameError || ShowBirthDateError || ShowPhoneNumError
+                || ShowCityError || ShowStreetError || ShowStringHouseNumError)
                 return false;
             return true;
         }
@@ -806,7 +759,6 @@ namespace CarpoolApp.ViewModels
                     BirthDate = this.BirthDate,
                     PhoneNum = this.PhoneNum,
                     City = this.City,
-                    Neighborhood = this.Neighborhood,
                     Street = this.Street,
                     HouseNum = int.Parse(this.StringHouseNum),
                     Adult = new Adult()

@@ -146,19 +146,6 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region Neighborhood
-        private string neighborhood;
-        public string Neighborhood
-        {
-            get => neighborhood;
-            set
-            {
-                neighborhood = value;
-                OnPropertyChanged("Neighborhood");
-            }
-        }
-        #endregion
-
         #region Street
         private string street;
         public string Street
@@ -199,7 +186,6 @@ namespace CarpoolApp.ViewModels
             this.BirthDate = currentUser.BirthDate;
             this.PhoneNum = currentUser.PhoneNum;
             this.City = currentUser.City;
-            this.Neighborhood = currentUser.Neighborhood;
             this.Street = currentUser.Street;
             this.HouseNum = currentUser.HouseNum;
 

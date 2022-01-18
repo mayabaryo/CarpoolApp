@@ -126,19 +126,6 @@
                                 <Label Text="{Binding City}" Grid.Column="1" Style="{StaticResource entry}"/>
                             </Grid>
 
-                            <!-- Neighborhood -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label Text="שכונה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                <Label Text="{Binding Neighborhood}" Grid.Column="1" Style="{StaticResource entry}"/>
-                            </Grid>
-
                             <!-- Street -->
                             <Grid>
                                 <Grid.ColumnDefinitions>

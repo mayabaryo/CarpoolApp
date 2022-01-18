@@ -18,7 +18,6 @@ namespace CarpoolApp.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string City { get; set; }
-        public string Neighborhood { get; set; }
         public string Street { get; set; }
         public int HouseNum { get; set; }
         public bool Recurring { get; set; }

@@ -8,23 +8,6 @@
             <ScrollView>
                 <StackLayout>
 
-                    <!-- <SearchBar x:Name="searchBar" 
-                       Placeholder="Type a Search Term" 
-                       Text="{Binding City}"
-                       />
-
-                    <SearchBar Placeholder="Search for a city..." Text="{Binding City}"
-                                PlaceholderColor="{DynamicResource secondaryText}" SearchCommand="{Binding SearchCityCommand}"  /> -->
-
-                    
-                    <!--<Button Text="ערים" Command="{Binding GetCitiesCommand}"></Button>-->
-
-                    <!--
-                    <Entry Placeholder="הכנס רחוב" Text="{Binding Street}" Style="{StaticResource entry}"/>
-                    <CollectionView EmptyView="לא נמצאו רחובות" x:Name="streets" ItemsSource="{Binding FilteredCities}" SelectedItem="{Binding SelectedStreetItem}" SelectionMode="Single"
-                                   IsVisible="{Binding ShowCities}" SelectionChangedCommand="{Binding Source={x:Reference streets}, Path=BindingContext.SelectedStreet}" SelectionChangedCommandParameter="{Binding Source={x:Reference streets}, Path=SelectedItem}"></CollectionView>
-                    -->
-                    
                     <!-- Photo -->
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -160,20 +143,6 @@
                             <CollectionView EmptyView="לא נמצאו ערים"  x:Name="cities" ItemsSource="{Binding FilteredCities}" SelectedItem="{Binding SelectedCityItem}" SelectionMode="Single"
                                    IsVisible="{Binding ShowCities}" SelectionChangedCommand="{Binding Source={x:Reference cities}, Path=BindingContext.SelectedCity}" SelectionChangedCommandParameter="{Binding Source={x:Reference cities}, Path=SelectedItem}"></CollectionView>
                             <!-- <Entry Placeholder="עיר" MaxLength="30" Text="{Binding City}" Style="{StaticResource entry}"/> -->                            
-
-                            <!-- Neighborhood -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label Text="שכונה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                <Label Text="{Binding NeighborhoodError}" IsVisible="{Binding ShowNeighborhoodError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                            </Grid>
-                            <Entry Placeholder="שכונה" MaxLength="30" Text="{Binding Neighborhood}" Style="{StaticResource entry}"/>
 
                             <!-- Street -->
                             <Grid>

@@ -43,7 +43,7 @@ namespace CarpoolApp
             //CurrentAdult = null;
             //CurrentKid = null;
 
-            Page p = new Views.AddActivity();
+            Page p = new Views.Login();
             p.Title = "התחברות";
             MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
 

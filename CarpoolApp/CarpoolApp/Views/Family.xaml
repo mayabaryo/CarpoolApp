@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarpoolApp.Views.Family"
+             FlowDirection="RightToLeft">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid Margin="0,0,0,0" Padding="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0" Aspect="AspectFill" Source="carpoolLogo" Opacity="0.6"></Image>
+                <Label Text="המשפחה שלי" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
+            </Grid>
+
+            <StackLayout Style="{StaticResource Stack}">
+                <Grid>
+                    <Button Text="הוסף ילד" Style="{StaticResource Button}" Command="{Binding MoveToAddKid}" Grid.Column="0" />
+                    <Button Text="הוסף מבוגר" Style="{StaticResource Button}" Command="{Binding MoveToAddAdult}" Grid.Column="1" />
+                </Grid>
+            </StackLayout>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

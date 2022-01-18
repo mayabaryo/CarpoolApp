@@ -155,20 +155,6 @@
                                 <CollectionView EmptyView="לא נמצאו ערים"  x:Name="cities" ItemsSource="{Binding FilteredCities}" SelectedItem="{Binding SelectedCityItem}" SelectionMode="Single"
                                    IsVisible="{Binding ShowCities}" SelectionChangedCommand="{Binding Source={x:Reference cities}, Path=BindingContext.SelectedCity}" SelectionChangedCommandParameter="{Binding Source={x:Reference cities}, Path=SelectedItem}"></CollectionView>
 
-                                <!-- Neighborhood -->
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Label Text="שכונה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                    <Label Text="{Binding NeighborhoodError}" IsVisible="{Binding ShowNeighborhoodError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                                </Grid>
-                                <Entry Placeholder="שכונה" MaxLength="30" Text="{Binding Neighborhood}" Style="{StaticResource entry}"/>
-
                                 <!-- Street -->
                                 <Grid>
                                     <Grid.ColumnDefinitions>

@@ -30,10 +30,23 @@
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.User}"/>
         </local:AdultProfile.IconImageSource>
     </local:AdultProfile>
-    <local:AddKid Title="הוספת ילד">
-        <local:AddKid.IconImageSource>
-            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.UserPlus}"/>
-        </local:AddKid.IconImageSource>
-    </local:AddKid>
+    
+    <local:Family Title="המשפחה שלי">
+        <local:Family.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Users}"/>
+        </local:Family.IconImageSource>
+    </local:Family>
+    
+    <local:AddActivity Title="הוספת פעילות">
+        <local:AddActivity.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.SquarePlus}"/>
+        </local:AddActivity.IconImageSource>
+    </local:AddActivity>
+
+    <local:AddCarpool Title="הוספת הסעה">
+        <local:AddCarpool.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Taxi}"/>
+        </local:AddCarpool.IconImageSource>
+    </local:AddCarpool>
 
 </TabbedPage>

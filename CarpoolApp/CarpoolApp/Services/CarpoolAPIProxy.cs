@@ -92,6 +92,7 @@ namespace CarpoolApp.Services
 
         public string GetBasePhotoUri() { return this.basePhotosUri; }
 
+        #region LoginAsync
         public async Task<User> LoginAsync(string email, string pass)
         {
             try
@@ -119,7 +120,9 @@ namespace CarpoolApp.Services
                 return null;
             }
         }
+        #endregion
 
+        #region UpdateUser
         public async Task<User> UpdateUser(User user)
         {
             try
@@ -151,7 +154,9 @@ namespace CarpoolApp.Services
                 return null;
             }
         }
+        #endregion
 
+        #region EmailExistAsync
         public async Task<bool> EmailExistAsync(string email)
         {
             try
@@ -170,7 +175,9 @@ namespace CarpoolApp.Services
                 return false;
             }
         }
+        #endregion
 
+        #region UserNameExistAsync
         public async Task<bool> UserNameExistAsync(string userName)
         {
             try
@@ -189,7 +196,9 @@ namespace CarpoolApp.Services
                 return true;
             }
         }
+        #endregion
 
+        #region AdultSignUpAsync
         public async Task<Adult> AdultSignUpAsync(Adult adult)
         {
             try
@@ -221,7 +230,9 @@ namespace CarpoolApp.Services
                 return null;
             }
         }
+        #endregion
 
+        #region AddKidAsync
         public async Task<Kid> AddKidAsync(Kid kid)
         {
             try
@@ -253,7 +264,9 @@ namespace CarpoolApp.Services
                 return null;
             }
         }
+        #endregion
 
+        #region AddAdultAsync
         public async Task<Adult> AddAdultAsync(Adult adult)
         {
             try
@@ -285,8 +298,44 @@ namespace CarpoolApp.Services
                 return null;
             }
         }
+        #endregion
+
+        #region AddActivityAsync
+        public async Task<Activity> AddActivityAsync(Activity activity)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Activity>(activity, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddActivity", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    Activity a = JsonSerializer.Deserialize<Activity>(jsonObject, options);
+                    return a;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
 
         //Upload file to server (only images!)
+        #region UploadImage
         public async Task<bool> UploadImage(Models.FileInfo fileInfo, string targetFileName)
         {
             try
@@ -308,9 +357,13 @@ namespace CarpoolApp.Services
                 return false;
             }
         }
+        #endregion
+
+
 
         //************** Streets and Cities JSOn file **********************************
-        public List<string> GetCitiesNameList(List<City> cities)
+        #region GetCitiesNameList
+        private List<string> GetCitiesNameList(List<City> cities)
         {
             List<string> citiesName = new List<string>();
 
@@ -322,6 +375,9 @@ namespace CarpoolApp.Services
 
             return citiesName;
         }
+        #endregion
+
+        #region GetCitiesAsync
         public async Task<List<string>> GetCitiesAsync()
         {
             ///royts/israel-cities/master/israel-cities.json
@@ -351,8 +407,10 @@ namespace CarpoolApp.Services
                 return null;
             }
         }
+        #endregion
 
-        public List<string> GetStreetsNameList(List<Street> streets/*, string city*/)
+        #region GetStreetsNameList
+        private List<string> GetStreetsNameList(List<Street> streets/*, string city*/)
         {
             List<string> streetsName = new List<string>();
 
@@ -363,6 +421,9 @@ namespace CarpoolApp.Services
 
             return streetsName;
         }
+        #endregion
+
+        #region GetStreetsAsync
         public async Task<List<string>> GetStreetsAsync(/*string city*/)
         {
             //?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500
@@ -391,5 +452,6 @@ namespace CarpoolApp.Services
                 return null;
             }
         }
+        #endregion
     }
 }

@@ -29,6 +29,7 @@ namespace CarpoolApp.ViewModels
         #endregion
 
         private List<string> allCities;
+        #region FilteredCities
         private ObservableCollection<string> filteredCities;
         public ObservableCollection<string> FilteredCities
         {
@@ -46,8 +47,10 @@ namespace CarpoolApp.ViewModels
                 }
             }
         }
+        #endregion
 
         private List<string> allStreets;
+        #region FilteredStreets
         private ObservableCollection<string> filteredStreets;
         public ObservableCollection<string> FilteredStreets
         {
@@ -65,7 +68,7 @@ namespace CarpoolApp.ViewModels
                 }
             }
         }
-
+        #endregion
 
         #region ActivityName
         private bool showActivityNameError;
@@ -86,7 +89,7 @@ namespace CarpoolApp.ViewModels
             set
             {
                 activityName = value;
-                ValidateName();
+                ValidateActivityName();
                 OnPropertyChanged("ActivityName");
             }
         }
@@ -102,7 +105,7 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private void ValidateName()
+        private void ValidateActivityName()
         {
             this.ShowActivityNameError = string.IsNullOrEmpty(ActivityName);
         }
@@ -146,7 +149,7 @@ namespace CarpoolApp.ViewModels
         private void ValidateStartTime()
         {
             TimeSpan ts = this.StartTime - DateTime.Now;
-            this.ShowStartTimeError = ts.TotalDays < 0;
+            this.ShowStartTimeError = ts.TotalMinutes < 0;
         }
         #endregion        
 
@@ -188,7 +191,8 @@ namespace CarpoolApp.ViewModels
         private void ValidateEndTime()
         {
             TimeSpan ts = this.EndTime - DateTime.Now;
-            this.ShowEndTimeError = ts.TotalDays < 0;
+            TimeSpan span = this.EndTime - this.StartTime;
+            this.ShowEndTimeError = ts.TotalMinutes < 0 || span.TotalMinutes < 0;
         }
         #endregion        
 
@@ -266,50 +270,6 @@ namespace CarpoolApp.ViewModels
             }
             else
                 this.CityError = ERROR_MESSAGES.REQUIRED_FIELD;
-        }
-        #endregion
-
-        #region Neighborhood
-        private bool showNeighborhoodError;
-
-        public bool ShowNeighborhoodError
-        {
-            get => showNeighborhoodError;
-            set
-            {
-                showNeighborhoodError = value;
-                OnPropertyChanged("ShowNeighborhoodError");
-            }
-        }
-
-        private string neighborhood;
-
-        public string Neighborhood
-        {
-            get => neighborhood;
-            set
-            {
-                neighborhood = value;
-                ValidateNeighborhood();
-                OnPropertyChanged("Neighborhood");
-            }
-        }
-
-        private string neighborhoodError;
-
-        public string NeighborhoodError
-        {
-            get => neighborhoodError;
-            set
-            {
-                neighborhoodError = value;
-                OnPropertyChanged("NeighborhoodError");
-            }
-        }
-
-        private void ValidateNeighborhood()
-        {
-            this.ShowNeighborhoodError = string.IsNullOrEmpty(Neighborhood);
         }
         #endregion
 
@@ -612,10 +572,9 @@ namespace CarpoolApp.ViewModels
             this.FilteredStreets = new ObservableCollection<string>();
 
             this.ActivityNameError = ERROR_MESSAGES.REQUIRED_FIELD;
-            this.StartTimeError = ERROR_MESSAGES.REQUIRED_FIELD;
-            this.EndTimeError = ERROR_MESSAGES.REQUIRED_FIELD;
+            this.StartTimeError = ERROR_MESSAGES.BAD_ACTIVITY_DATE;
+            this.EndTimeError = ERROR_MESSAGES.BAD_ACTIVITY_DATE;
             this.CityError = ERROR_MESSAGES.BAD_CITY;
-            this.NeighborhoodError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StreetError = ERROR_MESSAGES.BAD_STREET;
             this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
             this.EntryCodeError = ERROR_MESSAGES.SHORT_PASS;
@@ -624,7 +583,6 @@ namespace CarpoolApp.ViewModels
             this.ShowStartTimeError = false;
             this.ShowEndTimeError = false;
             this.ShowCityError = false;
-            this.ShowNeighborhoodError = false;
             this.ShowStreetError = false;
             this.ShowStringHouseNumError = false;
             this.ShowEntryCodeError = false;
@@ -634,7 +592,75 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        //This function validate the entire form upon submit!
+        #region ValidateForm
+        private bool ValidateForm()
+        {
+            //Validate all fields first
+            ValidateActivityName();
+            ValidateStartTime();
+            ValidateEndTime();
+            ValidateCity();
+            ValidateStreet();
+            ValidateStringHouseNum();
+            ValidateEntryCode();
 
+            //check if any validation failed
+            if (ShowActivityNameError || ShowStartTimeError || ShowEndTimeError || ShowCityError
+                || ShowStreetError || ShowStringHouseNumError || ShowEntryCodeError)
+                return false;
+            return true;
+        }
+        #endregion
+
+        #region SaveData
+        //public Command SaveDataCommand { protected set; get; }
+        public Command SaveDataCommand => new Command(SaveData);
+        private async void SaveData()
+        {
+            if (ValidateForm())
+            {
+                App theApp = (App)App.Current;
+                User currentUser = theApp.CurrentUser;
+
+                Activity activity = new Activity()
+                {
+                    ActivityName = this.ActivityName,
+                    StartTime = this.StartTime,
+                    EndTime = this.EndTime,
+                    City = this.City,
+                    Street = this.Street,
+                    HouseNum = int.Parse(this.StringHouseNum),
+                    Recurring = this.Recurring,
+                    EntryCode = this.EntryCode,
+                    AdultId = currentUser.Id
+                };
+
+                ServerStatus = "מתחבר לשרת...";
+                await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
+                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+
+                Activity newActivity = await proxy.AddActivityAsync(activity);
+                if (newActivity == null)
+                {
+                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "הוספת הפעילות נכשלה", "אישור", FlowDirection.RightToLeft);
+                }
+                else
+                {                
+                    ServerStatus = "שומר נתונים...";
+
+                    Page p = new AdultMainTab();
+                    p.Title = $"שלום {theApp.CurrentUser.UserName}";
+                    theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+
+                    await App.Current.MainPage.DisplayAlert("הוספה", "הוספת הפעילות בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
+                }                
+            }
+            else
+                await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
+        }
+        #endregion
 
         #region OnCityChanged
         public void OnCityChanged(string search)

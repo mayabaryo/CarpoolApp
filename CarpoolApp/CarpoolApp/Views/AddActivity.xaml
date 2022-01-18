@@ -4,138 +4,136 @@
              x:Class="CarpoolApp.Views.AddActivity"
              FlowDirection="RightToLeft">
     <ContentPage.Content>
-        <StackLayout Style="{StaticResource Stack}">
-            <ScrollView>
-                <StackLayout>
-                    <Frame Style="{StaticResource logInSignUp}">
-                        <StackLayout>
-                            <!-- Activity Name-->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label Text="שם הפעילות" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                <Label Text="{Binding ActivityNameError}" IsVisible="{Binding ShowActivityNameError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                            </Grid>
-                            <Entry Placeholder="שם הפעילות" MaxLength="30" Text="{Binding ActivityName}" Style="{StaticResource entry}"/>
-                            
-                            <!-- Start Time -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label Text="שעת התחלה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                <Label Text="{Binding StartTimeError}" IsVisible="{Binding ShowStartTimeError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                            </Grid>
-                            <DatePicker Date="{Binding StartTime}" Style="{StaticResource entry}"/>
+        <StackLayout>
+            <Grid Margin="0,0,0,0" Padding="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0" Aspect="AspectFill" Source="carpoolLogo" Opacity="0.6"></Image>
+                <Label Text="הוספת פעילות" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
+            </Grid>
+            <StackLayout Style="{StaticResource Stack}">
+                <ScrollView>
+                    <StackLayout>
+                        <Frame Style="{StaticResource logInSignUp}">
+                            <StackLayout>
+                                <!-- Activity Name-->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="שם הפעילות" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                    <Label Text="{Binding ActivityNameError}" IsVisible="{Binding ShowActivityNameError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+                                </Grid>
+                                <Entry Placeholder="שם הפעילות" MaxLength="30" Text="{Binding ActivityName}" Style="{StaticResource entry}"/>
 
-                            <!-- End Time -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label Text="שעת סיום" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                <Label Text="{Binding EndTimeError}" IsVisible="{Binding ShowEndTimeError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                            </Grid>
-                            <DatePicker Date="{Binding EndTime}" Style="{StaticResource entry}"/>
+                                <!-- Start Time -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="שעת התחלה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                    <Label Text="{Binding StartTimeError}" IsVisible="{Binding ShowStartTimeError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+                                </Grid>
+                                <DatePicker Date="{Binding StartTime}" Style="{StaticResource entry}"/>
 
-                            <!-- City -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label Text="עיר" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                <Label Text="{Binding CityError}" IsVisible="{Binding ShowCityError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                            </Grid>
-                            <SearchBar Placeholder="חפש עיר" Text="{Binding City}" Style="{StaticResource entry}"/>
-                            <CollectionView EmptyView="לא נמצאו ערים"  x:Name="cities" ItemsSource="{Binding FilteredCities}" SelectedItem="{Binding SelectedCityItem}" SelectionMode="Single"
+                                <!-- End Time -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="שעת סיום" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                    <Label Text="{Binding EndTimeError}" IsVisible="{Binding ShowEndTimeError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+                                </Grid>
+                                <DatePicker Date="{Binding EndTime}" Style="{StaticResource entry}"/>
+
+                                <!-- City -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="עיר" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                    <Label Text="{Binding CityError}" IsVisible="{Binding ShowCityError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+                                </Grid>
+                                <SearchBar Placeholder="חפש עיר" Text="{Binding City}" Style="{StaticResource entry}"/>
+                                <CollectionView EmptyView="לא נמצאו ערים"  x:Name="cities" ItemsSource="{Binding FilteredCities}" SelectedItem="{Binding SelectedCityItem}" SelectionMode="Single"
                                    IsVisible="{Binding ShowCities}" SelectionChangedCommand="{Binding Source={x:Reference cities}, Path=BindingContext.SelectedCity}" SelectionChangedCommandParameter="{Binding Source={x:Reference cities}, Path=SelectedItem}"></CollectionView>
-                            <!-- <Entry Placeholder="עיר" MaxLength="30" Text="{Binding City}" Style="{StaticResource entry}"/> -->
+                                <!-- <Entry Placeholder="עיר" MaxLength="30" Text="{Binding City}" Style="{StaticResource entry}"/> -->
 
-                            <!-- Neighborhood -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label Text="שכונה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                <Label Text="{Binding NeighborhoodError}" IsVisible="{Binding ShowNeighborhoodError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                            </Grid>
-                            <Entry Placeholder="שכונה" MaxLength="30" Text="{Binding Neighborhood}" Style="{StaticResource entry}"/>
-
-                            <!-- Street -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label Text="רחוב" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                <Label Text="{Binding StreetError}" IsVisible="{Binding ShowStreetError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                            </Grid>
-                            <SearchBar Placeholder="חפש רחוב" Text="{Binding Street}" Style="{StaticResource entry}"/>
-                            <CollectionView EmptyView="לא נמצאו רחובות"  x:Name="streets" ItemsSource="{Binding FilteredStreets}" SelectedItem="{Binding SelectedStreetItem}" SelectionMode="Single"
+                                <!-- Street -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="רחוב" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                    <Label Text="{Binding StreetError}" IsVisible="{Binding ShowStreetError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+                                </Grid>
+                                <SearchBar Placeholder="חפש רחוב" Text="{Binding Street}" Style="{StaticResource entry}"/>
+                                <CollectionView EmptyView="לא נמצאו רחובות"  x:Name="streets" ItemsSource="{Binding FilteredStreets}" SelectedItem="{Binding SelectedStreetItem}" SelectionMode="Single"
                                    IsVisible="{Binding ShowStreets}" SelectionChangedCommand="{Binding Source={x:Reference streets}, Path=BindingContext.SelectedStreet}" SelectionChangedCommandParameter="{Binding Source={x:Reference streets}, Path=SelectedItem}"></CollectionView>
 
-                            <!-- HouseNumber -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label Text="מספר בית" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                <Label Text="{Binding StringHouseNumError}" IsVisible="{Binding ShowStringHouseNumError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                            </Grid>
-                            <Entry Placeholder="מספר בית" MaxLength="30" Text="{Binding StringHouseNum}" Style="{StaticResource entry}"/>
+                                <!-- HouseNumber -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="מספר בית" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                    <Label Text="{Binding StringHouseNumError}" IsVisible="{Binding ShowStringHouseNumError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+                                </Grid>
+                                <Entry Placeholder="מספר בית" MaxLength="30" Text="{Binding StringHouseNum}" Style="{StaticResource entry}"/>
 
-                            <!-- Entry Code-->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label Text="קוד כניסה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
-                                <Label Text="{Binding EntryCodeError}" IsVisible="{Binding ShowEntryCodeError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
-                            </Grid>
-                            <Entry Placeholder="קוד כניסה" MaxLength="30" IsPassword="True" Text="{Binding EntryCode}" Style="{StaticResource entry}"/>
+                                <!-- Entry Code-->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="קוד כניסה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                    <Label Text="{Binding EntryCodeError}" IsVisible="{Binding ShowEntryCodeError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+                                </Grid>
+                                <Entry Placeholder="קוד כניסה" MaxLength="30" IsPassword="True" Text="{Binding EntryCode}" Style="{StaticResource entry}"/>
 
-                            <Grid>
-                                <CheckBox IsChecked="{Binding Recurring}" Grid.Column="0"/>
-                                <Label Text="האם הפעולה חוזרת?" Grid.Column="1" />
-                            </Grid>
-
-                        </StackLayout>
-                    </Frame>
-                    <Button Text="הירשם" Style="{StaticResource Button}" Command="{Binding SaveDataCommand}"></Button>
-                </StackLayout>
-            </ScrollView>
+                                <Grid>
+                                    <CheckBox IsChecked="{Binding Recurring}" Grid.Column="1"/>
+                                    <Label Text="האם הפעולה חוזרת?" Grid.Column="0" />
+                                </Grid>
+                                
+                            </StackLayout>
+                        </Frame>
+                        <Button Text="הוספה" Style="{StaticResource Button}" Command="{Binding SaveDataCommand}"></Button>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
