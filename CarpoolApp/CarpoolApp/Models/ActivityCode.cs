@@ -15,6 +15,9 @@ namespace CarpoolApp.Models
 
         public static int CodeToGroupID(string code)
         {
+            if (string.IsNullOrEmpty(code))
+                return -1;
+
             int cPos = code.IndexOf('C');
             int pPos = code.IndexOf('P');
 

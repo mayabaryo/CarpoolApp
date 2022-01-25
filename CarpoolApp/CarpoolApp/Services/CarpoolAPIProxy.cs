@@ -198,6 +198,27 @@ namespace CarpoolApp.Services
         }
         #endregion
 
+        #region ActivityExistAsync
+        public async Task<bool> ActivityExistAsync(int activityId)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync($"{this.baseUri}/IsActivityExist?activityId={activityId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
+
         #region AdultSignUpAsync
         public async Task<Adult> AdultSignUpAsync(Adult adult)
         {
@@ -334,6 +355,134 @@ namespace CarpoolApp.Services
         }
         #endregion
 
+        #region GetAllKidsAsync
+        public async Task<List<Kid>> GetAllKidsAsync(Adult adult)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllKids?adult={adult}");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<Kid> kids = JsonSerializer.Deserialize<List<Kid>>(content, options);
+                    return kids;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
+        //#region GetAllActivitiesAsync
+        //public async Task<List<Activity>> GetAllActivitiesAsync(Kid kid)
+        //{
+        //    try
+        //    {
+        //        HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllActivities?kid={kid}");
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            JsonSerializerOptions options = new JsonSerializerOptions
+        //            {
+        //                ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+        //                PropertyNameCaseInsensitive = true
+        //            };
+        //            string content = await response.Content.ReadAsStringAsync();
+        //            List<Activity> activities = JsonSerializer.Deserialize<List<Activity>>(content, options);
+        //            return activities;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e.Message);
+        //        return null;
+        //    }
+        //}
+        //#endregion
+
+        #region GetAllActivitiesAsync
+        public async Task<List<Activity>> GetAllActivitiesAsync(Kid kid)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Kid>(kid, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/GetAllActivities", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    List<Activity> activities = JsonSerializer.Deserialize<List<Activity>>(jsonObject, options);
+                    return activities;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
+        #region JoinToActivityAsync
+        public async Task<KidsInActivity> JoinToActivityAsync(KidsInActivity kidsIn)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<KidsInActivity>(kidsIn, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/JoinToActivity", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    KidsInActivity k = JsonSerializer.Deserialize<KidsInActivity>(jsonObject, options);
+                    return k;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
         //Upload file to server (only images!)
         #region UploadImage
         public async Task<bool> UploadImage(Models.FileInfo fileInfo, string targetFileName)
@@ -358,7 +507,6 @@ namespace CarpoolApp.Services
             }
         }
         #endregion
-
 
 
         //************** Streets and Cities JSOn file **********************************

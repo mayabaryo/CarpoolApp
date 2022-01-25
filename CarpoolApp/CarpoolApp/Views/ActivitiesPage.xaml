@@ -1,31 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CarpoolApp.Views.Family"
+             x:Class="CarpoolApp.Views.ActivitiesPage"
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
-            <Grid Margin="0,0,0,0" Padding="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="150"/>
-                </Grid.RowDefinitions>
-                <Image Grid.Column="0" Aspect="AspectFill" Source="carpoolLogo" Opacity="0.6"></Image>
-                <Label Text="המשפחה שלי" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
-            </Grid>
 
-            <StackLayout Style="{StaticResource Stack}">
-                <Grid>
-                    <Button Text="הוסף ילד" Style="{StaticResource Button}" Command="{Binding MoveToAddKid}" Grid.Column="0" />
-                    <Button Text="הוסף מבוגר" Style="{StaticResource Button}" Command="{Binding MoveToAddAdult}" Grid.Column="1" />
-                </Grid>
-            </StackLayout>
-            
-            <!-- KidsCollection -->
+            <!-- ActivitiesCollection -->
             <CollectionView x:Name="collectionName" 
-                            ItemsSource="{Binding KidList}" SelectionMode="Single"
+                            ItemsSource="{Binding ActivityList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                 <CollectionView.ItemTemplate>
@@ -50,22 +33,8 @@
                                                     CommandParameter="{Binding}"/>
                                         </StackLayout>
                                     </SwipeItemView>
-
-                                    <!--
-                                    <SwipeItem Text="צרף לפעילות"
-                                           IconImageSource="clearIcon.png"
-                                           BackgroundColor="LightPink"
-                                           Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.JoinToActivityCommand}"
-                                           CommandParameter="{Binding}" />
-                                    <SwipeItem Text="צפה בפעילויות"
-                                           BackgroundColor="LightPink"
-                                           Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.ActivitiesCommand}"
-                                           CommandParameter="{Binding}" />
-                                    -->
-                                    
                                 </SwipeItems>
                             </SwipeView.RightItems>
-
 
 
                             <Grid Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#dfe7fd">
@@ -80,17 +49,17 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0"
-                                   Text="שם משתמש" FontAttributes="Bold"/>
+                                   Text="שם הפעילות" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="0"
-                                   Text="{Binding IdNavigation.UserName}"/>
+                                   Text="{Binding ActivityName}"/>
                                 <Label Grid.Column="0" Grid.Row="1"
-                                   Text="שם פרטי" FontAttributes="Bold"/>
+                                   Text="עיר" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="1"
-                                   Text="{Binding IdNavigation.FirstName}"/>
+                                   Text="{Binding City}"/>
                                 <Label Grid.Column="0" Grid.Row="2"
-                                   Text="שם משפחה" FontAttributes="Bold"/>
+                                   Text="רחוב" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="2"
-                                   Text="{Binding IdNavigation.LastName}"/>
+                                   Text="{Binding Street}"/>
 
                                 <Frame Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource SmallImageFrame}">
                                     <Image Source="{Binding IdNavigation.PhotoURL}" Style="{StaticResource SmallImage}"/>
@@ -120,6 +89,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

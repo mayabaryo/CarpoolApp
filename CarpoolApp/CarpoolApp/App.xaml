@@ -57,6 +57,25 @@
                 <Setter Property="WidthRequest" Value="150"></Setter>
             </Style>
 
+            <Style x:Key="SmallImageFrame" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="white"></Setter>
+                <Setter Property="CornerRadius" Value="100"></Setter>
+                <Setter Property="IsClippedToBounds" Value="True"></Setter>
+                <Setter Property="Padding" Value="0"></Setter>
+                <Setter Property="HeightRequest" Value="80"></Setter>
+                <Setter Property="WidthRequest" Value="80"></Setter>
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"></Setter>
+            </Style>
+
+            <Style x:Key="SmallImage" TargetType="Image">
+                <Setter Property="Aspect" Value="AspectFill"></Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="Margin" Value="0"></Setter>
+                <Setter Property="HeightRequest" Value="80"></Setter>
+                <Setter Property="WidthRequest" Value="80"></Setter>
+            </Style>
+
             <Style x:Key="labelNameStyle" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="FontSize" Value="Small" />

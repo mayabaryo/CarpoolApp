@@ -11,17 +11,12 @@ using CarpoolApp.ViewModels;
 namespace CarpoolApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Family : ContentPage
+    public partial class ActivitiesPage : ContentPage
     {
-        public Family()
+        public ActivitiesPage()
         {
-            this.BindingContext = new FamilyViewModel();
+            this.BindingContext = new ActivitiesPageViewModel();
             InitializeComponent();
         }
-
-        //public void OnSetImageSource(ImageSource imgSource)
-        //{
-        //    swipeView
-        //}
     }
 }
