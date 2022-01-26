@@ -51,5 +51,37 @@ namespace CarpoolApp.ViewModels
             }            
         }
         #endregion
+
+
+        #region AddCarpoolCommand
+        public ICommand AddCarpoolCommand => new Command<Activity>(OnAddCarpool);
+        public async void OnAddCarpool(Activity activity)
+        {
+            Page page = new AddCarpool();
+            page.Title = "צור הסעה";
+            await App.Current.MainPage.Navigation.PushAsync(page);
+        }
+        #endregion
+
+        #region ActivitiesCommand
+        public ICommand ShowCarpoolsCommand => new Command<Kid>(OnShowCarpools);
+        public async void OnShowCarpools(Kid kid)
+        {
+            App theApp = (App)App.Current;
+            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+            List<Activity> activities = await proxy.GetAllActivitiesAsync(kid);
+            ObservableCollection<Activity> theActivities = new ObservableCollection<Activity>(activities);
+
+            Page page = new ActivitiesPage();
+
+            ActivitiesPageViewModel activityContext = new ActivitiesPageViewModel()
+            {
+                ActivityList = theActivities
+            };
+            page.BindingContext = activityContext;
+            page.Title = $"{kid.IdNavigation.UserName} הפעילויות של";
+            await App.Current.MainPage.Navigation.PushAsync(page);
+        }
+        #endregion
     }
 }

@@ -19,17 +19,16 @@
 
                                     <SwipeItemView BackgroundColor="#e1eff6">
                                         <StackLayout Margin="10" WidthRequest="100" HeightRequest="200">
-                                            <Entry Text="{Binding ActivityCode}" Placeholder="הכנס קוד" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" />
-                                            <Button Text="צרף לפעילות" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"
-                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.JoinToActivityCommand}"
+                                            <Button Text="צור הסעה" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.AddCarpoolCommand}"
                                                     CommandParameter="{Binding}"/>
                                         </StackLayout>
                                     </SwipeItemView>
 
                                     <SwipeItemView BackgroundColor="#c8e7ff">
                                         <StackLayout Margin="10" WidthRequest="100">
-                                            <Button Text="צפה בפעילויות" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
-                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.ActivitiesCommand}"
+                                            <Button Text="צפה בהסעות" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.ShowCarpoolsCommand}"
                                                     CommandParameter="{Binding}"/>
                                         </StackLayout>
                                     </SwipeItemView>

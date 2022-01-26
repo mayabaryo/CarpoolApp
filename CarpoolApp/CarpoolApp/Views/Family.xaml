@@ -36,7 +36,7 @@
 
                                     <SwipeItemView BackgroundColor="#e1eff6">
                                         <StackLayout Margin="10" WidthRequest="100" HeightRequest="200">
-                                            <Entry Text="{Binding ActivityCode}" Placeholder="הכנס קוד" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" />
+                                            <Entry Text="{Binding Source={x:Reference collectionName}, Path=BindingContext.ActivityCode}" Placeholder="הכנס קוד" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" />
                                             <Button Text="צרף לפעילות" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"
                                                     Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.JoinToActivityCommand}"
                                                     CommandParameter="{Binding}"/>

@@ -82,7 +82,7 @@ namespace CarpoolApp.ViewModels
         public ICommand JoinToActivityCommand => new Command<Kid>(OnJoinToActivity);
         public async void OnJoinToActivity(Kid kid)
         {
-            string code = Models.ActivityCode.CreateGroupCode(2);
+            string code = Models.ActivityCode.CreateGroupCode(1);
             ActivityCode = code;
 
             int activityId = Models.ActivityCode.CodeToGroupID(ActivityCode);

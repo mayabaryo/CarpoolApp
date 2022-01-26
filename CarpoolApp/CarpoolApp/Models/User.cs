@@ -29,7 +29,8 @@ namespace CarpoolApp.Models
             get
             {
                 CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-                return $"{proxy.GetBasePhotoUri()}{this.Id}.jpg";
+                Random r = new Random();
+                return $"{proxy.GetBasePhotoUri()}{this.Id}.jpg?"+r.Next();
             }
         }
     }
