@@ -106,6 +106,24 @@ namespace CarpoolApp.Services
                         PropertyNameCaseInsensitive = true
                     };
                     string content = await response.Content.ReadAsStringAsync();
+
+                    //try
+                    //{
+                    //    Kid kid = JsonSerializer.Deserialize<Kid>(content, options);
+                    //    if (kid.KidsInActivities != null)
+                    //        return kid;
+                    //}
+                    //catch { }
+                    //try
+                    //{
+                    //    Adult adult = JsonSerializer.Deserialize<Adult>(content, options);
+                    //    if (adult.Activities != null)
+                    //        return adult;
+                    //}
+                    //catch { }
+
+                    //return null;
+
                     User u = JsonSerializer.Deserialize<User>(content, options);
                     return u;
                 }
