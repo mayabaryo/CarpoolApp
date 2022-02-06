@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using CarpoolApp.ViewModels;
 
 namespace CarpoolApp.Views
 {
@@ -14,6 +15,7 @@ namespace CarpoolApp.Views
     {
         public AddCarpool()
         {
+            this.BindingContext = new AddCarpoolViewModel();
             InitializeComponent();
         }
     }
