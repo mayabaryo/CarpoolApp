@@ -5,9 +5,55 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Grid Margin="0,0,0,0" Padding="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0" Aspect="AspectFill" Source="carpoolLogo" Opacity="0.6"></Image>
+                <Label Text="הוספת הסעה" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
+            </Grid>
+
+            <StackLayout Style="{StaticResource Stack}">
+                <ScrollView>
+                    <StackLayout>
+                        <Frame Style="{StaticResource logInSignUp}">
+                            <StackLayout>
+                                <!-- Carpool Time -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="שעת יציאה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                    <Label Text="{Binding CarpoolTimeError}" IsVisible="{Binding ShowCarpoolTimeError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+                                </Grid>
+                                <DatePicker Date="{Binding CarpoolTime}" Style="{StaticResource entry}"/>
+
+                                <!-- Seats -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="מספר מושבים" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                    <Label Text="{Binding StringSeatsError}" IsVisible="{Binding ShowStringSeatsError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+                                </Grid>
+                                <Entry Placeholder="מספר מושבים" MaxLength="30" Text="{Binding StringSeats}" Style="{StaticResource entry}"/>
+                            </StackLayout>
+                        </Frame>
+                        <Button Text="הוספה" Style="{StaticResource Button}" Command="{Binding SaveDataCommand}"></Button>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

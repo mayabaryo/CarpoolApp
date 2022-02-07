@@ -25,6 +25,7 @@ namespace CarpoolApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        public Activity Activity { get; set; }
 
         #region CarpoolTime
         private bool showCarpoolTimeError;
@@ -67,5 +68,189 @@ namespace CarpoolApp.ViewModels
             this.ShowCarpoolTimeError = ts.TotalMinutes < 0;
         }
         #endregion        
+
+        #region StringSeats
+        private bool showStringSeatsError;
+        public bool ShowStringSeatsError
+        {
+            get => showStringSeatsError;
+            set
+            {
+                showStringSeatsError = value;
+                OnPropertyChanged("ShowStringSeatsError");
+            }
+        }
+
+        private string stringSeats;
+        public string StringSeats
+        {
+            get => stringSeats;
+            set
+            {
+                stringSeats = value;
+                ValidateStringSeats();
+                OnPropertyChanged("StringSeats");
+            }
+        }
+
+        private string stringSeatsError;
+        public string StringSeatsError
+        {
+            get => stringSeatsError;
+            set
+            {
+                stringSeatsError = value;
+                OnPropertyChanged("StringHouseNumError");
+            }
+        }
+
+        private void ValidateStringSeats()
+        {
+            this.ShowStringSeatsError = string.IsNullOrEmpty(this.StringSeats);
+            int i;
+            if (!this.ShowStringSeatsError)
+            {
+                if (!int.TryParse(this.StringSeats, out i) || int.Parse(this.StringSeats) <= 0 /*!Regex.IsMatch(this.StringHouseNum, @"^[-+]?[0-9]*\.?[0-9]+$")*/)
+                {
+                    this.ShowStringSeatsError = true;
+                    this.StringSeatsError = ERROR_MESSAGES.BAD_SEATS;
+                }
+            }
+            else
+                this.StringSeatsError = ERROR_MESSAGES.REQUIRED_FIELD;
+        }
+        #endregion
+
+        #region ServerStatus
+        private string serverStatus;
+        public string ServerStatus
+        {
+            get { return serverStatus; }
+            set
+            {
+                serverStatus = value;
+                OnPropertyChanged("ServerStatus");
+            }
+        }
+        #endregion
+
+        #region Constructor
+        public AddCarpoolViewModel()
+        {
+            this.CarpoolTimeError = ERROR_MESSAGES.BAD_DATE;
+            this.StringSeatsError = ERROR_MESSAGES.BAD_SEATS;
+
+            this.ShowCarpoolTimeError = false;
+            this.ShowStringSeatsError = false;
+
+
+            this.SaveDataCommand = new Command(() => SaveData());
+
+            DateTime calendarDate = new DateTime(2000, 10, 10);
+            this.CarpoolTime = DateTime.Now;
+        }
+        #endregion
+
+        #region SaveData
+        public Command SaveDataCommand { protected set; get; }
+        private async void SaveData()
+        {
+            if (ValidateForm())
+            {
+                App theApp = (App)App.Current;
+                User currentUser = theApp.CurrentUser;
+
+                Adult currentAdult = new Adult()
+                {
+                    IdNavigation = currentUser
+                };
+
+                Carpool carpool = new Carpool()
+                {
+                    AdultId = currentAdult.Id,
+                    CarpoolTime = this.CarpoolTime,
+                    Seats = int.Parse(this.StringSeats),
+                    CarpoolStatusId = 0,
+                    ActivityId = Activity.Id
+                };
+
+                ServerStatus = "מתחבר לשרת...";
+                await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
+                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+
+                bool isEmailExist = await proxy.EmailExistAsync(theAdult.IdNavigation.Email);
+                bool isUserNameExist = await proxy.UserNameExistAsync(theAdult.IdNavigation.UserName);
+
+                if (!isEmailExist && !isUserNameExist)
+                {
+                    Adult newAdult = await proxy.AdultSignUpAsync(theAdult);
+                    if (newAdult == null)
+                    {
+                        await App.Current.MainPage.Navigation.PopModalAsync();
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה", "אישור", FlowDirection.RightToLeft);
+                    }
+                    else
+                    {
+                        if (this.imageFileResult != null)
+                        {
+                            ServerStatus = "מעלה תמונה...";
+
+                            bool success = await proxy.UploadImage(new FileInfo()
+                            {
+                                Name = this.imageFileResult.FullPath
+                            }, $"{newAdult.Id}.jpg");
+                        }
+                        //else
+                        //{
+                        //    bool success = await proxy.UploadImage(new FileInfo()
+                        //    {
+                        //        Name = DEFAULT_PHOTO
+                        //    }, $"{newAdult.Id}.jpg");
+                        //}
+                        ServerStatus = "שומר נתונים...";
+
+                        App theApp = (App)App.Current;
+                        theApp.CurrentUser = newAdult.IdNavigation;
+
+                        Page p = new AdultMainTab();
+                        p.Title = $"שלום {theApp.CurrentUser.UserName}";
+                        theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+
+                        await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
+                    }
+                }
+                else
+                {
+                    if (isEmailExist && isUserNameExist)
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "האימייל ושם המשתמש שהקלדת כבר קיימים במערכת, בבקשה תבחר אימייל ושם משתמש חדשים ונסה שוב", "אישור", FlowDirection.RightToLeft);
+
+                    else if (isEmailExist)
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "האימייל שהקלדת כבר קיים במערכת, בבקשה תבחר אימייל חדש ונסה שוב", "אישור", FlowDirection.RightToLeft);
+
+                    else
+                        await App.Current.MainPage.DisplayAlert("שגיאה", "שם המשתמש שהקלדת כבר קיים במערכת, בבקשה תבחר שם משתמש חדש ונסה שוב", "אישור", FlowDirection.RightToLeft);
+
+                    await App.Current.MainPage.Navigation.PopModalAsync();
+                }
+            }
+            else
+                await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
+        }
+        #endregion
+
+        //This function validate the entire form upon submit!
+        #region ValidateForm
+        private bool ValidateForm()
+        {
+            //Validate all fields first
+            ValidateCarpoolTime();
+            ValidateStringSeats();
+
+            //check if any validation failed
+            if (ShowCarpoolTimeError || ShowStringSeatsError)
+                return false;
+            return true;
+        }
+        #endregion
     }
 }

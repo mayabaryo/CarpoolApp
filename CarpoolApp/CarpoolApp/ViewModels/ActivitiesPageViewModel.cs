@@ -60,6 +60,14 @@ namespace CarpoolApp.ViewModels
             Page page = new AddCarpool();
             page.Title = "צור הסעה";
             await App.Current.MainPage.Navigation.PushAsync(page);
+
+            Page p = new AddCarpool();
+
+            AddCarpoolViewModel activityContext = new AddCarpoolViewModel()
+            {
+                Activity = activity
+            };
+            p.BindingContext = activityContext;
         }
         #endregion
 
