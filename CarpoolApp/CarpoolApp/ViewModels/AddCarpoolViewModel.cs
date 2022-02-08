@@ -171,67 +171,29 @@ namespace CarpoolApp.ViewModels
                     CarpoolTime = this.CarpoolTime,
                     Seats = int.Parse(this.StringSeats),
                     CarpoolStatusId = 0,
-                    ActivityId = Activity.Id
+                    ActivityId = this.Activity.Id
                 };
 
                 ServerStatus = "מתחבר לשרת...";
                 await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
                 CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
 
-                bool isEmailExist = await proxy.EmailExistAsync(theAdult.IdNavigation.Email);
-                bool isUserNameExist = await proxy.UserNameExistAsync(theAdult.IdNavigation.UserName);
-
-                if (!isEmailExist && !isUserNameExist)
+                Carpool newCarpool = await proxy.AddCarpoolAsync(carpool);
+                if (newCarpool == null)
                 {
-                    Adult newAdult = await proxy.AdultSignUpAsync(theAdult);
-                    if (newAdult == null)
-                    {
-                        await App.Current.MainPage.Navigation.PopModalAsync();
-                        await App.Current.MainPage.DisplayAlert("שגיאה", "ההרשמה נכשלה", "אישור", FlowDirection.RightToLeft);
-                    }
-                    else
-                    {
-                        if (this.imageFileResult != null)
-                        {
-                            ServerStatus = "מעלה תמונה...";
-
-                            bool success = await proxy.UploadImage(new FileInfo()
-                            {
-                                Name = this.imageFileResult.FullPath
-                            }, $"{newAdult.Id}.jpg");
-                        }
-                        //else
-                        //{
-                        //    bool success = await proxy.UploadImage(new FileInfo()
-                        //    {
-                        //        Name = DEFAULT_PHOTO
-                        //    }, $"{newAdult.Id}.jpg");
-                        //}
-                        ServerStatus = "שומר נתונים...";
-
-                        App theApp = (App)App.Current;
-                        theApp.CurrentUser = newAdult.IdNavigation;
-
-                        Page p = new AdultMainTab();
-                        p.Title = $"שלום {theApp.CurrentUser.UserName}";
-                        theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
-
-                        await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
-                    }
+                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    await App.Current.MainPage.DisplayAlert("שגיאה", "ההוספה נכשלה", "אישור", FlowDirection.RightToLeft);
                 }
                 else
                 {
-                    if (isEmailExist && isUserNameExist)
-                        await App.Current.MainPage.DisplayAlert("שגיאה", "האימייל ושם המשתמש שהקלדת כבר קיימים במערכת, בבקשה תבחר אימייל ושם משתמש חדשים ונסה שוב", "אישור", FlowDirection.RightToLeft);
+                    ServerStatus = "שומר נתונים...";
 
-                    else if (isEmailExist)
-                        await App.Current.MainPage.DisplayAlert("שגיאה", "האימייל שהקלדת כבר קיים במערכת, בבקשה תבחר אימייל חדש ונסה שוב", "אישור", FlowDirection.RightToLeft);
+                    //Page p = new AdultMainTab();
+                    //p.Title = $"שלום {theApp.CurrentUser.UserName}";
+                    //theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
 
-                    else
-                        await App.Current.MainPage.DisplayAlert("שגיאה", "שם המשתמש שהקלדת כבר קיים במערכת, בבקשה תבחר שם משתמש חדש ונסה שוב", "אישור", FlowDirection.RightToLeft);
-
-                    await App.Current.MainPage.Navigation.PopModalAsync();
-                }
+                    await App.Current.MainPage.DisplayAlert("ההוספה", "ההוספה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
+                }                
             }
             else
                 await App.Current.MainPage.DisplayAlert("שמירת נתונים", " יש בעיה עם הנתונים בדוק ונסה שוב", "אישור", FlowDirection.RightToLeft);
