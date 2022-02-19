@@ -142,6 +142,7 @@ namespace CarpoolApp.ViewModels
 
             ActivitiesPageViewModel activityContext = new ActivitiesPageViewModel()
             {
+                Kid = kid,
                 ActivityList = theActivities
             };
             page.BindingContext = activityContext;

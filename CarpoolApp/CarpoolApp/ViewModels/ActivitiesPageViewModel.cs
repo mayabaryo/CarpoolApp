@@ -58,16 +58,15 @@ namespace CarpoolApp.ViewModels
         public async void OnAddCarpool(Activity activity)
         {
             Page page = new AddCarpool();
+
+            AddCarpoolViewModel carpoolContext = new AddCarpoolViewModel()
+            {
+                Activity = activity,
+                Kid = this.Kid
+            };
+            page.BindingContext = carpoolContext;
             page.Title = "צור הסעה";
             await App.Current.MainPage.Navigation.PushAsync(page);
-
-            Page p = new AddCarpool();
-
-            AddCarpoolViewModel activityContext = new AddCarpoolViewModel()
-            {
-                Activity = activity
-            };
-            p.BindingContext = activityContext;
         }
         #endregion
 

@@ -26,6 +26,8 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
         public Activity Activity { get; set; }
+        public Kid Kid { get; set; }
+
 
         #region CarpoolTime
         private bool showCarpoolTimeError;
@@ -137,7 +139,7 @@ namespace CarpoolApp.ViewModels
         #region Constructor
         public AddCarpoolViewModel()
         {
-            this.CarpoolTimeError = ERROR_MESSAGES.BAD_DATE;
+            this.CarpoolTimeError = ERROR_MESSAGES.BAD_ACTIVITY_DATE;
             this.StringSeatsError = ERROR_MESSAGES.BAD_SEATS;
 
             this.ShowCarpoolTimeError = false;
@@ -167,12 +169,14 @@ namespace CarpoolApp.ViewModels
 
                 Carpool carpool = new Carpool()
                 {
-                    AdultId = currentAdult.Id,
+                    AdultId = currentUser.Id,
                     CarpoolTime = this.CarpoolTime,
                     Seats = int.Parse(this.StringSeats),
                     CarpoolStatusId = 0,
                     ActivityId = this.Activity.Id
                 };
+
+                
 
                 ServerStatus = "מתחבר לשרת...";
                 await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
@@ -186,6 +190,15 @@ namespace CarpoolApp.ViewModels
                 }
                 else
                 {
+                    KidsInCarpool kidsInCarpool = new KidsInCarpool()
+                    {
+                        KidId = Kid.IdNavigation.Id,
+                        CarpoolId = newCarpool.Id
+                    };
+
+                    //הוספת הילד להסעה
+                    KidsInCarpool newKidsIn = await proxy.JoinToCarpoolAsync(kidsInCarpool);
+
                     ServerStatus = "שומר נתונים...";
 
                     //Page p = new AdultMainTab();
