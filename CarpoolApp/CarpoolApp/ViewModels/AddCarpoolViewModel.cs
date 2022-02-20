@@ -172,17 +172,16 @@ namespace CarpoolApp.ViewModels
                     AdultId = currentUser.Id,
                     CarpoolTime = this.CarpoolTime,
                     Seats = int.Parse(this.StringSeats),
-                    CarpoolStatusId = 0,
+                    CarpoolStatusId = 1,
                     ActivityId = this.Activity.Id
                 };
-
-                
-
+               
                 ServerStatus = "מתחבר לשרת...";
                 await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
-                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
 
+                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
                 Carpool newCarpool = await proxy.AddCarpoolAsync(carpool);
+
                 if (newCarpool == null)
                 {
                     await App.Current.MainPage.Navigation.PopModalAsync();
@@ -196,7 +195,7 @@ namespace CarpoolApp.ViewModels
                         CarpoolId = newCarpool.Id
                     };
 
-                    //הוספת הילד להסעה
+                    //הוספת הילד הנוכחי להסעה
                     KidsInCarpool newKidsIn = await proxy.JoinToCarpoolAsync(kidsInCarpool);
 
                     ServerStatus = "שומר נתונים...";
@@ -205,6 +204,7 @@ namespace CarpoolApp.ViewModels
                     //p.Title = $"שלום {theApp.CurrentUser.UserName}";
                     //theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
 
+                    await App.Current.MainPage.Navigation.PopModalAsync();
                     await App.Current.MainPage.DisplayAlert("ההוספה", "ההוספה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
                 }                
             }

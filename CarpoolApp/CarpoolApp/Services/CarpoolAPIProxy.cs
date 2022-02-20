@@ -471,36 +471,6 @@ namespace CarpoolApp.Services
         }
         #endregion
 
-        //#region GetAllActivitiesAsync
-        //public async Task<List<Activity>> GetAllActivitiesAsync(Kid kid)
-        //{
-        //    try
-        //    {
-        //        HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/GetAllActivities?kid={kid}");
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            JsonSerializerOptions options = new JsonSerializerOptions
-        //            {
-        //                ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
-        //                PropertyNameCaseInsensitive = true
-        //            };
-        //            string content = await response.Content.ReadAsStringAsync();
-        //            List<Activity> activities = JsonSerializer.Deserialize<List<Activity>>(content, options);
-        //            return activities;
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        return null;
-        //    }
-        //}
-        //#endregion
-
         #region GetAllActivitiesAsync
         public async Task<List<Activity>> GetAllActivitiesAsync(Kid kid)
         {
@@ -521,6 +491,40 @@ namespace CarpoolApp.Services
                     jsonObject = await response.Content.ReadAsStringAsync();
                     List<Activity> activities = JsonSerializer.Deserialize<List<Activity>>(jsonObject, options);
                     return activities;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
+        #region GetAllCarpoolsAsync
+        public async Task<List<Carpool>> GetAllCarpoolsAsync(Kid kid)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Kid>(kid, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/GetAllCarpools", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    List<Carpool> carpools = JsonSerializer.Deserialize<List<Carpool>>(jsonObject, options);
+                    return carpools;
                 }
                 else
                 {

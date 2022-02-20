@@ -70,23 +70,24 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region ActivitiesCommand
-        public ICommand ShowCarpoolsCommand => new Command<Kid>(OnShowCarpools);
-        public async void OnShowCarpools(Kid kid)
+        #region CarpoolsCommand
+        public ICommand CarpoolsCommand => new Command(OnCarpools);
+        public async void OnCarpools(/*Kid kid*/)
         {
             App theApp = (App)App.Current;
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            List<Activity> activities = await proxy.GetAllActivitiesAsync(kid);
-            ObservableCollection<Activity> theActivities = new ObservableCollection<Activity>(activities);
+            List<Carpool> carpools = await proxy.GetAllCarpoolsAsync(this.Kid);
+            ObservableCollection<Carpool> theCarpools = new ObservableCollection<Carpool>(carpools);
 
-            Page page = new ActivitiesPage();
-
-            ActivitiesPageViewModel activityContext = new ActivitiesPageViewModel()
+            Page page = new CarpoolsPage();
+            CarpoolsPageViewModel carpoolContext = new CarpoolsPageViewModel()
             {
-                ActivityList = theActivities
+                Kid = this.Kid,
+                CarpoolList = theCarpools
             };
-            page.BindingContext = activityContext;
-            page.Title = $"{kid.IdNavigation.UserName} הפעילויות של";
+
+            page.BindingContext = carpoolContext;
+            page.Title = "הצטרף להסעה";
             await App.Current.MainPage.Navigation.PushAsync(page);
         }
         #endregion

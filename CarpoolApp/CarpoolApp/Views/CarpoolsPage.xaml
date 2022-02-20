@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CarpoolApp.Views.ActivitiesPage"
+             x:Class="CarpoolApp.Views.CarpoolsPage"
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
 
-            <!-- ActivitiesCollection -->
+            <!-- CarpoolsCollection -->
             <CollectionView x:Name="collectionName" 
-                            ItemsSource="{Binding ActivityList}" SelectionMode="Single"
+                            ItemsSource="{Binding CarpoolList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                 <CollectionView.ItemTemplate>
@@ -28,8 +28,8 @@
                                     <SwipeItemView BackgroundColor="#c8e7ff">
                                         <StackLayout Margin="10" WidthRequest="100">
                                             <Button Text="צפה בהסעות" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
-                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.CarpoolsCommand}"
-                                                    />
+                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.ShowCarpoolsCommand}"
+                                                    CommandParameter="{Binding}"/>
                                         </StackLayout>
                                     </SwipeItemView>
                                 </SwipeItems>
@@ -48,17 +48,17 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0"
-                                   Text="שם הפעילות" FontAttributes="Bold"/>
+                                   Text="נהג" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="0"
-                                   Text="{Binding ActivityName}"/>
+                                   Text="{Binding Adult.IdNavigation.UserName}"/>
                                 <Label Grid.Column="0" Grid.Row="1"
-                                   Text="עיר" FontAttributes="Bold"/>
+                                   Text="סטטוס" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="1"
-                                   Text="{Binding City}"/>
+                                   Text="{Binding CarpoolStatus.StatusName}"/>
                                 <Label Grid.Column="0" Grid.Row="2"
-                                   Text="רחוב" FontAttributes="Bold"/>
+                                   Text="מושבים פנויים" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="2"
-                                   Text="{Binding Street}"/>
+                                   Text="{Binding Seats}"/>
 
                                 <Frame Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource SmallImageFrame}">
                                     <Image Source="{Binding IdNavigation.PhotoURL}" Style="{StaticResource SmallImage}"/>
