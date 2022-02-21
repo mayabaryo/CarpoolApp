@@ -196,8 +196,8 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <ImageButton Padding="0" Margin="0" Source="clearIcon.png" HorizontalOptions="End" BackgroundColor="White" Grid.Column="0" Grid.Row="0" Command="{Binding ClearCommand}"/>
-                            <ImageButton Padding="0" Margin="0" Source="tickIcon.png" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" BackgroundColor="White" Command="{Binding SaveDataCommand}"/>
+                            <ImageButton Padding="0" Margin="0" Source="clearIcon.png" HorizontalOptions="End" BackgroundColor="Transparent" Grid.Column="0" Grid.Row="0" Command="{Binding ClearCommand}"/>
+                            <ImageButton Padding="0" Margin="0" Source="tickIcon.png" HorizontalOptions="Start" Grid.Column="1" Grid.Row="0" BackgroundColor="Transparent" Command="{Binding SaveDataCommand}"/>
                         </Grid>
                     </StackLayout>
                 </ScrollView>

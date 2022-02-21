@@ -999,7 +999,7 @@ namespace CarpoolApp.ViewModels
             this.SelectedCityItem = currentUser.City;
             this.SelectedStreetItem = currentUser.Street;
 
-            this.UserImgSrc = currentUser.PhotoURL;
+            //this.UserImgSrc = currentUser.PhotoURL;
             this.Password = currentUser.UserPswd;
             this.Name = currentUser.FirstName;
             this.LastName = currentUser.LastName;
@@ -1009,8 +1009,8 @@ namespace CarpoolApp.ViewModels
             this.Street = this.SelectedStreetItem;
             this.HouseNum = currentUser.HouseNum;
             this.StringHouseNum = HouseNum.ToString();
-            //if (SetImageSourceEvent != null)
-            //    SetImageSourceEvent(currentUser.PhotoURL);
+            if (SetImageSourceEvent != null)
+                SetImageSourceEvent(currentUser.PhotoURL);
         }
         #endregion
 
