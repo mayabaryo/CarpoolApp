@@ -5,10 +5,44 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
+            <!-- ההסעה שלי -->
+            <Label Text="ההסעה שלי" Style="{StaticResource smallerTitle}"></Label>
+            <Label Text="לא נמצאו נתונים. הצטרף להסעה!" IsVisible="{Binding ShowLabel}"></Label>
+            <Grid Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsVisible="{Binding ShowCarpool}" BackgroundColor="#dfe7fd">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Grid.Row="0"
+                                   Text="נהג" FontAttributes="Bold"/>
+                <Label Grid.Column="1" Grid.Row="0"
+                                   Text="{Binding MyCarpool.Adult.IdNavigation.UserName}"/>
+                <Label Grid.Column="0" Grid.Row="1"
+                                   Text="סטטוס" FontAttributes="Bold"/>
+                <Label Grid.Column="1" Grid.Row="1"
+                                   Text="{Binding MyCarpool.CarpoolStatus.StatusName}"/>
+                <Label Grid.Column="0" Grid.Row="2"
+                                   Text="מושבים פנויים" FontAttributes="Bold"/>
+                <Label Grid.Column="1" Grid.Row="2"
+                                   Text="{Binding MyCarpool.Seats}"/>
 
+                <Frame Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource SmallImageFrame}">
+                    <Image Source="{Binding IdNavigation.PhotoURL}" Style="{StaticResource SmallImage}"/>
+                </Frame>
+
+            </Grid>
+
+
+            <Label Text="הסעות קיימות" Style="{StaticResource smallerTitle}"></Label>
             <!-- CarpoolsCollection -->
             <CollectionView x:Name="collectionName" 
-                            ItemsSource="{Binding CarpoolList}" SelectionMode="Single"
+                            ItemsSource="{Binding CarpoolsInActivity}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                 <CollectionView.ItemTemplate>

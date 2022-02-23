@@ -28,7 +28,16 @@ namespace CarpoolApp.ViewModels
 
         public Kid Kid { get; set; }
         public ObservableCollection<Carpool> CarpoolList { get; set; }
+        public Activity Activity { get; set; }
+        public ObservableCollection<Carpool> CarpoolsInActivity { get; set; }
+        public Carpool MyCarpool { get; set; }
+        public bool ShowCarpool { get; set; }
+        public bool ShowLabel { get => !ShowCarpool; }
 
 
+        public CarpoolsPageViewModel()
+        {
+
+        }
     }
 }
