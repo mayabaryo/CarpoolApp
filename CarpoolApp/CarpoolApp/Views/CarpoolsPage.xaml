@@ -53,8 +53,8 @@
 
                                     <SwipeItemView BackgroundColor="#e1eff6">
                                         <StackLayout Margin="10" WidthRequest="100" HeightRequest="200">
-                                            <Button Text="צור הסעה" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
-                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.AddCarpoolCommand}"
+                                            <Button Text="בקש להצטרף" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.RequestToJoinCommand}"
                                                     CommandParameter="{Binding}"/>
                                         </StackLayout>
                                     </SwipeItemView>
