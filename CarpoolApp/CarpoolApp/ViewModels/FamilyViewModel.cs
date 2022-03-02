@@ -135,7 +135,7 @@ namespace CarpoolApp.ViewModels
         {
             App theApp = (App)App.Current;
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            List<Activity> activities = await proxy.GetAllActivitiesAsync(kid);
+            List<Activity> activities = await proxy.GetKidActivitiesAsync(kid);
             ObservableCollection<Activity> theActivities = new ObservableCollection<Activity>(activities);
 
             Page page = new ActivitiesPage();

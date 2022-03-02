@@ -16,13 +16,14 @@
                 <Label Text="המשפחה שלי" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
             </Grid>
 
-            <StackLayout Style="{StaticResource Stack}">
+            <StackLayout Style="{StaticResource Stack}" Padding="10">
                 <Grid>
-                    <Button Text="הוסף ילד" Style="{StaticResource Button}" Command="{Binding MoveToAddKid}" Grid.Column="0" />
-                    <Button Text="הוסף מבוגר" Style="{StaticResource Button}" Command="{Binding MoveToAddAdult}" Grid.Column="1" />
+                    <Button Text="הוסף ילד" Style="{StaticResource Button}" Padding="25" Command="{Binding MoveToAddKid}" Grid.Column="0" />
+                    <Button Text="הוסף מבוגר" Style="{StaticResource Button}" Padding="25" Command="{Binding MoveToAddAdult}" Grid.Column="1" />
                 </Grid>
             </StackLayout>
-            
+
+            <Label Text="הילדים שלי" Style="{StaticResource smallerTitle}"></Label>
             <!-- KidsCollection -->
             <CollectionView x:Name="collectionName" 
                             ItemsSource="{Binding KidList}" SelectionMode="Single"

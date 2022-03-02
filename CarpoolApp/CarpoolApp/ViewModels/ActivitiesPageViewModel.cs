@@ -43,7 +43,7 @@ namespace CarpoolApp.ViewModels
             {
                 App theApp = (App)App.Current;
                 CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-                List<Activity> theActivities = await proxy.GetAllActivitiesAsync(Kid);
+                List<Activity> theActivities = await proxy.GetKidActivitiesAsync(Kid);
                 foreach (Activity a in theActivities)
                 {
                     this.ActivityList.Add(a);
@@ -76,7 +76,7 @@ namespace CarpoolApp.ViewModels
         {
             App theApp = (App)App.Current;
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            List<Carpool> carpools = await proxy.GetAllCarpoolsAsync(this.Kid);
+            List<Carpool> carpools = await proxy.GetKidCarpoolsAsync(this.Kid);
             ObservableCollection<Carpool> theCarpools = new ObservableCollection<Carpool>(carpools);
 
             List<Carpool> activityCarpools = await proxy.GetCarpoolsInActivityAsync(activity);

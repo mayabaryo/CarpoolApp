@@ -43,10 +43,10 @@
         </local:AddActivity.IconImageSource>
     </local:AddActivity>
 
-    <local:AddCarpool Title="הוספת הסעה">
-        <local:AddCarpool.IconImageSource>
+    <local:AdultCarpools Title="ההסעות שלי">
+        <local:AdultCarpools.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Taxi}"/>
-        </local:AddCarpool.IconImageSource>
-    </local:AddCarpool>
+        </local:AdultCarpools.IconImageSource>
+    </local:AdultCarpools>
 
 </TabbedPage>
