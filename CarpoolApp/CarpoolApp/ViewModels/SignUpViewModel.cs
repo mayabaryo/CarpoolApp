@@ -877,9 +877,9 @@ namespace CarpoolApp.ViewModels
                         App theApp = (App)App.Current;
                         theApp.CurrentUser = newAdult.IdNavigation;
 
-                        Page p = new AdultMainTab();
-                        p.Title = $"שלום {theApp.CurrentUser.UserName}";
-                        theApp.MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
+                        Page page = new AdultMainTab();
+                        page.Title = "שלום " + theApp.CurrentUser.UserName;
+                        theApp.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
                         
                         await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
                     }

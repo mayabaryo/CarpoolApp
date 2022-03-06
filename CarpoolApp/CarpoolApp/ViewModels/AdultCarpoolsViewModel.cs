@@ -26,7 +26,7 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        public ObservableCollection<Carpool> CarpoolList { get; }
+        public ObservableCollection<Carpool> CarpoolList { get; set; }
 
         #region ServerStatus
         private string serverStatus;
@@ -58,6 +58,9 @@ namespace CarpoolApp.ViewModels
 
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             List<Carpool> theCarpools = await proxy.GetAdultCarpoolsAsync(currentAdult);
+
+            //System.Threading.Thread.Sleep(1000);
+            
             foreach (Carpool c in theCarpools)
             {
                 this.CarpoolList.Add(c);

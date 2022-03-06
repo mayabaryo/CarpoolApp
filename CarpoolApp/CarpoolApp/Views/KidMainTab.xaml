@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:fonts="clr-namespace:Fonts"
+            xmlns:local="clr-namespace:CarpoolApp.Views"
+            x:Class="CarpoolApp.Views.KidMainTab"
+            xmlns:windows="clr-namespace:Xamarin.Forms.PlatformConfiguration.WindowsSpecific;assembly=Xamarin.Forms.Core"
+            windows:TabbedPage.HeaderIconsEnabled="true"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            Title="Tabs Example"
+            SelectedTabColor="#8e94f2"
+            UnselectedTabColor="#bbadff"
+            FlowDirection="RightToLeft">
+    <!--"#9fa0ff"-->
+    <!--"#e0c3fc"-->
+
+    <!--Pages can be added as references or inline-->
+
+    <windows:TabbedPage.HeaderIconsSize>
+        <Size>
+            <x:Arguments>
+                <x:Double>48</x:Double>
+                <x:Double>48</x:Double>
+            </x:Arguments>
+        </Size>
+    </windows:TabbedPage.HeaderIconsSize>
+    <local:AdultProfile Title="הפרופיל שלי">
+        <local:AdultProfile.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.User}"/>
+        </local:AdultProfile.IconImageSource>
+    </local:AdultProfile>
+
+</TabbedPage>

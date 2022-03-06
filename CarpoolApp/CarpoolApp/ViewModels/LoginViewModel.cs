@@ -105,9 +105,9 @@ namespace CarpoolApp.ViewModels
                     page = new Views.AdultMainTab();
 
                 else
-                    page = new Views.KidPage();
+                    page = new Views.KidMainTab();
 
-                page.Title = $"שלום {user.UserName}";
+                page.Title = "שלום " + theApp.CurrentUser.UserName;
                 App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
             }
         }

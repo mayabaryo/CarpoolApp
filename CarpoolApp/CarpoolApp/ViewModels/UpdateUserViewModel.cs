@@ -841,8 +841,16 @@ namespace CarpoolApp.ViewModels
 
                     theApp.CurrentUser = user;
                     await App.Current.MainPage.Navigation.PopModalAsync();
-                    Page page = new AdultMainTab();
-                    page.Title = $"שלום {user.UserName}";
+
+                    Page page;
+
+                    if (user.Kid == null)
+                        page = new Views.AdultMainTab();
+
+                    else
+                        page = new Views.KidMainTab();
+
+                    page.Title = "שלום " + theApp.CurrentUser.UserName;
                     App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
                     await App.Current.MainPage.DisplayAlert("עדכון", "העדכון בוצע בהצלחה", "אישור", FlowDirection.RightToLeft);
                 }
