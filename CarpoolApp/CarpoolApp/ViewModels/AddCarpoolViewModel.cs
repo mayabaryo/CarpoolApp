@@ -204,7 +204,7 @@ namespace CarpoolApp.ViewModels
                     page.Title = "שלום" + theApp.CurrentUser.UserName;
                     App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
 
-                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    //await App.Current.MainPage.Navigation.PopModalAsync();
                     await App.Current.MainPage.DisplayAlert("ההוספה", "ההוספה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
                 }                
             }
