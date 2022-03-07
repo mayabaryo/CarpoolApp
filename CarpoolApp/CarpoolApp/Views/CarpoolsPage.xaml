@@ -42,7 +42,7 @@
             <Label Text="הסעות קיימות" Style="{StaticResource smallerTitle}"></Label>
             <!-- CarpoolsCollection -->
             <CollectionView x:Name="collectionName" 
-                            ItemsSource="{Binding CarpoolsInActivity}" SelectionMode="Single"
+                            ItemsSource="{Binding OtherCarpools}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
                         SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
                 <CollectionView.ItemTemplate>

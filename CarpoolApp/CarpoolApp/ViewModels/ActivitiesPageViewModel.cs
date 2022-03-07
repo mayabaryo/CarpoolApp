@@ -80,10 +80,21 @@ namespace CarpoolApp.ViewModels
             ObservableCollection<Carpool> theCarpools = new ObservableCollection<Carpool>(carpools);
 
             List<Carpool> activityCarpools = await proxy.GetCarpoolsInActivityAsync(activity);
-            ObservableCollection<Carpool> carpoolsInAcivity = new ObservableCollection<Carpool>(activityCarpools);
+            //ObservableCollection<Carpool> carpoolsInAcivity = new ObservableCollection<Carpool>(activityCarpools);
+
 
             Carpool myCarpool = theCarpools.Where(a => a.ActivityId == activity.Id).FirstOrDefault();
 
+            List<Carpool> otherCarpools = activityCarpools;
+            if (myCarpool != null)
+            {
+                foreach (Carpool c in activityCarpools)
+                {
+                    if (c.Id == myCarpool.Id)
+                        activityCarpools.Remove(c);
+                }
+            }
+            
 
             Page page = new CarpoolsPage();
             CarpoolsPageViewModel carpoolContext = new CarpoolsPageViewModel()
@@ -91,7 +102,7 @@ namespace CarpoolApp.ViewModels
                 Kid = this.Kid,
                 CarpoolList = theCarpools,
                 Activity = activity,
-                CarpoolsInActivity = carpoolsInAcivity,
+                OtherCarpools = new ObservableCollection<Carpool>(activityCarpools),
                 MyCarpool = myCarpool,
                 ShowCarpool = (myCarpool != null)
             };
