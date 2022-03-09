@@ -76,25 +76,29 @@ namespace CarpoolApp.ViewModels
         {
             App theApp = (App)App.Current;
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            List<Carpool> carpools = await proxy.GetKidCarpoolsAsync(this.Kid);
-            ObservableCollection<Carpool> theCarpools = new ObservableCollection<Carpool>(carpools);
+            List<Carpool> kidCarpools = await proxy.GetKidCarpoolsAsync(this.Kid);
+
+            ObservableCollection<Carpool> theCarpools = new ObservableCollection<Carpool>(kidCarpools);
 
             List<Carpool> activityCarpools = await proxy.GetCarpoolsInActivityAsync(activity);
+
+            //System.Threading.Thread.Sleep(10000);
+
             //ObservableCollection<Carpool> carpoolsInAcivity = new ObservableCollection<Carpool>(activityCarpools);
 
 
             Carpool myCarpool = theCarpools.Where(a => a.ActivityId == activity.Id).FirstOrDefault();
 
-            List<Carpool> otherCarpools = activityCarpools;
-            if (myCarpool != null)
-            {
-                foreach (Carpool c in activityCarpools)
-                {
-                    if (c.Id == myCarpool.Id)
-                        activityCarpools.Remove(c);
-                }
-            }
-            
+            //List<Carpool> otherCarpools = activityCarpools;
+            //if (myCarpool != null)
+            //{
+            //    foreach (Carpool c in activityCarpools)
+            //    {
+            //        if (c.Id == myCarpool.Id)
+            //            activityCarpools.Remove(c);
+            //    }
+            //}
+
 
             Page page = new CarpoolsPage();
             CarpoolsPageViewModel carpoolContext = new CarpoolsPageViewModel()

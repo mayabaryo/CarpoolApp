@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             x:Class="CarpoolApp.Views.ShowMap">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Text="{Binding Origin}" Placeholder="Origin"></Entry>
+            <Entry Text="{Binding Destination}" Placeholder="Destination"></Entry>
+            <Button Text="Go" Command="{Binding Go}"></Button>
+            <maps:Map x:Name="map" IsShowingUser="False" 
+                              HorizontalOptions="FillAndExpand"
+                     />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

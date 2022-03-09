@@ -16,6 +16,13 @@ using CarpoolApp.DTO;
 
 namespace CarpoolApp
 {
+    public class Constants
+    {
+        //Generate Google Api Key at: https://console.cloud.google.com/ for Places API, Directions API, Maps SDK For android!
+        //Generate Bing Api Key at: https://www.bingmapsportal.com/
+        public const string GoogleApiKey = "YOUR GOOGLE API KEY";
+        public const string BingApiKey = "YOUR BING API KEY";
+    }
     public partial class App : Application
     {
         public static bool IsDevEnv 
@@ -39,6 +46,9 @@ namespace CarpoolApp
             Streets = new List<string>();
 
             InitializeComponent();
+            //Set up google map api key
+            GoogleMapsApiService.Initialize(Constants.GoogleApiKey);
+
             CurrentUser = null;
             //CurrentAdult = null;
             //CurrentKid = null;
