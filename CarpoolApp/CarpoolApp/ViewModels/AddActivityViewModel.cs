@@ -49,7 +49,7 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        private List<string> allStreets;
+        private List<Street> allStreets;
         #region FilteredStreets
         private ObservableCollection<string> filteredStreets;
         public ObservableCollection<string> FilteredStreets
@@ -66,6 +66,19 @@ namespace CarpoolApp.ViewModels
                     this.filteredStreets = value;
                     OnPropertyChanged("FilteredStreets");
                 }
+            }
+        }
+        #endregion
+
+        #region IsStreetEnabled
+        private bool isStreetEnabled;
+        public bool IsStreetEnabled
+        {
+            get => isStreetEnabled;
+            set
+            {
+                isStreetEnabled = value;
+                OnPropertyChanged("IsStreetEnabled");
             }
         }
         #endregion
@@ -338,8 +351,8 @@ namespace CarpoolApp.ViewModels
             this.ShowStreetError = string.IsNullOrEmpty(this.Street);
             if (!this.ShowStreetError)
             {
-                string street = this.allStreets.Where(s => s == this.Street).FirstOrDefault();
-                if (string.IsNullOrEmpty(street))
+                Street street = this.allStreets.Where(s => s.street_name == this.Street).FirstOrDefault();
+                if (street == null)
                 {
                     this.ShowStreetError = true;
                     this.StreetError = ERROR_MESSAGES.BAD_STREET;
@@ -568,8 +581,9 @@ namespace CarpoolApp.ViewModels
             this.allCities = theApp.Cities;
             this.FilteredCities = new ObservableCollection<string>();
 
-            this.allStreets = theApp.Streets;
+            this.allStreets = theApp.StreetList;
             this.FilteredStreets = new ObservableCollection<string>();
+            this.IsStreetEnabled = false;
 
             this.ActivityNameError = ERROR_MESSAGES.REQUIRED_FIELD;
             this.StartTimeError = ERROR_MESSAGES.BAD_ACTIVITY_DATE;
@@ -665,40 +679,36 @@ namespace CarpoolApp.ViewModels
         #region OnCityChanged
         public void OnCityChanged(string search)
         {
+            this.Street = "";
+            this.ShowStreets = false;
+            this.FilteredStreets.Clear();
+            this.IsStreetEnabled = false;
+
             if (this.City != this.SelectedCityItem)
             {
                 this.ShowCities = true;
                 this.SelectedCityItem = null;
             }
-            //Filter the list of contacts based on the search term
+            //Filter the list of cities based on the search term
             if (this.allCities == null)
                 return;
             if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
             {
                 this.ShowCities = false;
                 this.FilteredCities.Clear();
-                //foreach (string city in this.allCities)
-                //{
-                //    if (!this.FilteredCities.Contains(city))
-                //        this.FilteredCities.Add(city);
-                //}
             }
             else
             {
                 foreach (string city in this.allCities)
                 {
-                    string contactString = city; /*$"{uc.FirstName}|{uc.LastName}|{uc.Email}";*/
-
                     if (!this.FilteredCities.Contains(city) &&
-                        contactString.Contains(search))
+                        city.Contains(search))
                         this.FilteredCities.Add(city);
                     else if (this.FilteredCities.Contains(city) &&
-                        !contactString.Contains(search))
+                        !city.Contains(search))
                         this.FilteredCities.Remove(city);
                 }
             }
-
-            //this.FilteredCities = new ObservableCollection<string>(this.FilteredCities);
         }
         #endregion
 
@@ -710,7 +720,7 @@ namespace CarpoolApp.ViewModels
                 this.ShowStreets = true;
                 this.SelectedStreetItem = null;
             }
-            //Filter the list of contacts based on the search term
+            //Filter the list of streets based on the search term
             if (this.allStreets == null)
                 return;
             if (String.IsNullOrWhiteSpace(search) || String.IsNullOrEmpty(search))
@@ -720,16 +730,16 @@ namespace CarpoolApp.ViewModels
             }
             else
             {
-                foreach (string street in this.allStreets)
+                foreach (Street street in this.allStreets)
                 {
-                    string contactString = street;
+                    string streetName = street.street_name;
 
-                    if (!this.FilteredStreets.Contains(street) &&
-                        contactString.Contains(search))
-                        this.FilteredStreets.Add(street);
-                    else if (this.FilteredStreets.Contains(street) &&
-                        !contactString.Contains(search))
-                        this.FilteredStreets.Remove(street);
+                    if (!this.FilteredStreets.Contains(streetName) &&
+                        streetName.Contains(search) && street.city_name == this.City)
+                        this.FilteredStreets.Add(streetName);
+                    else if (this.FilteredStreets.Contains(streetName) &&
+                        (!streetName.Contains(search) || !(street.city_name == this.City)))
+                        this.FilteredStreets.Remove(streetName);
                 }
             }
         }
@@ -743,19 +753,10 @@ namespace CarpoolApp.ViewModels
             {
                 this.ShowCities = false;
                 this.City = city;
-                //this.FilteredCities.Clear();
 
-                //App theApp = (App)App.Current;
-                //AddContactViewModel vm = new AddContactViewModel(uc);
-                //vm.ContactUpdatedEvent += OnContactAdded;
-                //Page p = new Views.AddContact(vm);
-                //await theApp.MainPage.Navigation.PushAsync(p);
-                //if (ClearSelection != null)
-                //    ClearSelection();
+                this.IsStreetEnabled = true;
             }
         }
-
-        //public event Action ClearSelection;
         #endregion
 
         #region SelectedStreet

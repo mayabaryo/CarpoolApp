@@ -39,11 +39,14 @@ namespace CarpoolApp
         //public Kid CurrentKid { get; set; }
         public List<string> Cities { get; set; }
         public List<string> Streets { get; set; }
+        public List<Street> StreetList { get; set; }
+
 
         public App()
         {
             Cities = new List<string>();
             Streets = new List<string>();
+            StreetList = new List<Street>();
 
             InitializeComponent();
             //Set up google map api key
@@ -68,6 +71,7 @@ namespace CarpoolApp
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             this.Streets = await proxy.GetStreetsAsync();
             this.Cities = await proxy.GetCitiesAsync();
+            this.StreetList = await proxy.GetStreetListAsync();
         }
 
         protected override void OnSleep()

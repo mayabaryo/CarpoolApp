@@ -759,5 +759,82 @@ namespace CarpoolApp.Services
             }
         }
         #endregion
+
+
+        #region GetStreetsNameByCity
+        private List<string> GetStreetsNameByCity(List<Street> streets, string city)
+        {
+            List<string> streetsName = new List<string>();
+
+            foreach (Street street in streets)
+            {
+                if (street.city_name == city)
+                    streetsName.Add(street.street_name);
+            }
+
+            return streetsName;
+        }
+        #endregion
+
+        #region GetStreetsByCityAsync
+        public async Task<List<string>> GetStreetsByCityAsync(string city)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseDataUri}/streets.json?666");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    List<Street> streets = JsonSerializer.Deserialize<List<Street>>(content, options);
+                    return GetStreetsNameByCity(streets, city);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
+
+        #region GetStreetListAsync
+        public async Task<List<Street>> GetStreetListAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseDataUri}/streets.json?666");
+                if (response.IsSuccessStatusCode)
+                {
+                    JsonSerializerOptions options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    List<Street> streets = JsonSerializer.Deserialize<List<Street>>(content, options);
+                    return streets;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
     }
 }

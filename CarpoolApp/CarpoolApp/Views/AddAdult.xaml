@@ -165,7 +165,7 @@
                                     <Label Text="רחוב" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                     <Label Text="{Binding StreetError}" IsVisible="{Binding ShowStreetError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                                 </Grid>
-                                <SearchBar Placeholder="חפש רחוב" Text="{Binding Street}" Style="{StaticResource entry}"/>
+                                <SearchBar Placeholder="חפש רחוב" Text="{Binding Street}" IsEnabled="{Binding IsStreetEnabled}" Style="{StaticResource entry}"/>
                                 <CollectionView EmptyView="לא נמצאו רחובות"  x:Name="streets" ItemsSource="{Binding FilteredStreets}" SelectedItem="{Binding SelectedStreetItem}" SelectionMode="Single"
                                    IsVisible="{Binding ShowStreets}" SelectionChangedCommand="{Binding Source={x:Reference streets}, Path=BindingContext.SelectedStreet}" SelectionChangedCommandParameter="{Binding Source={x:Reference streets}, Path=SelectedItem}"></CollectionView>
 

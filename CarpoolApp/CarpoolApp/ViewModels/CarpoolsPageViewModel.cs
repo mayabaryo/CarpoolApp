@@ -40,28 +40,28 @@ namespace CarpoolApp.ViewModels
 
         }
 
-        #region AddCarpoolCommand
-        public ICommand RequestToJoinCommand => new Command<Carpool>(OnRequestToJoin);
-        public async void OnRequestToJoin(Carpool carpool)
-        {
-            RequestToJoinCarpool requestToJoinCarpool = new RequestToJoinCarpool()
-            {
-                KidId = Kid.Id,
-                CarpoolId = carpool.Id,
-                RequestStatusId = 1
-            };
+        //#region AddCarpoolCommand
+        //public ICommand RequestToJoinCommand => new Command<Carpool>(OnRequestToJoin);
+        //public async void OnRequestToJoin(Carpool carpool)
+        //{
+        //    RequestToJoinCarpool requestToJoinCarpool = new RequestToJoinCarpool()
+        //    {
+        //        KidId = Kid.Id,
+        //        CarpoolId = carpool.Id,
+        //        RequestStatusId = 1
+        //    };
 
-            //Page page = new AddCarpool();
+        //    //Page page = new AddCarpool();
 
-            //AddCarpoolViewModel carpoolContext = new AddCarpoolViewModel()
-            //{
-            //    Activity = activity,
-            //    Kid = this.Kid
-            //};
-            //page.BindingContext = carpoolContext;
-            //page.Title = "צור הסעה";
-            //await App.Current.MainPage.Navigation.PushAsync(page);
-        }
-        #endregion
+        //    //AddCarpoolViewModel carpoolContext = new AddCarpoolViewModel()
+        //    //{
+        //    //    Activity = activity,
+        //    //    Kid = this.Kid
+        //    //};
+        //    //page.BindingContext = carpoolContext;
+        //    //page.Title = "צור הסעה";
+        //    //await App.Current.MainPage.Navigation.PushAsync(page);
+        //}
+        //#endregion
     }
 }
