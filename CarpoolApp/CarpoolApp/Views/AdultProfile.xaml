@@ -154,6 +154,9 @@
                         </StackLayout>
                     </Frame>
                     <Button Text="עדכון פרטים" Style="{StaticResource Button}" Command="{Binding UpdateCommand}"></Button>
+
+                    <Button Text="שלח אימייל" Style="{StaticResource Button}" Command="{Binding EmailCommand}"></Button>
+
                 </StackLayout>
             </ScrollView>
         </StackLayout>

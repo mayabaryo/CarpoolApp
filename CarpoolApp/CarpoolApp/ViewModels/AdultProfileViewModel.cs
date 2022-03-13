@@ -247,5 +247,24 @@ namespace CarpoolApp.ViewModels
             }
         }
         #endregion
+
+        #region EmailCommand
+        public ICommand EmailCommand => new Command(OnEmail);
+        public async void OnEmail()
+        {
+            App theApp = (App)App.Current;
+            User currentUser = theApp.CurrentUser;
+
+            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+
+            string activityCode = ActivityCode.CreateGroupCode(1);
+            string body = "תודה שיצרת פעילות חדשה! קוד הכניסה לפעילות שלך הינו " + activityCode;
+            string to = currentUser.Email;
+            string toName = currentUser.UserName;
+            bool isSent = await proxy.SendEmailAsync(body, to, toName);
+            
+        }
+        #endregion
+        
     }
 }

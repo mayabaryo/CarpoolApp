@@ -661,7 +661,15 @@ namespace CarpoolApp.ViewModels
                     await App.Current.MainPage.DisplayAlert("שגיאה", "הוספת הפעילות נכשלה", "אישור", FlowDirection.RightToLeft);
                 }
                 else
-                {                
+                {
+                    ServerStatus = "שולח קוד...";
+
+                    string activityCode = ActivityCode.CreateGroupCode(newActivity.Id);
+                    string body = "תודה שיצרת פעילות חדשה! קוד הכניסה לפעילות שלך הינו " + activityCode;
+                    string to = currentUser.Email;
+                    string toName = currentUser.UserName;
+                    bool isSent = await proxy.SendEmailAsync(body, to, toName);
+
                     ServerStatus = "שומר נתונים...";
 
                     Page page = new AdultMainTab();

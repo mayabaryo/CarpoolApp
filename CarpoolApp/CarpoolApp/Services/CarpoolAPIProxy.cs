@@ -92,6 +92,38 @@ namespace CarpoolApp.Services
 
         public string GetBasePhotoUri() { return this.basePhotosUri; }
 
+        #region SendEmailAsync
+        public async Task<bool> SendEmailAsync(string body, string to, string toName)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/SendEmailHelper?body={body}&to={to}&toName={toName}");
+                if (response.IsSuccessStatusCode)
+                {
+                    //JsonSerializerOptions options = new JsonSerializerOptions
+                    //{
+                    //    ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                    //    PropertyNameCaseInsensitive = true
+                    //};
+                    //string content = await response.Content.ReadAsStringAsync();
+
+                    //User u = JsonSerializer.Deserialize<User>(content, options);
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
+
         #region LoginAsync
         public async Task<User> LoginAsync(string email, string pass)
         {
