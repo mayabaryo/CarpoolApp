@@ -201,7 +201,7 @@ namespace CarpoolApp.ViewModels
                     ServerStatus = "שומר נתונים...";
 
                     Page page = new AdultMainTab();
-                    page.Title = "שלום" + theApp.CurrentUser.UserName;
+                    page.Title = "שלום " + theApp.CurrentUser.UserName;
                     App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
 
                     //await App.Current.MainPage.Navigation.PopModalAsync();
