@@ -259,7 +259,7 @@ namespace CarpoolApp.ViewModels
 
             string activityCode = ActivityCode.CreateGroupCode(1);
             string body = "תודה שיצרת פעילות חדשה! קוד הכניסה לפעילות שלך הינו " + activityCode;
-            string to = currentUser.Email;
+            string to = "yotam.mohel2@gmail.com";
             string toName = currentUser.UserName;
             bool isSent = await proxy.SendEmailAsync(body, to, toName);
             

@@ -880,7 +880,7 @@ namespace CarpoolApp.ViewModels
         #region OnCityChanged
         public void OnCityChanged(string search)
         {
-            //this.Street = "";
+            this.Street = "";
             this.ShowStreets = false;
             this.FilteredStreets.Clear();
             this.IsStreetEnabled = false;
