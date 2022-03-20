@@ -16,7 +16,9 @@
                 <Label Text="ההסעות שלי" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
             </Grid>
 
-            <!-- CarpoolsCollection -->
+            <StackLayout Style="{StaticResource Stack}">
+            <Frame Style="{StaticResource logInSignUp}">
+                    <!-- CarpoolsCollection -->
             <CollectionView x:Name="collectionName" 
                             ItemsSource="{Binding CarpoolList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
@@ -80,6 +82,8 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            </Frame>
+            </StackLayout>
 
         </StackLayout>
     </ContentPage.Content>
