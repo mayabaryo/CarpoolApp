@@ -10,6 +10,7 @@ using CarpoolApp.ViewModels;
 using CarpoolApp.Helpers;
 using Xamarin.Forms.Maps;
 using CarpoolApp.Model;
+using CarpoolApp.Services;
 
 namespace CarpoolApp.Views
 {
@@ -24,8 +25,26 @@ namespace CarpoolApp.Views
             InitializeComponent();
         }
 
-        public void OnUpdateMap()
+        public async void OnUpdateMap()
         {
+            List<GooglePlace> places = new List<GooglePlace>();
+            GoogleMapsApiService service = new GoogleMapsApiService();
+            //find auto complete places first for origin and destination
+            GooglePlaceAutoCompleteResult autoOrigin = await service.GetPlaces("הוד השרון");
+            GooglePlace origin = await service.GetPlaceDetails(autoOrigin.AutoCompletePlaces[0].PlaceId);
+
+            GooglePlaceAutoCompleteResult autoDest = await service.GetPlaces("אילת");
+            GooglePlace dest = await service.GetPlaceDetails(autoDest.AutoCompletePlaces[0].PlaceId);
+
+            GooglePlaceAutoCompleteResult autoPlace1 = await service.GetPlaces("באר שבע");
+            GooglePlace place1 = await service.GetPlaceDetails(autoPlace1.AutoCompletePlaces[0].PlaceId);
+            GooglePlaceAutoCompleteResult autoPlace2 = await service.GetPlaces("נתניה");
+            GooglePlace place2 = await service.GetPlaceDetails(autoPlace2.AutoCompletePlaces[0].PlaceId);
+
+            places.Add(place1);
+            places.Add(place2);
+
+            GoogleDirection directions = await service.GetDirectionsMulti($"{origin.Latitude}", $"{origin.Longitude}", $"{dest.Latitude}", $"{dest.Longitude}", places);
 
             //Clear all routes and pins from the map
             map.MapElements.Clear();
@@ -56,7 +75,7 @@ namespace CarpoolApp.Views
             map.MoveToRegion(span);
 
             //Create the polyline between origin and destination
-            GoogleDirection directions = vm.RouteDirections;
+            //GoogleDirection directions = vm.RouteDirections;
             Xamarin.Forms.Maps.Polyline path = new Xamarin.Forms.Maps.Polyline()
             {
                 StrokeColor = Xamarin.Forms.Color.Blue,

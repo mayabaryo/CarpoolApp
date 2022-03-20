@@ -20,7 +20,8 @@ namespace CarpoolApp.UWP
         public MainPage()
         {
             this.InitializeComponent();
-
+            //Maps key 
+            Xamarin.FormsMaps.Init(CarpoolApp.Constants.BingApiKey);
             LoadApplication(new CarpoolApp.App());
         }
     }
