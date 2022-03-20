@@ -23,8 +23,14 @@
                 </Grid>
             </StackLayout>
 
+            
+            <StackLayout Style="{StaticResource Stack}">
+                
             <Label Text="הילדים שלי" Style="{StaticResource smallerTitle}"></Label>
             <!-- KidsCollection -->
+
+            <Frame Style="{StaticResource logInSignUp}">
+            
             <CollectionView x:Name="collectionName" 
                             ItemsSource="{Binding KidList}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
@@ -121,6 +127,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            </Frame>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

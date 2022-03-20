@@ -5,9 +5,24 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
+            <Grid Margin="0,0,0,0" Padding="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0" Aspect="AspectFill" Source="carpoolLogo" Opacity="0.6"></Image>
+                <Label Text="הסעות" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
+            </Grid>
+
+            <ScrollView>
+        <StackLayout Style="{StaticResource Stack}">
             <!-- ההסעה שלי -->
             <Label Text="ההסעה שלי" Style="{StaticResource smallerTitle}"></Label>
             <Label Text="לא נמצאו נתונים. הצטרף להסעה!" IsVisible="{Binding ShowLabel}"></Label>
+
+            <Frame Style="{StaticResource logInSignUp}" IsVisible="{Binding ShowCarpool}">
             <Grid Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsVisible="{Binding ShowCarpool}" BackgroundColor="#dfe7fd">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -37,10 +52,13 @@
                 </Frame>
 
             </Grid>
+            </Frame>
 
 
             <Label Text="הסעות קיימות" Style="{StaticResource smallerTitle}"></Label>
-            <!-- CarpoolsCollection -->
+
+            <Frame Style="{StaticResource logInSignUp}" HeightRequest="200">
+                <!-- CarpoolsCollection -->
             <CollectionView x:Name="collectionName" 
                             ItemsSource="{Binding OtherCarpools}" SelectionMode="Single"
                         SelectionChangedCommand="{Binding SelctionChanged}"
@@ -121,7 +139,11 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            </Frame>
 
         </StackLayout>
+            </ScrollView>
+        </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>

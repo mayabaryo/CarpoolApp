@@ -15,10 +15,10 @@ namespace CarpoolApp.Views
     {
         public UpdateUser()
         {
+            InitializeComponent();
             UpdateUserViewModel vm = new UpdateUserViewModel();
             this.BindingContext = vm;
-            vm.SetImageSourceEvent += OnSetImageSource;
-            InitializeComponent();
+            vm.SetImageSourceEvent += OnSetImageSource;            
         }
 
         public void OnSetImageSource(ImageSource imgSource)

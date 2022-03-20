@@ -5,7 +5,20 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
+            <Grid Margin="0,0,0,0" Padding="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0" Aspect="AspectFill" Source="carpoolLogo" Opacity="0.6"></Image>
+                <Label Text="פעילויות" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
+            </Grid>
+        
+        <StackLayout Style="{StaticResource Stack}">
 
+            <Frame Style="{StaticResource logInSignUp}">
             <!-- ActivitiesCollection -->
             <CollectionView x:Name="collectionName" 
                             ItemsSource="{Binding ActivityList}" SelectionMode="Single"
@@ -87,7 +100,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            </Frame>
 
+        </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -51,7 +51,7 @@
 
     <local:ShowMap Title="מפה">
         <local:ShowMap.IconImageSource>
-            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.MapLocationDot}"/>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.LocationDot}"/>
         </local:ShowMap.IconImageSource>
     </local:ShowMap>
 

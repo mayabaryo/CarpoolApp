@@ -880,15 +880,23 @@ namespace CarpoolApp.ViewModels
         #region OnCityChanged
         public void OnCityChanged(string search)
         {
-            this.Street = "";
-            this.ShowStreets = false;
-            this.FilteredStreets.Clear();
-            this.IsStreetEnabled = false;
+            //if (this.Street != this.selectedStreetItem)
+            //{
+            //    this.Street = "";
+            //    this.ShowStreets = false;
+            //    this.FilteredStreets.Clear();
+            //    this.IsStreetEnabled = false;
+            //}            
 
             if (this.City != this.SelectedCityItem)
             {
                 this.ShowCities = true;
                 this.SelectedCityItem = null;
+
+                this.Street = "";
+                this.ShowStreets = false;
+                this.FilteredStreets.Clear();
+                this.IsStreetEnabled = false;
             }
             //Filter the list of cities based on the search term
             if (this.allCities == null)
