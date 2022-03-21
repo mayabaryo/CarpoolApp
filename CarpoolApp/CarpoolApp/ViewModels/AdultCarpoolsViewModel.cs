@@ -68,5 +68,31 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+
+        #region StartCommand
+        public ICommand StartCommand => new Command<Carpool>(OnStart);
+        public async void OnStart(Carpool carpool)
+        {
+            App theApp = (App)App.Current;
+            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+
+            User driver = carpool.Adult.IdNavigation;
+            string origin = $"{driver.City},{driver.Street} {driver.HouseNum}";
+
+            Activity activity = carpool.Activity;
+            string dest = $"{activity.City},{activity.Street} {activity.HouseNum}";
+
+            List<Kid> kids = await proxy.GetKidsInCarpoolAsync(carpool);
+
+            List<string> waypoints = new List<string>();
+            foreach(Kid kid in kids)
+            {
+                User user = kid.IdNavigation;
+                string point = $"{user.City},{user.Street} {user.HouseNum}";
+                waypoints.Add(point);
+            }
+        }
+        #endregion
+
     }
 }
