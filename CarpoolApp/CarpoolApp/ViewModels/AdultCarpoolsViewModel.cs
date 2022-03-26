@@ -13,6 +13,7 @@ using CarpoolApp.Views;
 using System.Text.RegularExpressions;
 using CarpoolApp.DTO;
 using System.Collections.ObjectModel;
+using CarpoolApp.Model;
 
 namespace CarpoolApp.ViewModels
 {
@@ -91,6 +92,44 @@ namespace CarpoolApp.ViewModels
                 string point = $"{user.City},{user.Street} {user.HouseNum}";
                 waypoints.Add(point);
             }
+
+
+            //GoogleMapsApiService service = new GoogleMapsApiService();
+
+            //GooglePlaceAutoCompleteResult originPlaces = await service.GetPlaces(origin);
+            //GooglePlaceAutoCompleteResult destPlaces = await service.GetPlaces(dest);
+            ////extract the exact first google place for origin and destination
+            ////note that here i am taking the first suggestion but it will be better if you will
+            ////ask the user to choose which suggestion is better for him
+            //GooglePlace originplace = await service.GetPlaceDetails(originPlaces.AutoCompletePlaces[0].PlaceId);
+            //GooglePlace destplace = await service.GetPlaceDetails(destPlaces.AutoCompletePlaces[0].PlaceId);
+
+            //List<GooglePlace> waypointsPlaces = new List<GooglePlace>();
+            //foreach(string point in waypoints)
+            //{
+            //    GooglePlaceAutoCompleteResult pointPlaces = await service.GetPlaces(point);
+            //    GooglePlace pointplace = await service.GetPlaceDetails(pointPlaces.AutoCompletePlaces[0].PlaceId);
+            //    waypointsPlaces.Add(pointplace);
+            //}
+
+            //GoogleDirection directions = await service.GetDirectionsMulti($"{originplace.Latitude}", $"{originplace.Longitude}", $"{destplace.Latitude}", $"{destplace.Longitude}", waypointsPlaces);
+
+
+
+            //ShowMapViewModel mapContext = new ShowMapViewModel(origin, dest, waypoints);
+            //{
+            //    Origin = origin,
+            //    Destination = dest,
+            //    Waypoints = waypoints
+            //};
+
+            ShowMap page = new ShowMap(origin, dest, waypoints);
+            //{
+            //    //mapContext.OnUpdateMapEvent += ShowMap.OnUpdateMap,
+            //    BindingContext = mapContext
+            //};
+            await App.Current.MainPage.Navigation.PushAsync(page);
+
         }
         #endregion
 

@@ -5,9 +5,11 @@
              x:Class="CarpoolApp.Views.ShowMap">
     <ContentPage.Content>
         <StackLayout>
+            <!--
             <Entry Text="{Binding Origin}" Placeholder="Origin"></Entry>
             <Entry Text="{Binding Destination}" Placeholder="Destination"></Entry>
-            <Button Text="Go" Command="{Binding Go}"></Button>
+            <Button Text="Go" Command="{Binding Start}"></Button>
+            -->
             <maps:Map x:Name="map" IsShowingUser="False" 
                               HorizontalOptions="FillAndExpand"
                      />
