@@ -93,7 +93,7 @@ namespace CarpoolApp.Views
             //GoogleDirection directions = vm.RouteDirections;
             Xamarin.Forms.Maps.Polyline path = new Xamarin.Forms.Maps.Polyline()
             {
-                StrokeColor = Xamarin.Forms.Color.87D6C5,
+                StrokeColor = Xamarin.Forms.Color.FromHex("87D6C5"),
                 StrokeWidth = 15
             };
             //run through each leg of the route, then, through each step
