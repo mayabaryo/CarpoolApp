@@ -26,7 +26,7 @@
             
             <StackLayout Style="{StaticResource Stack}">
                 
-            <Label Text="הילדים שלי" Style="{StaticResource smallerTitle}"></Label>
+            <Label Text="הילדים שלי" Style="{StaticResource smallerTitle}" Margin="-5"></Label>
             <!-- KidsCollection -->
 
             <Frame Style="{StaticResource logInSignUp}">

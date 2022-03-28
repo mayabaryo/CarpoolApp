@@ -77,13 +77,7 @@
                                         </StackLayout>
                                     </SwipeItemView>
 
-                                    <SwipeItemView BackgroundColor="#c8e7ff">
-                                        <StackLayout Margin="10" WidthRequest="100">
-                                            <Button Text="צפה בהסעות" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
-                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.ShowCarpoolsCommand}"
-                                                    CommandParameter="{Binding}"/>
-                                        </StackLayout>
-                                    </SwipeItemView>
+                                    
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
