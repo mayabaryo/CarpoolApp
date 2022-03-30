@@ -34,34 +34,74 @@ namespace CarpoolApp.ViewModels
         public bool ShowCarpool { get; set; }
         public bool ShowLabel { get => !ShowCarpool; }
 
+        #region ServerStatus
+        private string serverStatus;
+        public string ServerStatus
+        {
+            get { return serverStatus; }
+            set
+            {
+                serverStatus = value;
+                OnPropertyChanged("ServerStatus");
+            }
+        }
+        #endregion
 
         public CarpoolsPageViewModel()
         {
 
         }
 
-        //#region AddCarpoolCommand
-        //public ICommand RequestToJoinCommand => new Command<Carpool>(OnRequestToJoin);
-        //public async void OnRequestToJoin(Carpool carpool)
-        //{
-        //    RequestToJoinCarpool requestToJoinCarpool = new RequestToJoinCarpool()
-        //    {
-        //        KidId = Kid.Id,
-        //        CarpoolId = carpool.Id,
-        //        RequestStatusId = 1
-        //    };
+        #region RequestToJoinCommand
+        public ICommand RequestToJoinCommand => new Command<Carpool>(OnRequestToJoin);
+        public async void OnRequestToJoin(Carpool carpool)
+        {
+            App theApp = (App)App.Current;
 
-        //    //Page page = new AddCarpool();
+            RequestToJoinCarpool request = new RequestToJoinCarpool()
+            {
+                KidId = Kid.Id,
+                CarpoolId = carpool.Id,
+                //RequestStatusId = 3
+            };
 
-        //    //AddCarpoolViewModel carpoolContext = new AddCarpoolViewModel()
-        //    //{
-        //    //    Activity = activity,
-        //    //    Kid = this.Kid
-        //    //};
-        //    //page.BindingContext = carpoolContext;
-        //    //page.Title = "צור הסעה";
-        //    //await App.Current.MainPage.Navigation.PushAsync(page);
-        //}
-        //#endregion
+            ServerStatus = "מתחבר לשרת...";
+            await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
+
+            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+            bool addRequest = await proxy.AddRequestToJoinCarpoolAsync(request);
+
+            if (!addRequest)
+            {
+                await App.Current.MainPage.DisplayAlert("שגיאה", "הגשת הבקשה להצטרפות להסעה נכשלה!", "בסדר", FlowDirection.RightToLeft);
+                await App.Current.MainPage.Navigation.PopModalAsync();
+            }
+            else
+            {
+                ServerStatus = "קורא נתונים...";
+
+
+                //theApp.CurrentPlayer.RequestToJoinTeams.Add(request);
+
+                await App.Current.MainPage.DisplayAlert("הגשת בקשה להצטרפות להסעה", "הגשת הבקשה להצטרפות להסעה נשלחה לנהג!", "אישור", FlowDirection.RightToLeft);
+                await App.Current.MainPage.Navigation.PopModalAsync();
+
+                //NavigationPage p = new NavigationPage(new GamesScores());
+                //NavigationPage.SetHasNavigationBar(p, false);
+                //await App.Current.MainPage.Navigation.PushAsync(p);
+            }
+
+            //Page page = new AddCarpool();
+
+            //AddCarpoolViewModel carpoolContext = new AddCarpoolViewModel()
+            //{
+            //    Activity = activity,
+            //    Kid = this.Kid
+            //};
+            //page.BindingContext = carpoolContext;
+            //page.Title = "צור הסעה";
+            //await App.Current.MainPage.Navigation.PushAsync(page);
+        }
+        #endregion
     }
 }

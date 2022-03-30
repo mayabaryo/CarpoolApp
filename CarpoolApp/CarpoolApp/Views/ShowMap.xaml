@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
-             x:Class="CarpoolApp.Views.ShowMap">
+             x:Class="CarpoolApp.Views.ShowMap"
+             FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout>
             <!--
@@ -10,9 +11,92 @@
             <Entry Text="{Binding Destination}" Placeholder="Destination"></Entry>
             <Button Text="Go" Command="{Binding Start}"></Button>
             -->
-            <maps:Map x:Name="map" IsShowingUser="False" 
+
+            <Label Text="רשימת ילדים" Style="{StaticResource smallerTitle}" FontSize="Medium" Margin="0"></Label>
+
+            <StackLayout Style="{StaticResource Stack}" HeightRequest="100" Margin="-25">
+                
+                <!-- KidsCollection -->
+                <ScrollView Margin="-5">
+                    <Frame Style="{StaticResource logInSignUp}" Margin="-10">
+
+                    <CollectionView x:Name="collectionName" HeightRequest="100"
+                            ItemsSource="{Binding KidList}" SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelctionChanged}"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <SwipeView>
+                                    <SwipeView.RightItems>
+                                        <SwipeItems SwipeBehaviorOnInvoked="RemainOpen">
+
+                                            <SwipeItemView BackgroundColor="#e1eff6">
+                                                <StackLayout Margin="10" WidthRequest="100" HeightRequest="200">
+                                                    <Entry Text="{Binding Source={x:Reference collectionName}, Path=BindingContext.ActivityCode}" Placeholder="הכנס קוד" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" />
+                                                    <Button Text="צרף לפעילות" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"
+                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.JoinToActivityCommand}"
+                                                    CommandParameter="{Binding}"/>
+                                                </StackLayout>
+                                            </SwipeItemView>
+
+                                            <SwipeItemView BackgroundColor="#c8e7ff">
+                                                <StackLayout Margin="10" WidthRequest="100">
+                                                    <Button Text="צפה בפעילויות" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.ActivitiesCommand}"
+                                                    CommandParameter="{Binding}"/>
+                                                </StackLayout>
+                                            </SwipeItemView>
+                                        </SwipeItems>
+                                    </SwipeView.RightItems>
+
+
+                                    <Grid Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#dfe7fd">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            
+                                            </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Grid.Row="0"
+                                   Text="שם משתמש" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="0"
+                                   Text="{Binding IdNavigation.UserName}"/>
+                                        <Label Grid.Column="0" Grid.Row="1"
+                                   Text="שם פרטי" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="1"
+                                   Text="{Binding IdNavigation.FirstName}"/>
+                                        <Label Grid.Column="0" Grid.Row="2"
+                                   Text="שם משפחה" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="2"
+                                   Text="{Binding IdNavigation.LastName}"/>
+
+                                        <Frame Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource SmallImageFrame}">
+                                            <Image Source="{Binding IdNavigation.PhotoURL}" Style="{StaticResource SmallImage}"/>
+                                        </Frame>
+
+                                        <Button Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" BackgroundColor="{Binding Color}" Command="{Binding InCommand}" CornerRadius="100" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="30" WidthRequest="30"></Button>
+                                        
+                                        </Grid>
+                                </SwipeView>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </Frame>
+                </ScrollView>
+            </StackLayout>
+
+
+            <maps:Map x:Name="map" IsShowingUser="True" 
                               HorizontalOptions="FillAndExpand"
                      />
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

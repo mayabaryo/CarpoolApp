@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//#nullable disable
 
 namespace CarpoolApp.Models
 {
@@ -10,6 +9,7 @@ namespace CarpoolApp.Models
         public Carpool()
         {
             KidsInCarpools = new HashSet<KidsInCarpool>();
+            RequestToJoinCarpools = new HashSet<RequestToJoinCarpool>();
         }
 
         public int Id { get; set; }
@@ -23,5 +23,6 @@ namespace CarpoolApp.Models
         public virtual Adult Adult { get; set; }
         public virtual CarpoolStatus CarpoolStatus { get; set; }
         public virtual ICollection<KidsInCarpool> KidsInCarpools { get; set; }
+        public virtual ICollection<RequestToJoinCarpool> RequestToJoinCarpools { get; set; }
     }
 }

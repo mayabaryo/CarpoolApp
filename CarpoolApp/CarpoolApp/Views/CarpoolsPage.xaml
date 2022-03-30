@@ -19,8 +19,8 @@
             <ScrollView>
         <StackLayout Style="{StaticResource Stack}">
             <!-- ההסעה שלי -->
-            <Label Text="ההסעה שלי" Style="{StaticResource smallerTitle}"></Label>
-            <Label Text="לא נמצאו נתונים. הצטרף להסעה!" IsVisible="{Binding ShowLabel}"></Label>
+            <Label Text="ההסעה שלי" Style="{StaticResource smallerTitle}" Margin="-20"></Label>
+            <Label Text="לא נמצאו נתונים. הצטרף להסעה!" IsVisible="{Binding ShowLabel}" Margin="-20"></Label>
 
             <Frame Style="{StaticResource logInSignUp}" IsVisible="{Binding ShowCarpool}">
             <Grid Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsVisible="{Binding ShowCarpool}" BackgroundColor="#dfe7fd">
@@ -55,7 +55,7 @@
             </Frame>
 
 
-            <Label Text="הסעות קיימות" Style="{StaticResource smallerTitle}"></Label>
+            <Label Text="הסעות קיימות" Style="{StaticResource smallerTitle}" Margin="-20"></Label>
 
             <Frame Style="{StaticResource logInSignUp}" HeightRequest="200">
                 <!-- CarpoolsCollection -->

@@ -123,7 +123,7 @@ namespace CarpoolApp.ViewModels
             //    Waypoints = waypoints
             //};
 
-            ShowMap page = new ShowMap(origin, dest, waypoints);
+            ShowMap page = new ShowMap(origin, dest, waypoints, kids);
             //{
             //    //mapContext.OnUpdateMapEvent += ShowMap.OnUpdateMap,
             //    BindingContext = mapContext

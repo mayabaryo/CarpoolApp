@@ -11,15 +11,16 @@ using CarpoolApp.Helpers;
 using Xamarin.Forms.Maps;
 using CarpoolApp.Model;
 using CarpoolApp.Services;
+using CarpoolApp.Models;
 
 namespace CarpoolApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ShowMap : ContentPage
     {
-        public ShowMap(string origin, string dest, List<string> waypoints)
+        public ShowMap(string origin, string dest, List<string> waypoints, List<Kid> kids)
         {
-            ShowMapViewModel vm = new ShowMapViewModel(origin, dest, waypoints);
+            ShowMapViewModel vm = new ShowMapViewModel(origin, dest, waypoints, kids);
             vm.OnUpdateMapEvent += OnUpdateMap;
             this.BindingContext = vm;
             InitializeComponent();

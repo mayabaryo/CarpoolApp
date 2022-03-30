@@ -7,6 +7,8 @@ using Xamarin.Forms;
 using CarpoolApp.Services;
 using CarpoolApp.Helpers;
 using CarpoolApp.Model;
+using CarpoolApp.Models;
+using System.Collections.ObjectModel;
 
 namespace CarpoolApp.ViewModels
 {
@@ -59,17 +61,40 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        #region Color
+        private string color;
+        public string Color
+        {
+            get => color;
+            set
+            {
+                color = value;
+                OnPropertyChanged("Color");
+            }
+        }
+        #endregion
+
+        public ObservableCollection<Kid> KidList { get; }
+
 
         #region Constructor
-        public ShowMapViewModel(string origin, string dest, List<string> waypoints)
+        public ShowMapViewModel(string origin, string dest, List<string> waypoints, List<Kid> kids)
         {
+            this.Color = "Red";
+
             this.Origin = origin;
             this.Destination = dest;
             this.Waypoints = waypoints;
 
+            KidList = new ObservableCollection<Kid>();
+            foreach (Kid k in kids)
+            {
+                this.KidList.Add(k);
+            }
+
             OnStart();
         }
-        #endregion
+        #endregion     
 
         public GooglePlace RouteOrigin { get; private set; }
         public GooglePlace RouteDestination { get; private set; }
@@ -154,6 +179,14 @@ namespace CarpoolApp.ViewModels
             }
 
 
+        }
+        #endregion
+
+        #region InCommand
+        public ICommand InCommand => new Command(OnIn);
+        public void OnIn()
+        {
+            this.Color = "LightGreen";
         }
         #endregion
 

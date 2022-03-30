@@ -25,6 +25,13 @@
             </x:Arguments>
         </Size>
     </windows:TabbedPage.HeaderIconsSize>
+
+    <local:AdultCarpools Title="ההסעות שלי">
+        <local:AdultCarpools.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Taxi}"/>
+        </local:AdultCarpools.IconImageSource>
+    </local:AdultCarpools>
+
     <local:AdultProfile Title="הפרופיל שלי">
         <local:AdultProfile.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.User}"/>
@@ -43,12 +50,7 @@
         </local:AddActivity.IconImageSource>
     </local:AddActivity>
 
-    <local:AdultCarpools Title="ההסעות שלי">
-        <local:AdultCarpools.IconImageSource>
-            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Taxi}"/>
-        </local:AdultCarpools.IconImageSource>
-    </local:AdultCarpools>
-
+    
     <!--
     <local:ShowMap Title="מפה">
         <local:ShowMap.IconImageSource>
