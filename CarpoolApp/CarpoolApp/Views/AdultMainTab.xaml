@@ -43,12 +43,18 @@
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Users}"/>
         </local:Family.IconImageSource>
     </local:Family>
-    
+
     <local:AddActivity Title="הוספת פעילות">
         <local:AddActivity.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.SquarePlus}"/>
         </local:AddActivity.IconImageSource>
     </local:AddActivity>
+
+    <local:Notifications Title="התראות">
+        <local:Notifications.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.PaperPlane}"/>
+        </local:Notifications.IconImageSource>
+    </local:Notifications>
 
     
     <!--

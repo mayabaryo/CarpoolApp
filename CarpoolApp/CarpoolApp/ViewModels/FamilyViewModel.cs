@@ -52,12 +52,31 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        public ObservableCollection<Kid> KidList { get; }
+        #region KidsCollection
+        private ObservableCollection<Kid> kidsCollection;
+        public ObservableCollection<Kid> KidsCollection
+        {
+            get
+            {
+                return this.kidsCollection;
+            }
+            set
+            {
+                if (this.kidsCollection != value)
+                {
+                    this.kidsCollection = value;
+                    OnPropertyChanged("KidsCollection");
+                }
+            }
+        }
+        #endregion
+
+        //public ObservableCollection<Kid> KidList { get; }
 
         #region Constructor
         public FamilyViewModel()
         {
-            KidList = new ObservableCollection<Kid>();
+            //KidList = new ObservableCollection<Kid>();
             CreateKidCollection();
         }
         #endregion
@@ -67,14 +86,22 @@ namespace CarpoolApp.ViewModels
         {
             App theApp = (App)App.Current;
             User currentUser = theApp.CurrentUser;
-            Adult currentAdult = new Adult { IdNavigation = currentUser };
+            //Adult currentAdult = new Adult { IdNavigation = currentUser };
 
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            List<Kid> theKids = await proxy.GetAllKidsAsync(currentAdult);
-            foreach (Kid k in theKids)
+            List<Kid> theKids = await proxy.GetAllKidsAsync(currentUser.Adult);
+
+            if (theKids != null)
             {
-                this.KidList.Add(k);
+                kidsCollection = new ObservableCollection<Kid>(theKids);
             }
+
+            //this.KidList = new ObservableCollection<Kid>(theKids);
+
+            //foreach (Kid k in theKids)
+            //{
+            //    this.KidList.Add(k);
+            //}
         }
         #endregion
 
