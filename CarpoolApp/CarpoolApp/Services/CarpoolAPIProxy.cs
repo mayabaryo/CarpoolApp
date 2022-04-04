@@ -769,6 +769,41 @@ namespace CarpoolApp.Services
         }
         #endregion
 
+        #region ApproveRequestToJoinCarpoolAsync
+        public async Task<RequestToJoinCarpool> ApproveRequestToJoinCarpoolAsync(RequestToJoinCarpool request)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<RequestToJoinCarpool>(request, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/ApproveRequestToJoinCarpool", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    RequestToJoinCarpool requestToJoin = JsonSerializer.Deserialize<RequestToJoinCarpool>(jsonObject, options);
+                    return requestToJoin;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
+
         //Upload file to server (only images!)
         #region UploadImage
         public async Task<bool> UploadImage(Models.FileInfo fileInfo, string targetFileName)
