@@ -138,6 +138,7 @@ namespace CarpoolApp.ViewModels
             if (!deleted)
             {
                 await App.Current.MainPage.DisplayAlert("שגיאה", "דחיית בקשת השחקן להצטרפות לקבוצה נכשלה!", "בסדר");
+                await App.Current.MainPage.Navigation.PopModalAsync();
             }
             else
             {

@@ -17,7 +17,7 @@
             </Grid>
 
             <StackLayout Style="{StaticResource Stack}" Padding="10">
-                <Grid HeightRequest="200">
+                <Grid HeightRequest="150">
                     <Button Text="הוסף ילד" Style="{StaticResource Button}" Padding="0" Command="{Binding MoveToAddKid}" Grid.Column="0" />
                     <Button Text="הוסף מבוגר" Style="{StaticResource Button}" Padding="0" Command="{Binding MoveToAddAdult}" Grid.Column="1" />
                 </Grid>
@@ -26,7 +26,7 @@
             
             <StackLayout Style="{StaticResource Stack}">
                 
-            <Label Text="הילדים שלי" Style="{StaticResource smallerTitle}" Margin="-20"></Label>
+            <Label Text="הילדים שלי" Style="{StaticResource smallerTitle}" Margin="-30"></Label>
             <!-- KidsCollection -->
 
             <Frame Style="{StaticResource logInSignUp}">

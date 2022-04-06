@@ -6,7 +6,7 @@
              FlowDirection="RightToLeft">
     <ContentPage.Content>
         <StackLayout Style="{StaticResource Stack}" Padding="0">
-            <Grid Margin="0,0,0,0" Padding="0">
+            <Grid Margin="0,0,0,-30" Padding="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -17,11 +17,19 @@
                 <Label Text="התראות" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
             </Grid>
 
-            <CollectionView x:Name="collectionView" EmptyView="אין כרגע בקשות להצטרף להסעה!" ItemsSource="{Binding RequestsCollection}">
+
+            <StackLayout Style="{StaticResource Stack}">
+
+                <Label Text="בקשות הצטרפות" Style="{StaticResource smallerTitle}" Margin="-30"></Label>
+                <!-- KidsCollection -->
+
+                <Frame Style="{StaticResource logInSignUp}">
+
+                    <CollectionView x:Name="collectionView" EmptyView="אין כרגע בקשות להצטרף להסעה!" ItemsSource="{Binding RequestsCollection}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:RequestToJoinCarpool">
+                    <DataTemplate>
                         <SwipeView>
-                            <SwipeView.LeftItems>
+                            <SwipeView.RightItems>
                                 <SwipeItems>
                                     <SwipeItem Text="אישור"
                                    IconImageSource="tickIcon.png"
@@ -34,7 +42,7 @@
                                    Command="{Binding Source={x:Reference collectionView}, Path=BindingContext.DeleteCommand}"
                                    CommandParameter="{Binding}" />
                                 </SwipeItems>
-                            </SwipeView.LeftItems>
+                            </SwipeView.RightItems>
 
                             <!--
                             <Grid Padding="10">
@@ -71,7 +79,7 @@
                                 <Label Grid.Column="0" Grid.Row="2"
                                    Text="שם משפחה" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="2"
-                                   Text="{Binding Kid.IdNavigation.LastName}"/>
+                                   Text="{Binding Carpool.Activity.ActivityName}"/>
 
                                 <Frame Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource SmallImageFrame}">
                                     <Image Source="{Binding Kid.IdNavigation.PhotoURL}" Style="{StaticResource SmallImage}"/>
@@ -85,6 +93,8 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+            </Frame>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
