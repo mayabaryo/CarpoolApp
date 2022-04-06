@@ -58,18 +58,18 @@ namespace CarpoolApp.ViewModels
         {
             App theApp = (App)App.Current;
 
-            RequestToJoinCarpool request = new RequestToJoinCarpool()
-            {
-                KidId = Kid.Id,
-                CarpoolId = carpool.Id,
-                //RequestStatusId = 3
-            };
+            //RequestToJoinCarpool request = new RequestToJoinCarpool()
+            //{
+            //    KidId = Kid.Id,
+            //    CarpoolId = carpool.Id,
+            //    //RequestStatusId = 3
+            //};
 
             ServerStatus = "מתחבר לשרת...";
             await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
 
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            bool addRequest = await proxy.AddRequestToJoinCarpoolAsync(request);
+            bool addRequest = await proxy.AddRequestToJoinCarpoolAsync(Kid.Id, carpool.Id);
 
             if (!addRequest)
             {
@@ -85,6 +85,10 @@ namespace CarpoolApp.ViewModels
 
                 await App.Current.MainPage.DisplayAlert("הגשת בקשה להצטרפות להסעה", "הגשת הבקשה להצטרפות להסעה נשלחה לנהג!", "אישור", FlowDirection.RightToLeft);
                 await App.Current.MainPage.Navigation.PopModalAsync();
+
+                Page page = new AdultMainTab();
+                page.Title = "שלום " + theApp.CurrentUser.UserName;
+                App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
 
                 //NavigationPage p = new NavigationPage(new GamesScores());
                 //NavigationPage.SetHasNavigationBar(p, false);

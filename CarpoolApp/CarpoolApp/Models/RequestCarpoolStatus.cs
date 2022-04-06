@@ -8,12 +8,12 @@ namespace CarpoolApp.Models
     {
         public RequestCarpoolStatus()
         {
-            RequestToJoinCarpools = new HashSet<RequestToJoinCarpool>();
+            KidsInCarpools = new HashSet<KidsInCarpool>();
         }
 
         public int RequestId { get; set; }
         public string RequestName { get; set; }
 
-        public virtual ICollection<RequestToJoinCarpool> RequestToJoinCarpools { get; set; }
+        public virtual ICollection<KidsInCarpool> KidsInCarpools { get; set; }
     }
 }

@@ -707,25 +707,23 @@ namespace CarpoolApp.Services
         }
         #endregion
 
+
         #region AddRequestToJoinCarpoolAsync
-        public async Task<bool> AddRequestToJoinCarpoolAsync(RequestToJoinCarpool request)
+        public async Task<bool> AddRequestToJoinCarpoolAsync(int kidId, int carpoolId)
         {
             try
             {
-                JsonSerializerOptions options = new JsonSerializerOptions
-                {
-                    ReferenceHandler = ReferenceHandler.Preserve,
-                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
-                    PropertyNameCaseInsensitive = true
-                };
-                string jsonObject = JsonSerializer.Serialize<RequestToJoinCarpool>(request, options);
-                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddRequestToJoinCarpool", content);
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/AddRequestToJoinCarpool?kidId={kidId}&carpoolId={carpoolId}");
                 if (response.IsSuccessStatusCode)
                 {
-                    jsonObject = await response.Content.ReadAsStringAsync();
-                    bool r = JsonSerializer.Deserialize<bool>(jsonObject, options);
+                    //JsonSerializerOptions options = new JsonSerializerOptions
+                    //{
+                    //    ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
+                    //    PropertyNameCaseInsensitive = true
+                    //};
+                    //string content = await response.Content.ReadAsStringAsync();
+                    //List<Kid> kids = JsonSerializer.Deserialize<List<Kid>>(content, options);
+
                     return true;
                 }
                 else
@@ -741,8 +739,42 @@ namespace CarpoolApp.Services
         }
         #endregion
 
+        //#region AddRequestToJoinCarpoolAsync
+        //public async Task<bool> AddRequestToJoinCarpoolAsync(RequestToJoinCarpool request)
+        //{
+        //    try
+        //    {
+        //        JsonSerializerOptions options = new JsonSerializerOptions
+        //        {
+        //            ReferenceHandler = ReferenceHandler.Preserve,
+        //            Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+        //            PropertyNameCaseInsensitive = true
+        //        };
+        //        string jsonObject = JsonSerializer.Serialize<RequestToJoinCarpool>(request, options);
+        //        StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+        //        HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddRequestToJoinCarpool", content);
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            //jsonObject = await response.Content.ReadAsStringAsync();
+        //            //bool r = JsonSerializer.Deserialize<bool>(jsonObject, options);
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e.Message);
+        //        return false;
+        //    }
+        //}
+        //#endregion
+
         #region GetRequestsToJoinCarpoolAsync
-        public async Task<List<RequestToJoinCarpool>> GetRequestsToJoinCarpoolAsync(Adult adult)
+        public async Task<List<KidsInCarpool>> GetRequestsToJoinCarpoolAsync(Adult adult)
         {
             try
             {
@@ -756,7 +788,7 @@ namespace CarpoolApp.Services
                     };
 
                     string res = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<List<RequestToJoinCarpool>>(res, options);
+                    return JsonSerializer.Deserialize<List<KidsInCarpool>>(res, options);
                 }
                 else
                     return null;
@@ -769,42 +801,127 @@ namespace CarpoolApp.Services
         }
         #endregion
 
+
         #region ApproveRequestToJoinCarpoolAsync
-        public async Task<RequestToJoinCarpool> ApproveRequestToJoinCarpoolAsync(RequestToJoinCarpool request)
+        public async Task<bool> ApproveRequestToJoinCarpoolAsync(int kidId, int carpoolId)
         {
             try
             {
-                JsonSerializerOptions options = new JsonSerializerOptions
-                {
-                    ReferenceHandler = ReferenceHandler.Preserve,
-                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
-                    PropertyNameCaseInsensitive = true
-                };
-                string jsonObject = JsonSerializer.Serialize<RequestToJoinCarpool>(request, options);
-                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/ApproveRequestToJoinCarpool", content);
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/ApproveRequestToJoinCarpool?kidId={kidId}&carpoolId={carpoolId}");
                 if (response.IsSuccessStatusCode)
                 {
-                    jsonObject = await response.Content.ReadAsStringAsync();
-                    RequestToJoinCarpool requestToJoin = JsonSerializer.Deserialize<RequestToJoinCarpool>(jsonObject, options);
-                    return requestToJoin;
+                    return true;
                 }
                 else
                 {
-                    return null;
+                    return false;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return null;
+                return false;
             }
         }
         #endregion
 
+        //#region ApproveRequestToJoinCarpoolAsync
+        //public async Task<bool> ApproveRequestToJoinCarpoolAsync(RequestToJoinCarpool request)
+        //{
+        //    try
+        //    {
+        //        JsonSerializerOptions options = new JsonSerializerOptions
+        //        {
+        //            ReferenceHandler = ReferenceHandler.Preserve,
+        //            Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+        //            PropertyNameCaseInsensitive = true
+        //        };
+        //        string jsonObject = JsonSerializer.Serialize<RequestToJoinCarpool>(request, options);
+        //        StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+        //        HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/ApproveRequestToJoinCarpool", content);
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            //jsonObject = await response.Content.ReadAsStringAsync();
+        //            //RequestToJoinCarpool requestToJoin = JsonSerializer.Deserialize<RequestToJoinCarpool>(jsonObject, options);
+
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e.Message);
+        //        return false;
+        //    }
+        //}
+        //#endregion
+
+
+        #region DeclineRequestToJoinCarpoolAsync
+        public async Task<bool> DeclineRequestToJoinCarpoolAsync(int kidId, int carpoolId)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/DeclineRequestToJoinCarpool?kidId={kidId}&carpoolId={carpoolId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
+
+        //#region DeleteRequestToJoinCarpoolAsync
+        //public async Task<bool> DeleteRequestToJoinCarpoolAsync(RequestToJoinCarpool request)
+        //{
+        //    try
+        //    {
+        //        JsonSerializerOptions options = new JsonSerializerOptions
+        //        {
+        //            ReferenceHandler = ReferenceHandler.Preserve,
+        //            Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+        //            PropertyNameCaseInsensitive = true
+        //        };
+        //        string jsonObject = JsonSerializer.Serialize<RequestToJoinCarpool>(request, options);
+        //        StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+        //        HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/DeleteRequestToJoinCarpool", content);
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            //jsonObject = await response.Content.ReadAsStringAsync();
+        //            //RequestToJoinCarpool requestToJoin = JsonSerializer.Deserialize<RequestToJoinCarpool>(jsonObject, options);
+                    
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e.Message);
+        //        return false;
+        //    }
+        //}
+        //#endregion
 
         //Upload file to server (only images!)
+
+
         #region UploadImage
         public async Task<bool> UploadImage(Models.FileInfo fileInfo, string targetFileName)
         {

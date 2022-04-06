@@ -17,7 +17,7 @@
                 <Label Text="התראות" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
             </Grid>
 
-            <CollectionView x:Name="collectionView" EmptyView="אין כרגע בקשות להצטרף לקבוצה!" ItemsSource="{Binding RequestsCollection}">
+            <CollectionView x:Name="collectionView" EmptyView="אין כרגע בקשות להצטרף להסעה!" ItemsSource="{Binding RequestsCollection}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:RequestToJoinCarpool">
                         <SwipeView>
@@ -36,6 +36,7 @@
                                 </SwipeItems>
                             </SwipeView.LeftItems>
 
+                            <!--
                             <Grid Padding="10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -45,6 +46,40 @@
                                 </Grid.RowDefinitions>
                                 <Label Text="{Binding Kid.IdNavigation.UserName}" Grid.Column="0" />
                             </Grid>
+                            -->
+
+
+                            <Grid Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#dfe7fd">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0"
+                                   Text="שם משתמש" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" Grid.Row="0"
+                                   Text="{Binding Kid.IdNavigation.UserName}"/>
+                                <Label Grid.Column="0" Grid.Row="1"
+                                   Text="שם פרטי" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" Grid.Row="1"
+                                   Text="{Binding Kid.IdNavigation.FirstName}"/>
+                                <Label Grid.Column="0" Grid.Row="2"
+                                   Text="שם משפחה" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" Grid.Row="2"
+                                   Text="{Binding Kid.IdNavigation.LastName}"/>
+
+                                <Frame Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource SmallImageFrame}">
+                                    <Image Source="{Binding Kid.IdNavigation.PhotoURL}" Style="{StaticResource SmallImage}"/>
+                                </Frame>
+
+                            </Grid>
+
+
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

@@ -11,7 +11,6 @@ namespace CarpoolApp.Models
             KidsInActivities = new HashSet<KidsInActivity>();
             KidsInCarpools = new HashSet<KidsInCarpool>();
             KidsOfAdults = new HashSet<KidsOfAdult>();
-            RequestToJoinCarpools = new HashSet<RequestToJoinCarpool>();
         }
 
         public int Id { get; set; }
@@ -20,6 +19,5 @@ namespace CarpoolApp.Models
         public virtual ICollection<KidsInActivity> KidsInActivities { get; set; }
         public virtual ICollection<KidsInCarpool> KidsInCarpools { get; set; }
         public virtual ICollection<KidsOfAdult> KidsOfAdults { get; set; }
-        public virtual ICollection<RequestToJoinCarpool> RequestToJoinCarpools { get; set; }
     }
 }
