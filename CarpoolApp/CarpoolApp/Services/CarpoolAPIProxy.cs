@@ -903,7 +903,7 @@ namespace CarpoolApp.Services
         //        {
         //            //jsonObject = await response.Content.ReadAsStringAsync();
         //            //RequestToJoinCarpool requestToJoin = JsonSerializer.Deserialize<RequestToJoinCarpool>(jsonObject, options);
-                    
+
         //            return true;
         //        }
         //        else
@@ -921,6 +921,51 @@ namespace CarpoolApp.Services
 
         //Upload file to server (only images!)
 
+        #region CarpoolInProcessAsync
+        public async Task<bool> CarpoolInProcessAsync(int carpoolId)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/CarpoolInProcess?carpoolId={carpoolId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
+
+        #region CarpoolEndedAsync
+        public async Task<bool> CarpoolEndedAsync(int carpoolId)
+        {
+            try
+            {
+                HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/CarpoolEnded?carpoolId={carpoolId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
 
         #region UploadImage
         public async Task<bool> UploadImage(Models.FileInfo fileInfo, string targetFileName)

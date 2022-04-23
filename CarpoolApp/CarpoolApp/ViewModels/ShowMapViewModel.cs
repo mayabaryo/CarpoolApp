@@ -9,6 +9,12 @@ using CarpoolApp.Helpers;
 using CarpoolApp.Model;
 using CarpoolApp.Models;
 using System.Collections.ObjectModel;
+using CarpoolApp.Views;
+
+using Xamarin.Essentials;
+using System.Linq;
+using System.Text.RegularExpressions;
+using CarpoolApp.DTO;
 
 namespace CarpoolApp.ViewModels
 {
@@ -74,17 +80,31 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        #region Carpool
+        private Carpool carpool;
+        public Carpool Carpool
+        {
+            get => carpool;
+            set
+            {
+                carpool = value;
+                OnPropertyChanged("Carpool");
+            }
+        }
+        #endregion
+
         public ObservableCollection<Kid> KidList { get; }
 
 
         #region Constructor
-        public ShowMapViewModel(string origin, string dest, List<string> waypoints, List<Kid> kids)
+        public ShowMapViewModel(string origin, string dest, List<string> waypoints, List<Kid> kids, Carpool carpool)
         {
             this.Color = "Red";
 
             this.Origin = origin;
             this.Destination = dest;
             this.Waypoints = waypoints;
+            this.Carpool = carpool;
 
             KidList = new ObservableCollection<Kid>();
             foreach (Kid k in kids)
@@ -141,6 +161,10 @@ namespace CarpoolApp.ViewModels
         {
             try
             {
+                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+                bool succeed = await proxy.CarpoolInProcessAsync(this.Carpool.Id);
+
+
                 GoogleMapsApiService service = new GoogleMapsApiService();
                 //find auto complete places first for origin and destination
                 GooglePlaceAutoCompleteResult originPlaces = await service.GetPlaces(Origin);
@@ -182,9 +206,34 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region InCommand
-        public ICommand InCommand => new Command(OnIn);
-        public void OnIn()
+        #region EndCommand
+        public ICommand EndCommand => new Command(OnEnd);
+        public async void OnEnd()
+        {
+            try
+            {
+                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+                bool succeed = await proxy.CarpoolEndedAsync(this.Carpool.Id);
+
+                App theApp = (App)App.Current;
+
+                Page page = new AdultMainTab();
+                page.Title = "שלום " + theApp.CurrentUser.UserName;
+                theApp.MainPage = new NavigationPage(page)/* { BarBackgroundColor = Color.FromHex("#81cfe0") }*/;
+
+                //await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        #endregion
+
+        #region KidInCommand
+        public ICommand KidInCommand => new Command<Kid>(OnKidIn);
+        public void OnKidIn(Kid kid)
         {
             this.Color = "LightGreen";
         }

@@ -87,6 +87,10 @@ namespace CarpoolApp.ViewModels
         private async void ApproveRequest(KidsInCarpool kidsIn)
         {
             App theApp = (App)App.Current;
+            User currentUser = theApp.CurrentUser;
+          
+            //List<Adult> adults = new List<Adult>(kidsIn.Kid.KidsOfAdults);
+            List<KidsOfAdult> kidsOfAdult = new List<KidsOfAdult>(kidsIn.Kid.KidsOfAdults);
             //Player player = request.Player;
             //player.Team = request.Team;
 
@@ -105,6 +109,16 @@ namespace CarpoolApp.ViewModels
             {
                 //theApp.CurrentCoach.Team.Players.Add(player);
                 ServerStatus = "קורא נתונים...";
+
+                string body = "בקשתך לצרף את " + kidsIn.Kid.IdNavigation.UserName + " להסעה אושרה על ידי " + currentUser.UserName;
+                foreach (KidsOfAdult kidsOf in kidsOfAdult)
+                {
+                    Adult adult = kidsOf.Adult;
+                    string to = adult.IdNavigation.Email;
+                    string toName = adult.IdNavigation.UserName;
+                    bool isSent = await proxy.SendEmailAsync(body, to, toName);
+                }
+
 
                 await App.Current.MainPage.DisplayAlert("אישור בקשת הצטרפות להסעה", "הוספת משתמש להסעה בוצעה בהצלחה!", "אישור", FlowDirection.RightToLeft);
                 await App.Current.MainPage.Navigation.PopModalAsync();
