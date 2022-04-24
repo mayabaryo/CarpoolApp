@@ -921,6 +921,40 @@ namespace CarpoolApp.Services
 
         //Upload file to server (only images!)
 
+        #region IsKidInActiveCarpoolAsync
+        public async Task<Carpool> IsKidInActiveCarpoolAsync(Kid kid)
+        {
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
+                    PropertyNameCaseInsensitive = true
+                };
+                string jsonObject = JsonSerializer.Serialize<Kid>(kid, options);
+                StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/IsKidInActiveCarpool", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonObject = await response.Content.ReadAsStringAsync();
+                    Carpool carpool = JsonSerializer.Deserialize<Carpool>(jsonObject, options);
+                    return carpool;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
+
         #region CarpoolInProcessAsync
         public async Task<bool> CarpoolInProcessAsync(int carpoolId)
         {
