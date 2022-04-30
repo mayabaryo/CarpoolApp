@@ -55,7 +55,7 @@ namespace CarpoolApp.ViewModels
         {
             App theApp = (App)App.Current;
             User currentUser = theApp.CurrentUser;
-            Adult currentAdult = new Adult { IdNavigation = currentUser };
+            Adult currentAdult = currentUser.Adult;
 
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             List<Carpool> theCarpools = await proxy.GetAdultCarpoolsAsync(currentAdult);

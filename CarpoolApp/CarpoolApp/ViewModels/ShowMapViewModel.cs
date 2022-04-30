@@ -233,9 +233,22 @@ namespace CarpoolApp.ViewModels
 
         #region KidInCommand
         public ICommand KidInCommand => new Command<Kid>(OnKidIn);
-        public void OnKidIn(Kid kid)
+        public async void OnKidIn(Kid kid)
         {
             this.Color = "LightGreen";
+
+            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+            List<KidsOfAdult> kidsOfAdult = kid.KidsOfAdults.ToList();
+
+            string body = kid.IdNavigation.UserName + " כעת בהסעה לפעילות. ניתן לצפות במסלול בזמן אמת באפליקציה";
+            //string body = "בקשתך לצרף את " + kid.IdNavigation.UserName + " להסעה אושרה על ידי " + currentUser.UserName;
+            foreach (KidsOfAdult kidsOf in kidsOfAdult)
+            {
+                Adult adult = kidsOf.Adult;
+                string to = adult.IdNavigation.Email;
+                string toName = adult.IdNavigation.UserName;
+                bool isSent = await proxy.SendEmailAsync(body, to, toName);
+            }
         }
         #endregion
 

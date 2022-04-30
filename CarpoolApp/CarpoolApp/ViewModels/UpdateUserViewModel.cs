@@ -854,9 +854,11 @@ namespace CarpoolApp.ViewModels
                         //    await App.Current.MainPage.DisplayAlert("עדכון", "יש בעיה בהעלאת התמונה", "אישור", FlowDirection.RightToLeft);
                         //}
                     }
-                    ServerStatus = "שומר נתונים...";
 
                     theApp.CurrentUser = user;
+
+                    ServerStatus = "שומר נתונים...";
+
                     await App.Current.MainPage.Navigation.PopModalAsync();
 
                     Page page;
