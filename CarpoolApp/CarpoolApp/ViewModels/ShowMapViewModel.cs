@@ -15,6 +15,7 @@ using Xamarin.Essentials;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CarpoolApp.DTO;
+using Xamarin.Forms.Maps;
 
 namespace CarpoolApp.ViewModels
 {
@@ -193,6 +194,25 @@ namespace CarpoolApp.ViewModels
                 RouteOrigin = place1;
                 RouteDestination = place2;
                 RouteDirections = direction;
+
+                //List<Pin> pins = new List<Pin>();
+                //for (int i = 0; i < RouteWaypoints.Count; i++)
+                //{
+
+                //}  
+                //foreach (GooglePlace route in RouteWaypoints)
+                //{
+                //    Pin pin = new Pin
+                //    {
+                //        Type = PinType.Place,
+                //        Position = new Position(route.Latitude, route.Longitude),
+                //        Label = "נקודת איסוף",
+                //        Address = route.Name
+                //    };
+                //    pins.Add(pin);
+                //}
+
+
                 if (OnUpdateMapEvent != null)
                     OnUpdateMapEvent();
 
@@ -203,6 +223,33 @@ namespace CarpoolApp.ViewModels
             }
 
 
+        }
+        #endregion
+
+        #region NavigateCommand
+        public ICommand NavigateCommand => new Command(OnNavigate);
+        public void OnNavigate()
+        {
+            try
+            {
+
+
+                //CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+                //bool succeed = await proxy.CarpoolEndedAsync(this.Carpool.Id);
+
+                //App theApp = (App)App.Current;
+
+                //Page page = new AdultMainTab();
+                //page.Title = "שלום " + theApp.CurrentUser.UserName;
+                //theApp.MainPage = new NavigationPage(page) /*{ BarBackgroundColor = Color.FromHex("#81cfe0") }*/;
+
+                //await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
         #endregion
 
@@ -219,7 +266,7 @@ namespace CarpoolApp.ViewModels
 
                 Page page = new AdultMainTab();
                 page.Title = "שלום " + theApp.CurrentUser.UserName;
-                theApp.MainPage = new NavigationPage(page)/* { BarBackgroundColor = Color.FromHex("#81cfe0") }*/;
+                theApp.MainPage = new NavigationPage(page) /*{ BarBackgroundColor = Color.FromHex("#81cfe0") }*/;
 
                 //await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
 
@@ -235,12 +282,12 @@ namespace CarpoolApp.ViewModels
         public ICommand KidInCommand => new Command<Kid>(OnKidIn);
         public async void OnKidIn(Kid kid)
         {
-            this.Color = "LightGreen";
+            //this.Color = "LightGreen";
 
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             List<KidsOfAdult> kidsOfAdult = kid.KidsOfAdults.ToList();
 
-            string body = kid.IdNavigation.UserName + " כעת בהסעה לפעילות. ניתן לצפות במסלול בזמן אמת באפליקציה";
+            string body = $"{kid.IdNavigation.FirstName} {kid.IdNavigation.LastName}" + " כעת בהסעה לפעילות. ניתן לצפות במסלול בזמן אמת באפליקציה";
             //string body = "בקשתך לצרף את " + kid.IdNavigation.UserName + " להסעה אושרה על ידי " + currentUser.UserName;
             foreach (KidsOfAdult kidsOf in kidsOfAdult)
             {

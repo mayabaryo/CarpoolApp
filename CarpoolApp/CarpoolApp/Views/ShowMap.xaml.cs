@@ -55,39 +55,57 @@ namespace CarpoolApp.Views
             ShowMapViewModel vm = (ShowMapViewModel)this.BindingContext;
 
             //Create two pins for origin and destination and add them to the map
-            Pin pin1 = new Pin
+            Pin startPin = new Pin
             {
                 Type = PinType.Place,
                 Position = new Position(vm.RouteOrigin.Latitude, vm.RouteOrigin.Longitude),
                 Label = "התחלה",
                 Address = vm.RouteOrigin.Name
             };
-            map.Pins.Add(pin1);
-            Pin pin2 = new Pin
+            map.Pins.Add(startPin);
+
+            Pin endPin = new Pin
             {
                 Type = PinType.Place,
                 Position = new Position(vm.RouteDestination.Latitude, vm.RouteDestination.Longitude),
                 Label = "יעד",
                 Address = vm.RouteDestination.Name
             };
-            map.Pins.Add(pin2);
+            map.Pins.Add(endPin);
 
             //Create pins for waypoints and add them to the map
-            foreach (GooglePlace route in vm.RouteWaypoints)
+
+            for (int i = 0; i < vm.RouteWaypoints.Count && i < vm.KidList.Count; i++)
             {
+                GooglePlace route = vm.RouteWaypoints[i];
+
+                Kid kid = vm.KidList[i];
+
                 Pin pin = new Pin
                 {
                     Type = PinType.Place,
                     Position = new Position(route.Latitude, route.Longitude),
-                    Label = "נקודת איסוף",
+                    Label = "אסוף את " + $"{kid.IdNavigation.FirstName} {kid.IdNavigation.LastName}",
                     Address = route.Name
                 };
                 map.Pins.Add(pin);
             }
 
+            //foreach (GooglePlace route in vm.RouteWaypoints)
+            //{
+            //    Pin pin = new Pin
+            //    {
+            //        Type = PinType.Place,
+            //        Position = new Position(route.Latitude, route.Longitude),
+            //        Label = "נקודת איסוף",
+            //        Address = route.Name
+            //    };
+            //    map.Pins.Add(pin);
+            //}
+
             //Move the map to show the environment of the origin place! with radius of 5 KM... should be changed
             //according to the specific needs
-            MapSpan span = MapSpan.FromCenterAndRadius(pin1.Position, Distance.FromKilometers(5));
+            MapSpan span = MapSpan.FromCenterAndRadius(startPin.Position, Distance.FromKilometers(5));
             map.MoveToRegion(span);
 
             //Create the polyline between origin and destination
