@@ -637,7 +637,7 @@ namespace CarpoolApp.ViewModels
                 App theApp = (App)App.Current;
                 User currentUser = theApp.CurrentUser;
 
-                Activity activity = new Activity()
+                Models.Activity activity = new Models.Activity()
                 {
                     ActivityName = this.ActivityName,
                     StartTime = this.StartTime,
@@ -654,7 +654,7 @@ namespace CarpoolApp.ViewModels
                 await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
                 CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
 
-                Activity newActivity = await proxy.AddActivityAsync(activity);
+                Models.Activity newActivity = await proxy.AddActivityAsync(activity);
                 if (newActivity == null)
                 {
                     await App.Current.MainPage.Navigation.PopModalAsync();
