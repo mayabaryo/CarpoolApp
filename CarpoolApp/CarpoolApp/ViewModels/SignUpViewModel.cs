@@ -835,7 +835,7 @@ namespace CarpoolApp.ViewModels
 
                 if (!isEmailExist && !isUserNameExist)
                 {
-                    Adult newAdult = await proxy.AdultSignUpAsync(theAdult);
+                    User newAdult = await proxy.AdultSignUpAsync(theAdult);
                     if (newAdult == null)
                     {
                         await App.Current.MainPage.Navigation.PopModalAsync();
@@ -862,7 +862,7 @@ namespace CarpoolApp.ViewModels
                         ServerStatus = "שומר נתונים...";
 
                         App theApp = (App)App.Current;
-                        theApp.CurrentUser = newAdult.IdNavigation;
+                        theApp.CurrentUser = newAdult;
 
                         Page page = new AdultMainTab();
                         page.Title = "שלום " + theApp.CurrentUser.UserName;

@@ -25,6 +25,13 @@
             </x:Arguments>
         </Size>
     </windows:TabbedPage.HeaderIconsSize>
+
+    <local:KidCarpools Title="ההסעות שלי">
+        <local:KidCarpools.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Taxi}"/>
+        </local:KidCarpools.IconImageSource>
+    </local:KidCarpools>
+    
     <local:AdultProfile Title="הפרופיל שלי">
         <local:AdultProfile.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.User}"/>

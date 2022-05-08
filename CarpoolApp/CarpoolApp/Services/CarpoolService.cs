@@ -56,13 +56,25 @@ namespace CarpoolApp.Services
             await hubConnection.InvokeAsync("OnConnect", groups);
         }
 
+        //public async Task Connect(string groups)
+        //{
+        //    await hubConnection.StartAsync();
+        //    await hubConnection.InvokeAsync("OnConnect", groups);
+        //}
+
         //Use this method when the chat is finished so the connection will not stay open
-        public async Task Disconnect(string[] groups)
+        public async Task Disconnect(string[] group)
         {
-            await hubConnection.InvokeAsync("OnDisconnect", groups);
+            await hubConnection.InvokeAsync("OnDisconnect", group);
             await hubConnection.StopAsync();
 
         }
+
+        //public async Task Disconnect(string group)
+        //{
+        //    await hubConnection.InvokeAsync("OnDisconnect", group);
+        //    await hubConnection.StopAsync();
+        //}
 
         //This message send message to all clients!
         public async Task SendMessage(string userId, string message)

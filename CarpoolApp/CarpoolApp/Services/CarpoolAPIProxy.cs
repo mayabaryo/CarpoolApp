@@ -270,7 +270,7 @@ namespace CarpoolApp.Services
         #endregion
 
         #region AdultSignUpAsync
-        public async Task<Adult> AdultSignUpAsync(Adult adult)
+        public async Task<User> AdultSignUpAsync(Adult adult)
         {
             try
             {
@@ -287,8 +287,8 @@ namespace CarpoolApp.Services
                 if (response.IsSuccessStatusCode)
                 {
                     jsonObject = await response.Content.ReadAsStringAsync();
-                    Adult a = JsonSerializer.Deserialize<Adult>(jsonObject, options);
-                    return a;
+                    User user = JsonSerializer.Deserialize<User>(jsonObject, options);
+                    return user;
                 }
                 else
                 {
