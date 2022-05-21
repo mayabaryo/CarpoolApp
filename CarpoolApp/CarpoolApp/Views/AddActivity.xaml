@@ -34,6 +34,20 @@
                                 </Grid>
                                 <Entry Placeholder="שם הפעילות" MaxLength="30" Text="{Binding ActivityName}" Style="{StaticResource entry}"/>
 
+                                <!-- date -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="תאריך" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
+                                    <Label Text="{Binding DateError}" IsVisible="{Binding ShowDateError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
+                                </Grid>
+                                <DatePicker Date="{Binding Date}" Style="{StaticResource entry}"/>
+
                                 <!-- Start Time -->
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -46,7 +60,7 @@
                                     <Label Text="שעת התחלה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                     <Label Text="{Binding StartTimeError}" IsVisible="{Binding ShowStartTimeError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                                 </Grid>
-                                <DatePicker Date="{Binding StartTime}" Style="{StaticResource entry}"/>
+                                <TimePicker Time="{Binding StartTime}" Style="{StaticResource entry}"/>
 
                                 <!-- End Time -->
                                 <Grid>
@@ -60,7 +74,7 @@
                                     <Label Text="שעת סיום" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                     <Label Text="{Binding EndTimeError}" IsVisible="{Binding ShowEndTimeError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                                 </Grid>
-                                <DatePicker Date="{Binding EndTime}" Style="{StaticResource entry}"/>
+                                <TimePicker Time="{Binding EndTime}" Style="{StaticResource entry}"/>
 
                                 <!-- City -->
                                 <Grid>

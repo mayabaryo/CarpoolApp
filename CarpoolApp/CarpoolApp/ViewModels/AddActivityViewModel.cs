@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using CarpoolApp.DTO;
 using System.Collections.ObjectModel;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace CarpoolApp.ViewModels
 {
@@ -124,6 +125,48 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        #region Date
+        private bool showDateError;
+        public bool ShowDateError
+        {
+            get => showDateError;
+            set
+            {
+                showDateError = value;
+                OnPropertyChanged("ShowDateError");
+            }
+        }
+
+        private DateTime date;
+        public DateTime Date
+        {
+            get => date;
+            set
+            {
+                date = value;
+                ValidateDate();
+                OnPropertyChanged("Date");
+            }
+        }
+
+        private string dateError;
+        public string DateError
+        {
+            get => dateError;
+            set
+            {
+                dateError = value;
+                OnPropertyChanged("DateError");
+            }
+        }
+
+        private void ValidateDate()
+        {
+            TimeSpan ts = this.Date - DateTime.Today;
+            this.ShowDateError = ts.TotalMinutes < 0;
+        }
+        #endregion        
+
         #region StartTime
         private bool showStartTimeError;
         public bool ShowStartTimeError
@@ -136,8 +179,8 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private DateTime startTime;
-        public DateTime StartTime
+        private Time startTime;
+        public Time StartTime
         {
             get => startTime;
             set
@@ -161,8 +204,8 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateStartTime()
         {
-            TimeSpan ts = this.StartTime - DateTime.Now;
-            this.ShowStartTimeError = ts.TotalMinutes < 0;
+            //TimeSpan ts = this.StartTime - DateTime.Now;
+            //this.ShowStartTimeError = ts.TotalMinutes < 0;
         }
         #endregion        
 
@@ -178,8 +221,8 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private DateTime endTime;
-        public DateTime EndTime
+        private Time endTime;
+        public Time EndTime
         {
             get => endTime;
             set
@@ -203,9 +246,9 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateEndTime()
         {
-            TimeSpan ts = this.EndTime - DateTime.Now;
-            TimeSpan span = this.EndTime - this.StartTime;
-            this.ShowEndTimeError = ts.TotalMinutes < 0 || span.TotalMinutes < 0;
+            //TimeSpan ts = this.EndTime - DateTime.Now;
+            TimeSpan span = this.EndTime.Date - this.StartTime.Date;
+            this.ShowEndTimeError = /*ts.TotalMinutes < 0 ||*/ span.TotalMinutes < 0;
         }
         #endregion        
 
@@ -586,23 +629,26 @@ namespace CarpoolApp.ViewModels
             this.IsStreetEnabled = false;
 
             this.ActivityNameError = ERROR_MESSAGES.REQUIRED_FIELD;
-            this.StartTimeError = ERROR_MESSAGES.BAD_ACTIVITY_DATE;
-            this.EndTimeError = ERROR_MESSAGES.BAD_ACTIVITY_DATE;
+            this.DateError = ERROR_MESSAGES.BAD_ACTIVITY_DATE;
+            //this.StartTimeError = ERROR_MESSAGES.BAD_ACTIVITY_DATE;
+            this.EndTimeError = ERROR_MESSAGES.BAD_END_TIME;
             this.CityError = ERROR_MESSAGES.BAD_CITY;
             this.StreetError = ERROR_MESSAGES.BAD_STREET;
             this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
             this.EntryCodeError = ERROR_MESSAGES.SHORT_PASS;
 
             this.ShowActivityNameError = false;
-            this.ShowStartTimeError = false;
+            this.ShowDateError = false;
+            //this.ShowStartTimeError = false;
             this.ShowEndTimeError = false;
             this.ShowCityError = false;
             this.ShowStreetError = false;
             this.ShowStringHouseNumError = false;
             this.ShowEntryCodeError = false;
 
-            this.StartTime = DateTime.Now;
-            this.EndTime = DateTime.Now;
+            this.Date = DateTime.Today;
+            //this.StartTime = DateTime.Now;
+            //this.EndTime = DateTime.Now;
         }
         #endregion
 
@@ -640,8 +686,8 @@ namespace CarpoolApp.ViewModels
                 Models.Activity activity = new Models.Activity()
                 {
                     ActivityName = this.ActivityName,
-                    StartTime = this.StartTime,
-                    EndTime = this.EndTime,
+                    StartTime = this.StartTime.Date,
+                    EndTime = this.EndTime.Date,
                     City = this.City,
                     Street = this.Street,
                     HouseNum = int.Parse(this.StringHouseNum),

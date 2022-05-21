@@ -280,22 +280,37 @@ namespace CarpoolApp.ViewModels
 
         #region KidInCommand
         public ICommand KidInCommand => new Command<Kid>(OnKidIn);
-        public async void OnKidIn(Kid kid)
-        {
+        public /*async*/ void OnKidIn(Kid kid)
+       {
             //this.Color = "LightGreen";
+            kid.IsInCarpool = true;
 
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             List<KidsOfAdult> kidsOfAdult = kid.KidsOfAdults.ToList();
 
             string body = $"{kid.IdNavigation.FirstName} {kid.IdNavigation.LastName}" + " כעת בהסעה לפעילות. ניתן לצפות במסלול בזמן אמת באפליקציה";
             //string body = "בקשתך לצרף את " + kid.IdNavigation.UserName + " להסעה אושרה על ידי " + currentUser.UserName;
-            foreach (KidsOfAdult kidsOf in kidsOfAdult)
+            //foreach (KidsOfAdult kidsOf in kidsOfAdult)
+            //{
+            //    Adult adult = kidsOf.Adult;
+            //    string to = adult.IdNavigation.Email;
+            //    string toName = adult.IdNavigation.UserName;
+            //    bool isSent = await proxy.SendEmailAsync(body, to, toName);
+            //}
+        }
+        #endregion
+
+        #region KidsInCarpool
+        public List<Kid> KidsInCarpool()
+        {
+            List<Kid> kidsInCarpool = new List<Kid>();
+
+            foreach(Kid kid in this.KidList)
             {
-                Adult adult = kidsOf.Adult;
-                string to = adult.IdNavigation.Email;
-                string toName = adult.IdNavigation.UserName;
-                bool isSent = await proxy.SendEmailAsync(body, to, toName);
+                if (kid.IsInCarpool)
+                    kidsInCarpool.Add(kid);
             }
+            return kidsInCarpool;
         }
         #endregion
 

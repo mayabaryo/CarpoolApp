@@ -27,6 +27,7 @@ namespace CarpoolApp.ViewModels
         public const string BAD_CITY = "עיר לא תקינה";
         public const string BAD_STREET = "רחוב לא תקין";
         public const string BAD_ACTIVITY_DATE = "תאריך לא תקין";
+        public const string BAD_END_TIME = "שעה לא תקין";
         public const string BAD_SEATS = "מספר מושבים לא תקין";
     }
 
