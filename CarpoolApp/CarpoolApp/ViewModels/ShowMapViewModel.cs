@@ -96,6 +96,7 @@ namespace CarpoolApp.ViewModels
 
         public ObservableCollection<Kid> KidList { get; }
 
+        private CarpoolService service;
 
         #region Constructor
         public ShowMapViewModel(string origin, string dest, List<string> waypoints, List<Kid> kids, Carpool carpool)
@@ -113,10 +114,19 @@ namespace CarpoolApp.ViewModels
                 this.KidList.Add(k);
             }
 
+            this.service = new CarpoolService();
+            this.service.RegisterToArrive(OnArriveToDestination);
+
+            
+
+
             OnStart();
         }
         #endregion     
+        void OnArriveToDestination()
+        {
 
+        }
         public GooglePlace RouteOrigin { get; private set; }
         public GooglePlace RouteDestination { get; private set; }
         public List<GooglePlace> RouteWaypoints { get; private set; }

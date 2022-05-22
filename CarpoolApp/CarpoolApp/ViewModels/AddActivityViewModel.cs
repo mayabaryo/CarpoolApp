@@ -179,8 +179,8 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private Time startTime;
-        public Time StartTime
+        private TimeSpan startTime;
+        public TimeSpan StartTime
         {
             get => startTime;
             set
@@ -204,8 +204,8 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateStartTime()
         {
-            //TimeSpan ts = this.StartTime - DateTime.Now;
-            //this.ShowStartTimeError = ts.TotalMinutes < 0;
+            TimeSpan span = this.EndTime - this.StartTime;
+            this.ShowEndTimeError = span.TotalMinutes < 0;
         }
         #endregion        
 
@@ -221,8 +221,8 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private Time endTime;
-        public Time EndTime
+        private TimeSpan endTime;
+        public TimeSpan EndTime
         {
             get => endTime;
             set
@@ -246,9 +246,8 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateEndTime()
         {
-            //TimeSpan ts = this.EndTime - DateTime.Now;
-            TimeSpan span = this.EndTime.Date - this.StartTime.Date;
-            this.ShowEndTimeError = /*ts.TotalMinutes < 0 ||*/ span.TotalMinutes < 0;
+            TimeSpan span = this.EndTime - this.StartTime;
+            this.ShowEndTimeError = span.TotalMinutes < 0;
         }
         #endregion        
 
@@ -658,6 +657,7 @@ namespace CarpoolApp.ViewModels
         {
             //Validate all fields first
             ValidateActivityName();
+            ValidateDate();
             ValidateStartTime();
             ValidateEndTime();
             ValidateCity();
@@ -666,7 +666,7 @@ namespace CarpoolApp.ViewModels
             ValidateEntryCode();
 
             //check if any validation failed
-            if (ShowActivityNameError || ShowStartTimeError || ShowEndTimeError || ShowCityError
+            if (ShowActivityNameError || ShowDateError || ShowStartTimeError || ShowEndTimeError || ShowCityError
                 || ShowStreetError || ShowStringHouseNumError || ShowEntryCodeError)
                 return false;
             return true;
@@ -683,11 +683,14 @@ namespace CarpoolApp.ViewModels
                 App theApp = (App)App.Current;
                 User currentUser = theApp.CurrentUser;
 
+                DateTime start = this.Date + this.StartTime;
+                DateTime end = this.Date + this.EndTime;
+
                 Models.Activity activity = new Models.Activity()
                 {
                     ActivityName = this.ActivityName,
-                    StartTime = this.StartTime.Date,
-                    EndTime = this.EndTime.Date,
+                    StartTime = start,
+                    EndTime = end,
                     City = this.City,
                     Street = this.Street,
                     HouseNum = int.Parse(this.StringHouseNum),

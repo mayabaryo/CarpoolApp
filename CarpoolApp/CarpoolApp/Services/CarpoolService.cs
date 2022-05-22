@@ -50,57 +50,57 @@ namespace CarpoolApp.Services
         }
 
         //Connect gets a list of groups the user belongs to!
-        public async Task Connect(string[] groups)
+        public async Task Connect(int carpoolId)
         {
             await hubConnection.StartAsync();
-            await hubConnection.InvokeAsync("OnConnect", groups);
+            await hubConnection.InvokeAsync("OnConnect", carpoolId);
         }
 
-        //public async Task Connect(string groups)
-        //{
-        //    await hubConnection.StartAsync();
-        //    await hubConnection.InvokeAsync("OnConnect", groups);
-        //}
-
-        //Use this method when the chat is finished so the connection will not stay open
-        public async Task Disconnect(string[] group)
+        
+        public async Task Disconnect(int carpoolId)
         {
-            await hubConnection.InvokeAsync("OnDisconnect", group);
+            await hubConnection.InvokeAsync("OnDisconnect", carpoolId);
             await hubConnection.StopAsync();
 
         }
 
-        //public async Task Disconnect(string group)
-        //{
-        //    await hubConnection.InvokeAsync("OnDisconnect", group);
-        //    await hubConnection.StopAsync();
-        //}
-
-        //This message send message to all clients!
-        public async Task SendMessage(string userId, string message)
+       
+        public async Task SendKidOnBoard(int carpoolId, int kidId)
         {
 
-            await hubConnection.InvokeAsync("SendMessage", userId, message);
+            await hubConnection.InvokeAsync("SendKidOnBoard", carpoolId, kidId);
 
         }
 
-        //This methid send a message to specific group
-        public async Task SendMessageToGroup(string userId, string message, string groupName)
+        public async Task SendArriveToDestination(int carpoolId)
         {
 
-            await hubConnection.InvokeAsync("SendMessageToGroup", userId, message, groupName);
+            await hubConnection.InvokeAsync("SendKidOnBoard", carpoolId);
 
         }
 
-        //this method register a method to be called upon receiving a message
-        public void RegisterToReceiveMessage(Action<string, string> GetMessageAndUser)
+        public async Task SendLocation(int carpoolId, double longitude, double latitude)
         {
-            hubConnection.On("ReceiveMessage", GetMessageAndUser);
+
+            await hubConnection.InvokeAsync("SendKidOnBoard", carpoolId, longitude, latitude);
+
         }
-        //this method register a method to be called upon receiving a message from specific group
-        public void RegisterToReceiveMessageFromGroup(Action<string, string, string> GetMessageAndUserFromGroup)
+
+
+       
+
+      
+        public void RegisterToKidOnBoard(Action<int> UpdateKidOnBoard)
         {
-            hubConnection.On("ReceiveMessageFromGroup", GetMessageAndUserFromGroup);
+            hubConnection.On("UpdateKidOnBoard", UpdateKidOnBoard);
+        }
+        public void RegisterToLocation(Action<int, int> UpdateLocation)
+        {
+            hubConnection.On("UpdateDriverLocation", UpdateLocation);
+        }
+        public void RegisterToArrive(Action UpdateLocation)
+        {
+            hubConnection.On("UpdateArriveToDestination", UpdateLocation);
         }
     }
 }

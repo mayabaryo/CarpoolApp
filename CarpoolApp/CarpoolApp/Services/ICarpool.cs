@@ -7,13 +7,15 @@ namespace CarpoolApp.Services
 {
     public interface ICarpoolService
     {
-        Task Connect(string[] groupNames);
+        Task Connect(int carpoolId);
         //Task Connect(string groupName);
-        Task Disconnect(string[] groupNames);
+        Task Disconnect(int carpoolId);
         //Task Disconnect(string groupName);
-        Task SendMessage(string userId, string message);
-        Task SendMessageToGroup(string userId, string message, string groupName);
-        void RegisterToReceiveMessage(Action<string, string> GetMessageAndUser);
-        void RegisterToReceiveMessageFromGroup(Action<string, string, string> GetMessageAndUserFromGroup);
+        Task SendKidOnBoard(int carpoolId, int kidId);
+        Task SendLocation(int carpoolId, double longitude, double latitude);
+        Task SendArriveToDestination(int carpoolId);
+        void RegisterToKidOnBoard(Action<int> UpdateKidOnBoard);
+        void RegisterToLocation(Action<int, int> UpdateLocation);
+        void RegisterToArrive(Action UpdateLocation);
     }
 }
