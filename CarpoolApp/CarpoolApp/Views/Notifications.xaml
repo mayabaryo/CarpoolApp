@@ -79,7 +79,7 @@
                                 <Label Grid.Column="0" Grid.Row="2"
                                    Text="שם משפחה" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="2"
-                                   Text="{Binding Carpool.Activity.ActivityName}"/>
+                                   Text="{Binding Kid.IdNavigation.LastName}"/>
 
                                 <Frame Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource SmallImageFrame}">
                                     <Image Source="{Binding Kid.IdNavigation.PhotoURL}" Style="{StaticResource SmallImage}"/>

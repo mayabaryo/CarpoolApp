@@ -75,21 +75,26 @@ namespace CarpoolApp.Services
         public async Task SendArriveToDestination(int carpoolId)
         {
 
-            await hubConnection.InvokeAsync("SendKidOnBoard", carpoolId);
+            await hubConnection.InvokeAsync("SendArriveToDestination", carpoolId);
 
         }
 
         public async Task SendLocation(int carpoolId, double longitude, double latitude)
         {
 
-            await hubConnection.InvokeAsync("SendKidOnBoard", carpoolId, longitude, latitude);
+            await hubConnection.InvokeAsync("SendLocation", carpoolId, longitude, latitude);
+
+        }
+
+        public async Task StartDrive(int carpoolId)
+        {
+
+            await hubConnection.InvokeAsync("StartDrive", carpoolId);
 
         }
 
 
-       
 
-      
         public void RegisterToKidOnBoard(Action<int> UpdateKidOnBoard)
         {
             hubConnection.On("UpdateKidOnBoard", UpdateKidOnBoard);
@@ -98,9 +103,13 @@ namespace CarpoolApp.Services
         {
             hubConnection.On("UpdateDriverLocation", UpdateLocation);
         }
-        public void RegisterToArrive(Action UpdateLocation)
+        public void RegisterToArrive(Action UpdateArriveToDestination)
         {
-            hubConnection.On("UpdateArriveToDestination", UpdateLocation);
+            hubConnection.On("UpdateArriveToDestination", UpdateArriveToDestination);
+        }
+        public void RegisterToStartDrive(Action UpdateStartDrive)
+        {
+            hubConnection.On("UpdateStartDrive", UpdateStartDrive);
         }
     }
 }

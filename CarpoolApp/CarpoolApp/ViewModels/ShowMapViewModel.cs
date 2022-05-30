@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using CarpoolApp.DTO;
 using Xamarin.Forms.Maps;
+using System.Threading.Tasks;
 
 namespace CarpoolApp.ViewModels
 {
@@ -94,6 +95,33 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
+        #region InDrive
+        //boolean indicates if the driver start the drive to destination
+        private bool inDrive;
+        public bool InDrive
+        {
+            get => inDrive;
+            set
+            {
+                inDrive = value;
+                OnPropertyChanged("InDrive");
+            }
+        }
+        #endregion
+
+        #region IsDriver
+        private bool isDriver;
+        public bool IsDriver
+        {
+            get => isDriver;
+            set
+            {
+                isDriver = value;
+                OnPropertyChanged("IsDriver");
+            }
+        }
+        #endregion
+
         public ObservableCollection<Kid> KidList { get; }
 
         private CarpoolService service;
@@ -113,19 +141,40 @@ namespace CarpoolApp.ViewModels
             {
                 this.KidList.Add(k);
             }
-
+            InDrive = false;
             this.service = new CarpoolService();
-            this.service.RegisterToArrive(OnArriveToDestination);
 
-            
+            App theApp = (App)App.Current;
+            User currentUser = theApp.CurrentUser;
+
+            if (currentUser.Id == carpool.AdultId)
+                IsDriver = true;
+            else
+                IsDriver = false;
 
 
             OnStart();
         }
         #endregion     
-        void OnArriveToDestination()
+        private bool OnTimer()
         {
+            GetLocation();
+            return InDrive;
+        }
 
+        private async void GetLocation()
+        {
+            try
+            {
+                var location = await Geolocation.GetLocationAsync();
+
+                await this.service.SendLocation(Carpool.Id, location.Latitude, location.Longitude);
+                
+            }
+            catch (Exception e)
+            {
+                // Unable to get location
+            }
         }
         public GooglePlace RouteOrigin { get; private set; }
         public GooglePlace RouteDestination { get; private set; }
@@ -238,23 +287,14 @@ namespace CarpoolApp.ViewModels
 
         #region NavigateCommand
         public ICommand NavigateCommand => new Command(OnNavigate);
-        public void OnNavigate()
+        public async void OnNavigate()
         {
             try
             {
-
-
-                //CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-                //bool succeed = await proxy.CarpoolEndedAsync(this.Carpool.Id);
-
-                //App theApp = (App)App.Current;
-
-                //Page page = new AdultMainTab();
-                //page.Title = "שלום " + theApp.CurrentUser.UserName;
-                //theApp.MainPage = new NavigationPage(page) /*{ BarBackgroundColor = Color.FromHex("#81cfe0") }*/;
-
-                //await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
-
+                await this.service.Connect(Carpool.Id);
+                InDrive = true;
+                await this.service.StartDrive(Carpool.Id);
+                Device.StartTimer(TimeSpan.FromSeconds(10), () => OnTimer());
             }
             catch (Exception e)
             {
@@ -276,9 +316,12 @@ namespace CarpoolApp.ViewModels
 
                 Page page = new AdultMainTab();
                 page.Title = "שלום " + theApp.CurrentUser.UserName;
-                theApp.MainPage = new NavigationPage(page) /*{ BarBackgroundColor = Color.FromHex("#81cfe0") }*/;
-
+               
+                await this.service.SendArriveToDestination(Carpool.Id);
+                InDrive = false;
+                await this.service.Disconnect(Carpool.Id);
                 //await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
+                theApp.MainPage = new NavigationPage(page) /*{ BarBackgroundColor = Color.FromHex("#81cfe0") }*/;
 
             }
             catch (Exception e)
@@ -290,23 +333,26 @@ namespace CarpoolApp.ViewModels
 
         #region KidInCommand
         public ICommand KidInCommand => new Command<Kid>(OnKidIn);
-        public /*async*/ void OnKidIn(Kid kid)
+        public async void OnKidIn(Kid kid)
        {
             //this.Color = "LightGreen";
-            kid.IsInCarpool = true;
+            if(!kid.IsInCarpool)
+                kid.IsInCarpool = true;
+            else
+                kid.IsInCarpool = false;
 
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             List<KidsOfAdult> kidsOfAdult = kid.KidsOfAdults.ToList();
 
             string body = $"{kid.IdNavigation.FirstName} {kid.IdNavigation.LastName}" + " כעת בהסעה לפעילות. ניתן לצפות במסלול בזמן אמת באפליקציה";
-            //string body = "בקשתך לצרף את " + kid.IdNavigation.UserName + " להסעה אושרה על ידי " + currentUser.UserName;
-            //foreach (KidsOfAdult kidsOf in kidsOfAdult)
-            //{
-            //    Adult adult = kidsOf.Adult;
-            //    string to = adult.IdNavigation.Email;
-            //    string toName = adult.IdNavigation.UserName;
-            //    bool isSent = await proxy.SendEmailAsync(body, to, toName);
-            //}
+            foreach (KidsOfAdult kidsOf in kidsOfAdult)
+            {
+                Adult adult = kidsOf.Adult;
+                string to = adult.IdNavigation.Email;
+                string toName = adult.IdNavigation.UserName;
+                bool isSent = await proxy.SendEmailAsync(body, to, toName);
+            }
+            await this.service.SendKidOnBoard(Carpool.Id, kid.Id);
         }
         #endregion
 

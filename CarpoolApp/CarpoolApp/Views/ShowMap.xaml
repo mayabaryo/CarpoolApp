@@ -165,9 +165,9 @@
 
             <StackLayout Orientation="Horizontal">
 
-                <Button Text="התחל ניווט" Style="{StaticResource Button}" BackgroundColor="LightGreen" Command="{Binding NavigateCommand}"></Button>
+                <Button Text="התחל ניווט" IsVisible="{Binding IsDriver}" Style="{StaticResource Button}" BackgroundColor="LightGreen" Command="{Binding NavigateCommand}"></Button>
 
-                <Button Text="סיים נסיעה" Style="{StaticResource Button}" BackgroundColor="Red" Command="{Binding EndCommand}"></Button>
+                <Button Text="סיים נסיעה" IsVisible="{Binding IsDriver}" Style="{StaticResource Button}" BackgroundColor="Red" Command="{Binding EndCommand}"></Button>
            
             </StackLayout>
 
