@@ -32,6 +32,12 @@
         </local:AdultCarpools.IconImageSource>
     </local:AdultCarpools>
 
+    <local:AllKidsCarpools Title="הסעות ילדים">
+        <local:AllKidsCarpools.IconImageSource>
+            <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.Taxi}"/>
+        </local:AllKidsCarpools.IconImageSource>
+    </local:AllKidsCarpools>
+
     <local:AdultProfile Title="הפרופיל שלי">
         <local:AdultProfile.IconImageSource>
             <FontImageSource Color="Black" FontFamily="MySolidFonts" Glyph="{x:Static fonts:IconSolidFonts.User}"/>

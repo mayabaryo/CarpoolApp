@@ -99,7 +99,7 @@ namespace CarpoolApp.Services
         {
             hubConnection.On("UpdateKidOnBoard", UpdateKidOnBoard);
         }
-        public void RegisterToLocation(Action<int, int> UpdateLocation)
+        public void RegisterToLocation(Action<double, double> UpdateLocation)
         {
             hubConnection.On("UpdateDriverLocation", UpdateLocation);
         }

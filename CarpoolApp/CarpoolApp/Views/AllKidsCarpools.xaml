@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarpoolApp.Views.AllKidsCarpools"
+             FlowDirection="RightToLeft">
+    <ContentPage.Content>
+        <StackLayout>
+
+
+            <Grid Margin="0,0,0,0" Padding="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Column="0" Aspect="AspectFill" Source="carpoolLogo" Opacity="0.6"></Image>
+                <Label Text="ההסעות של הילדים" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource title}"></Label>
+            </Grid>
+
+            <StackLayout Style="{StaticResource Stack}">
+                <Frame Style="{StaticResource logInSignUp}">
+                    <!-- CarpoolsCollection -->
+                    <CollectionView x:Name="collectionName" 
+                            ItemsSource="{Binding CarpoolList}" SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelctionChanged}"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference collectionName}, Path=SelectedItem}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <SwipeView>
+                                    <SwipeView.RightItems>
+                                        <SwipeItems SwipeBehaviorOnInvoked="RemainOpen">
+
+                                            <SwipeItemView BackgroundColor="#e1eff6">
+                                                <StackLayout Margin="10" WidthRequest="100" HeightRequest="200">
+                                                    <Button Text="צפה בנסיעה" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+                                                    Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.StartCommand}"
+                                                    CommandParameter="{Binding}"/>
+                                                </StackLayout>
+                                            </SwipeItemView>
+
+
+                                        </SwipeItems>
+                                    </SwipeView.RightItems>
+
+
+                                    <Grid Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#dfe7fd">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Grid.Row="0"
+                                   Text="נהג" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="0"
+                                   Text="{Binding Adult.IdNavigation.UserName}"/>
+                                        <Label Grid.Column="0" Grid.Row="1"
+                                   Text="סטטוס" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="1"
+                                   Text="{Binding CarpoolStatus.StatusName}"/>
+                                        <Label Grid.Column="0" Grid.Row="2"
+                                   Text="מושבים פנויים" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Grid.Row="2"
+                                   Text="{Binding Seats}"/>
+
+                                        <Frame Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource SmallImageFrame}">
+                                            <Image Source="{Binding Adult.IdNavigation.PhotoURL}" Style="{StaticResource SmallImage}"/>
+                                        </Frame>
+
+                                    </Grid>
+
+                                </SwipeView>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Frame>
+            </StackLayout>
+
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

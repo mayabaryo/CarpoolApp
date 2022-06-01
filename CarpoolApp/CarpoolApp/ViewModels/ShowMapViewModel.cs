@@ -150,12 +150,50 @@ namespace CarpoolApp.ViewModels
             if (currentUser.Id == carpool.AdultId)
                 IsDriver = true;
             else
+            {
+                ConnectToHubServer();
                 IsDriver = false;
+            }
 
-
+            
             OnStart();
         }
         #endregion     
+        private async void ConnectToHubServer()
+        {
+            await service.Connect(carpool.Id);
+            service.RegisterToArrive(OnArriveToDestination);
+            service.RegisterToKidOnBoard(OnKidOnBoard);
+            service.RegisterToStartDrive(OnStartDrive);
+            service.RegisterToLocation(OnDriverLocationUpdate);
+        }
+        public event Action<double, double> UpdateDriverLocationEvent;
+        private void OnDriverLocationUpdate(double latitude, double longitude)
+        {
+            if (UpdateDriverLocationEvent != null)
+            {
+                Device.BeginInvokeOnMainThread(() => UpdateDriverLocationEvent(latitude, longitude));
+                
+            }
+                
+        }
+        private void OnStartDrive()
+        {
+
+        }
+        private async void OnArriveToDestination()
+        {
+            await this.service.Disconnect(carpool.Id);
+        }
+        private void OnKidOnBoard(int kidId)
+        {
+            Kid kid = KidList.Where(k => k.Id == kidId).FirstOrDefault();
+            if (kid != null)
+            {
+                kid.IsInCarpool = true;
+            }
+        }
+
         private bool OnTimer()
         {
             GetLocation();
@@ -174,6 +212,7 @@ namespace CarpoolApp.ViewModels
             catch (Exception e)
             {
                 // Unable to get location
+                Console.WriteLine(e.Message);
             }
         }
         public GooglePlace RouteOrigin { get; private set; }

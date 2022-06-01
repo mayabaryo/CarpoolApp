@@ -18,12 +18,33 @@ namespace CarpoolApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ShowMap : ContentPage
     {
+        private Circle driver;
         public ShowMap(string origin, string dest, List<string> waypoints, List<Kid> kids, Carpool carpool)
         {
+            driver = null;
             ShowMapViewModel vm = new ShowMapViewModel(origin, dest, waypoints, kids, carpool);
             vm.OnUpdateMapEvent += OnUpdateMap;
+            vm.UpdateDriverLocationEvent += OnDriverLocationUpdate;
             this.BindingContext = vm;
             InitializeComponent();
+        }
+
+        public void OnDriverLocationUpdate(double latitude, double longitude)
+        {
+            Position pos = new Position(latitude, longitude);
+            if (driver == null)
+            {
+                this.driver = new Circle()
+                {
+                    StrokeColor = Color.White,
+                    FillColor = Color.Orange,
+                    Center = pos,
+                    Radius = Distance.FromMeters(150)
+                };
+                map.MapElements.Add(this.driver);
+            }
+            else
+                this.driver.Center = pos;
         }
 
         public void OnUpdateMap()

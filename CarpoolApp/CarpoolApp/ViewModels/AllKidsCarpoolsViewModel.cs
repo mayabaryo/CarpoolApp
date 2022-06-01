@@ -13,11 +13,10 @@ using CarpoolApp.Views;
 using System.Text.RegularExpressions;
 using CarpoolApp.DTO;
 using System.Collections.ObjectModel;
-using CarpoolApp.Model;
 
 namespace CarpoolApp.ViewModels
 {
-    class AdultCarpoolsViewModel : INotifyPropertyChanged
+    class AllKidsCarpoolsViewModel : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -43,7 +42,7 @@ namespace CarpoolApp.ViewModels
         #endregion
 
         #region Constructor
-        public AdultCarpoolsViewModel()
+        public AllKidsCarpoolsViewModel()
         {
             CarpoolList = new ObservableCollection<Carpool>();
             CreateCarpoolCollection();
@@ -55,13 +54,10 @@ namespace CarpoolApp.ViewModels
         {
             App theApp = (App)App.Current;
             User currentUser = theApp.CurrentUser;
-            Adult currentAdult = currentUser.Adult;
 
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            List<Carpool> theCarpools = await proxy.GetAdultCarpoolsAsync(currentAdult);
+            List<Carpool> theCarpools = await proxy.GetAllKidsCarpoolsAsync(currentUser.Adult);
 
-            //System.Threading.Thread.Sleep(1000);
-            
             foreach (Carpool c in theCarpools)
             {
                 this.CarpoolList.Add(c);
@@ -85,7 +81,7 @@ namespace CarpoolApp.ViewModels
             List<Kid> kids = await proxy.GetKidsInCarpoolAsync(carpool);
 
             List<string> waypoints = new List<string>();
-            foreach(Kid kid in kids)
+            foreach (Kid kid in kids)
             {
                 User user = kid.IdNavigation;
                 string point = $"{user.City},{user.Street} {user.HouseNum}";
@@ -96,6 +92,5 @@ namespace CarpoolApp.ViewModels
             await App.Current.MainPage.Navigation.PushAsync(page);
         }
         #endregion
-
     }
 }

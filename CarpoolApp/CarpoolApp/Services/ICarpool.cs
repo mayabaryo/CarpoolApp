@@ -15,7 +15,7 @@ namespace CarpoolApp.Services
         Task SendLocation(int carpoolId, double longitude, double latitude);
         Task SendArriveToDestination(int carpoolId);
         void RegisterToKidOnBoard(Action<int> UpdateKidOnBoard);
-        void RegisterToLocation(Action<int, int> UpdateLocation);
+        void RegisterToLocation(Action<double, double> UpdateLocation);
         void RegisterToArrive(Action UpdateLocation);
     }
 }
