@@ -106,7 +106,7 @@ namespace CarpoolApp.Views
                 {
                     Type = PinType.Place,
                     Position = new Position(route.Latitude, route.Longitude),
-                    Label = "אסוף את " + $"{kid.IdNavigation.FirstName} {kid.IdNavigation.LastName}",
+                    Label = $"{kid.IdNavigation.FirstName} {kid.IdNavigation.LastName}",
                     Address = route.Name
                 };
                 map.Pins.Add(pin);

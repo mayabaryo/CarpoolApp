@@ -510,97 +510,97 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region Recurring
-        private bool showRecurringError;
-        public bool ShowRecurringError
-        {
-            get => showRecurringError;
-            set
-            {
-                showRecurringError = value;
-                OnPropertyChanged("showRecurringError");
-            }
-        }
-
-        private bool recurring;
-        public bool Recurring
-        {
-            get => recurring;
-            set
-            {
-                recurring = value;
-                //ValidateRecurring();
-                OnPropertyChanged("Recurring");
-            }
-        }
-
-        private string recurringError;
-        public string RecurringError
-        {
-            get => recurringError;
-            set
-            {
-                recurringError = value;
-                OnPropertyChanged("RecurringError");
-            }
-        }
-
-        //private void ValidateRecurring()
+        //#region Recurring
+        //private bool showRecurringError;
+        //public bool ShowRecurringError
         //{
-        //    this.ShowRecurringError = 
+        //    get => showRecurringError;
+        //    set
+        //    {
+        //        showRecurringError = value;
+        //        OnPropertyChanged("showRecurringError");
+        //    }
         //}
-        #endregion
 
-        #region EntryCode
-        private bool showEntryCodeError;
-        public bool ShowEntryCodeError
-        {
-            get => showEntryCodeError;
-            set
-            {
-                showEntryCodeError = value;
-                OnPropertyChanged("ShowEntryCodeError");
-            }
-        }
+        //private bool recurring;
+        //public bool Recurring
+        //{
+        //    get => recurring;
+        //    set
+        //    {
+        //        recurring = value;
+        //        //ValidateRecurring();
+        //        OnPropertyChanged("Recurring");
+        //    }
+        //}
 
-        private string entryCode;
-        public string EntryCode
-        {
-            get => entryCode;
-            set
-            {
-                entryCode = value;
-                ValidateEntryCode();
-                OnPropertyChanged("EntryCode");
-            }
-        }
+        //private string recurringError;
+        //public string RecurringError
+        //{
+        //    get => recurringError;
+        //    set
+        //    {
+        //        recurringError = value;
+        //        OnPropertyChanged("RecurringError");
+        //    }
+        //}
 
-        private string entryCodeError;
-        public string EntryCodeError
-        {
-            get => entryCodeError;
-            set
-            {
-                entryCodeError = value;
-                OnPropertyChanged("EntryCodError");
-            }
-        }
+        ////private void ValidateRecurring()
+        ////{
+        ////    this.ShowRecurringError = 
+        ////}
+        //#endregion
 
-        private void ValidateEntryCode()
-        {
-            this.ShowEntryCodeError = string.IsNullOrEmpty(EntryCode);
-            if (!this.ShowEntryCodeError)
-            {
-                if (this.EntryCode.Length < 6)
-                {
-                    this.ShowEntryCodeError = true;
-                    this.EntryCodeError = ERROR_MESSAGES.SHORT_PASS;
-                }
-            }
-            else
-                this.EntryCodeError = ERROR_MESSAGES.REQUIRED_FIELD;
-        }
-        #endregion        
+        //#region EntryCode
+        //private bool showEntryCodeError;
+        //public bool ShowEntryCodeError
+        //{
+        //    get => showEntryCodeError;
+        //    set
+        //    {
+        //        showEntryCodeError = value;
+        //        OnPropertyChanged("ShowEntryCodeError");
+        //    }
+        //}
+
+        //private string entryCode;
+        //public string EntryCode
+        //{
+        //    get => entryCode;
+        //    set
+        //    {
+        //        entryCode = value;
+        //        ValidateEntryCode();
+        //        OnPropertyChanged("EntryCode");
+        //    }
+        //}
+
+        //private string entryCodeError;
+        //public string EntryCodeError
+        //{
+        //    get => entryCodeError;
+        //    set
+        //    {
+        //        entryCodeError = value;
+        //        OnPropertyChanged("EntryCodError");
+        //    }
+        //}
+
+        //private void ValidateEntryCode()
+        //{
+        //    this.ShowEntryCodeError = string.IsNullOrEmpty(EntryCode);
+        //    if (!this.ShowEntryCodeError)
+        //    {
+        //        if (this.EntryCode.Length < 6)
+        //        {
+        //            this.ShowEntryCodeError = true;
+        //            this.EntryCodeError = ERROR_MESSAGES.SHORT_PASS;
+        //        }
+        //    }
+        //    else
+        //        this.EntryCodeError = ERROR_MESSAGES.REQUIRED_FIELD;
+        //}
+        //#endregion        
 
         #region ServerStatus
         private string serverStatus;
@@ -634,7 +634,7 @@ namespace CarpoolApp.ViewModels
             this.CityError = ERROR_MESSAGES.BAD_CITY;
             this.StreetError = ERROR_MESSAGES.BAD_STREET;
             this.StringHouseNumError = ERROR_MESSAGES.BAD_HOUSE_NUM;
-            this.EntryCodeError = ERROR_MESSAGES.SHORT_PASS;
+            //this.EntryCodeError = ERROR_MESSAGES.SHORT_PASS;
 
             this.ShowActivityNameError = false;
             this.ShowDateError = false;
@@ -643,7 +643,7 @@ namespace CarpoolApp.ViewModels
             this.ShowCityError = false;
             this.ShowStreetError = false;
             this.ShowStringHouseNumError = false;
-            this.ShowEntryCodeError = false;
+            //this.ShowEntryCodeError = false;
 
             this.Date = DateTime.Today;
             //this.StartTime = DateTime.Now;
@@ -663,11 +663,11 @@ namespace CarpoolApp.ViewModels
             ValidateCity();
             ValidateStreet();
             ValidateStringHouseNum();
-            ValidateEntryCode();
+            //ValidateEntryCode();
 
             //check if any validation failed
             if (ShowActivityNameError || ShowDateError || ShowStartTimeError || ShowEndTimeError || ShowCityError
-                || ShowStreetError || ShowStringHouseNumError || ShowEntryCodeError)
+                || ShowStreetError || ShowStringHouseNumError/* || ShowEntryCodeError*/)
                 return false;
             return true;
         }
@@ -694,8 +694,6 @@ namespace CarpoolApp.ViewModels
                     City = this.City,
                     Street = this.Street,
                     HouseNum = int.Parse(this.StringHouseNum),
-                    Recurring = this.Recurring,
-                    EntryCode = this.EntryCode,
                     AdultId = currentUser.Id
                 };
 

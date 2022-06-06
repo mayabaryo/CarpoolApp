@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CarpoolApp.Views.UpdateUser"
              FlowDirection="RightToLeft">
+    
+    <!--
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="בית" Order="Primary" Priority="0" IconImageSource="homeIcon.png" Command="{Binding HomePageCommand}"></ToolbarItem>
         <ToolbarItem Text="הוספת ילד" Order="Secondary" Priority="0" Command="{Binding AddKidPageCommand}"></ToolbarItem>
@@ -13,6 +15,7 @@
         <ToolbarItem Text="צפייה בהסעות" Order="Secondary" Priority="5" Command="{Binding CarpoolsPageCommand}"></ToolbarItem>
         <ToolbarItem Text="התנתק" Order="Primary" Priority="1" IconImageSource="logoutIcon.png" Command="{Binding LogOutCommand}"></ToolbarItem>
     </ContentPage.ToolbarItems>
+    -->
 
     <ContentPage.Content>
         <StackLayout Style="{StaticResource Stack}">

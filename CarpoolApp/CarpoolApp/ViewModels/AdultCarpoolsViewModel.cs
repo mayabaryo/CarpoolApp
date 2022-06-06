@@ -85,13 +85,17 @@ namespace CarpoolApp.ViewModels
             List<Kid> kids = await proxy.GetKidsInCarpoolAsync(carpool);
 
             List<string> waypoints = new List<string>();
-            foreach(Kid kid in kids)
-            {
-                User user = kid.IdNavigation;
-                string point = $"{user.City},{user.Street} {user.HouseNum}";
-                waypoints.Add(point);
-            }
 
+            if (kids != null)
+            {
+                foreach (Kid kid in kids)
+                {
+                    User user = kid.IdNavigation;
+                    string point = $"{user.City},{user.Street} {user.HouseNum}";
+                    waypoints.Add(point);
+                }
+            }
+            
             ShowMap page = new ShowMap(origin, dest, waypoints, kids, carpool);
             await App.Current.MainPage.Navigation.PushAsync(page);
         }

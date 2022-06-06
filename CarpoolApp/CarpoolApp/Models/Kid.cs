@@ -30,8 +30,6 @@ namespace CarpoolApp.Models
         public virtual ICollection<KidsOfAdult> KidsOfAdults { get; set; }
 
         //Added only to client side
-        //public bool IsInCarpool { get; set; }
-
         #region IsInCarpool
         private bool isInCarpool;
         public bool IsInCarpool

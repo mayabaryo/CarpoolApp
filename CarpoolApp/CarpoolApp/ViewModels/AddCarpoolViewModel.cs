@@ -41,8 +41,8 @@ namespace CarpoolApp.ViewModels
             }
         }
 
-        private DateTime carpoolTime;
-        public DateTime CarpoolTime
+        private TimeSpan carpoolTime;
+        public TimeSpan CarpoolTime
         {
             get => carpoolTime;
             set
@@ -66,7 +66,7 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateCarpoolTime()
         {
-            TimeSpan ts = this.CarpoolTime - DateTime.Now;
+            TimeSpan ts = this.CarpoolTime - this.Activity.StartTime.TimeOfDay;
             this.ShowCarpoolTimeError = ts.TotalMinutes < 0;
         }
         #endregion        
@@ -148,8 +148,8 @@ namespace CarpoolApp.ViewModels
 
             this.SaveDataCommand = new Command(() => SaveData());
 
-            DateTime calendarDate = new DateTime(2000, 10, 10);
-            this.CarpoolTime = DateTime.Now;
+            //DateTime calendarDate = new DateTime(2000, 10, 10);
+            //this.CarpoolTime = DateTime.Now;
         }
         #endregion
 
@@ -167,10 +167,12 @@ namespace CarpoolApp.ViewModels
                     IdNavigation = currentUser
                 };
 
+                DateTime carpoolTime = this.Activity.StartTime.Date + this.CarpoolTime;
+
                 Carpool carpool = new Carpool()
                 {
                     AdultId = currentUser.Id,
-                    CarpoolTime = this.CarpoolTime,
+                    CarpoolTime = carpoolTime,
                     Seats = int.Parse(this.StringSeats),
                     CarpoolStatusId = 1,
                     ActivityId = this.Activity.Id

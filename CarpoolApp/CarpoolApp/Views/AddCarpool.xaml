@@ -33,7 +33,7 @@
                                     <Label Text="שעת יציאה" Grid.Column="0" Style="{StaticResource labelNameStyle}"/>
                                     <Label Text="{Binding CarpoolTimeError}" IsVisible="{Binding ShowCarpoolTimeError}" Grid.Column="1" Style="{StaticResource labelErrorStyle}"/>
                                 </Grid>
-                                <DatePicker Date="{Binding CarpoolTime}" Style="{StaticResource entry}"/>
+                                <TimePicker Time="{Binding CarpoolTime}" Style="{StaticResource entry}"/>
 
                                 <!-- Seats -->
                                 <Grid>

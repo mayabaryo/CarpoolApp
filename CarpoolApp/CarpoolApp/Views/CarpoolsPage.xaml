@@ -25,30 +25,30 @@
             <Frame Style="{StaticResource logInSignUp}" IsVisible="{Binding ShowCarpool}">
             <Grid Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsVisible="{Binding ShowCarpool}" BackgroundColor="#dfe7fd">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="20" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Grid.Row="0"
                                    Text="נהג" FontAttributes="Bold"/>
                 <Label Grid.Column="1" Grid.Row="0"
                                    Text="{Binding MyCarpool.Adult.IdNavigation.UserName}"/>
                 <Label Grid.Column="0" Grid.Row="1"
-                                   Text="סטטוס" FontAttributes="Bold"/>
+                                   Text="שעה" FontAttributes="Bold"/>
                 <Label Grid.Column="1" Grid.Row="1"
-                                   Text="{Binding MyCarpool.CarpoolStatus.StatusName}"/>
+                                   Text="{Binding MyCarpool.CarpoolTime}"/>
                 <Label Grid.Column="0" Grid.Row="2"
-                                   Text="מושבים פנויים" FontAttributes="Bold"/>
+                                   Text="מושבים" FontAttributes="Bold"/>
                 <Label Grid.Column="1" Grid.Row="2"
                                    Text="{Binding MyCarpool.Seats}"/>
 
                 <Frame Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource SmallImageFrame}">
-                    <Image Source="{Binding IdNavigation.PhotoURL}" Style="{StaticResource SmallImage}"/>
+                    <Image Source="{Binding MyCarpool.Adult.IdNavigation.PhotoURL}" Style="{StaticResource SmallImage}"/>
                 </Frame>
 
             </Grid>
@@ -83,25 +83,25 @@
 
                             <Grid Padding="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#dfe7fd">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="20" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="110" />
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0"
                                    Text="נהג" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="0"
                                    Text="{Binding Adult.IdNavigation.UserName}"/>
                                 <Label Grid.Column="0" Grid.Row="1"
-                                   Text="סטטוס" FontAttributes="Bold"/>
+                                   Text="שעה" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="1"
-                                   Text="{Binding CarpoolStatus.StatusName}"/>
+                                   Text="{Binding CarpoolTime}"/>
                                 <Label Grid.Column="0" Grid.Row="2"
-                                   Text="מושבים פנויים" FontAttributes="Bold"/>
+                                   Text="מושבים" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="2"
                                    Text="{Binding Seats}"/>
 

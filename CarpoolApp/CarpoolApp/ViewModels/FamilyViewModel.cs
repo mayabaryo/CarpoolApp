@@ -52,24 +52,24 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        #region KidsCollection
-        private ObservableCollection<Kid> kidsCollection;
-        public ObservableCollection<Kid> KidsCollection
-        {
-            get
-            {
-                return this.kidsCollection;
-            }
-            set
-            {
-                if (this.kidsCollection != value)
-                {
-                    this.kidsCollection = value;
-                    OnPropertyChanged("KidsCollection");
-                }
-            }
-        }
-        #endregion
+        //#region KidsCollection
+        //private ObservableCollection<Kid> kidsCollection;
+        //public ObservableCollection<Kid> KidsCollection
+        //{
+        //    get
+        //    {
+        //        return this.kidsCollection;
+        //    }
+        //    set
+        //    {
+        //        if (this.kidsCollection != value)
+        //        {
+        //            this.kidsCollection = value;
+        //            OnPropertyChanged("KidsCollection");
+        //        }
+        //    }
+        //}
+        //#endregion
 
         public ObservableCollection<Kid> KidList { get; }
 
@@ -173,7 +173,10 @@ namespace CarpoolApp.ViewModels
                 ActivityList = theActivities
             };
             page.BindingContext = activityContext;
-            page.Title = $"{kid.IdNavigation.UserName} הפעילויות של";
+            page.Title = "הפעילויות של " + kid.IdNavigation.UserName;
+
+            //page.Title = $"{kid.IdNavigation.UserName} הפעילויות של";
+
             await App.Current.MainPage.Navigation.PushAsync(page);
         }
         #endregion

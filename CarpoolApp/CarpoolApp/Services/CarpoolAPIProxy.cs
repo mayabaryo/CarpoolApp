@@ -1108,50 +1108,52 @@ namespace CarpoolApp.Services
         }
         #endregion
 
-        #region GetStreetsNameList
-        private List<string> GetStreetsNameList(List<Street> streets/*, string city*/)
-        {
-            List<string> streetsName = new List<string>();
 
-            foreach (Street street in streets)
-            {
-                streetsName.Add(street.street_name);
-            }
 
-            return streetsName;
-        }
-        #endregion
+        //#region GetStreetsNameList
+        //private List<string> GetStreetsNameList(List<Street> streets/*, string city*/)
+        //{
+        //    List<string> streetsName = new List<string>();
 
-        #region GetStreetsAsync
-        public async Task<List<string>> GetStreetsAsync(/*string city*/)
-        {
-            //?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500
-            try
-            {
-                HttpResponseMessage response = await this.client.GetAsync($"{this.baseDataUri}/streets.json?666");
-                if (response.IsSuccessStatusCode)
-                {
-                    JsonSerializerOptions options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
-                    string content = await response.Content.ReadAsStringAsync();
+        //    foreach (Street street in streets)
+        //    {
+        //        streetsName.Add(street.street_name);
+        //    }
+
+        //    return streetsName;
+        //}
+        //#endregion
+
+        //#region GetStreetsAsync
+        //public async Task<List<string>> GetStreetsAsync(/*string city*/)
+        //{
+        //    //?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500
+        //    try
+        //    {
+        //        HttpResponseMessage response = await this.client.GetAsync($"{this.baseDataUri}/streets.json?666");
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            JsonSerializerOptions options = new JsonSerializerOptions
+        //            {
+        //                PropertyNameCaseInsensitive = true
+        //            };
+        //            string content = await response.Content.ReadAsStringAsync();
                     
-                    List<Street> streets = JsonSerializer.Deserialize<List<Street>>(content, options);
-                    return GetStreetsNameList(streets/*, city*/);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-        #endregion
+        //            List<Street> streets = JsonSerializer.Deserialize<List<Street>>(content, options);
+        //            return GetStreetsNameList(streets/*, city*/);
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e.Message);
+        //        return null;
+        //    }
+        //}
+        //#endregion
 
 
         #region GetStreetsNameByCity

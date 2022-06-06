@@ -20,8 +20,6 @@ namespace CarpoolApp.Models
         public string City { get; set; }
         public string Street { get; set; }
         public int HouseNum { get; set; }
-        public bool Recurring { get; set; }
-        public string EntryCode { get; set; }
         public int AdultId { get; set; }
 
         public virtual Adult Adult { get; set; }
