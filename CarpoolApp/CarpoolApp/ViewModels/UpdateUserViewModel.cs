@@ -700,10 +700,6 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        ////set the user default photo image name
-        //public const string DEFAULT_PHOTO = "defaultphoto.jpg";
-
-        //private Adult theAdult;
 
         public Command SaveDataCommand { protected set; get; }
         public ICommand ClearCommand { protected set; get; }
@@ -715,9 +711,7 @@ namespace CarpoolApp.ViewModels
 
         #region Constructor
         public UpdateUserViewModel()
-        {
-            
-            
+        { 
             App theApp = (App)App.Current;
 
             this.allCities = theApp.Cities;
@@ -881,15 +875,7 @@ namespace CarpoolApp.ViewModels
 
         #region OnCityChanged
         public void OnCityChanged(string search)
-        {
-            //if (this.Street != this.selectedStreetItem)
-            //{
-            //    this.Street = "";
-            //    this.ShowStreets = false;
-            //    this.FilteredStreets.Clear();
-            //    this.IsStreetEnabled = false;
-            //}            
-
+        {     
             if (this.City != this.SelectedCityItem)
             {
                 this.ShowCities = true;
@@ -995,7 +981,6 @@ namespace CarpoolApp.ViewModels
             this.SelectedCityItem = currentUser.City;
             this.SelectedStreetItem = currentUser.Street;
 
-            //this.UserImgSrc = currentUser.PhotoURL;
             this.Password = currentUser.UserPswd;
             this.Name = currentUser.FirstName;
             this.LastName = currentUser.LastName;
@@ -1021,7 +1006,6 @@ namespace CarpoolApp.ViewModels
             this.SelectedCityItem = currentUser.City;
             this.SelectedStreetItem = currentUser.Street;
 
-            //this.UserImgSrc = currentUser.PhotoURL;
             this.Password = currentUser.UserPswd;
             this.Name = currentUser.FirstName;
             this.LastName = currentUser.LastName;
@@ -1088,8 +1072,6 @@ namespace CarpoolApp.ViewModels
             page.Title = $"שלום {theApp.CurrentUser.UserName}";
 
             await App.Current.MainPage.Navigation.PopToRootAsync();
-            //while (App.Current. != App.Current.MainPage)
-            //await App.Current.MainPage.Navigation.PushAsync(page);
         }
         #endregion
 

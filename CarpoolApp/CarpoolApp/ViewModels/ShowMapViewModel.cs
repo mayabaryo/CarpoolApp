@@ -293,23 +293,6 @@ namespace CarpoolApp.ViewModels
                 RouteDestination = place2;
                 RouteDirections = direction;
 
-                //List<Pin> pins = new List<Pin>();
-                //for (int i = 0; i < RouteWaypoints.Count; i++)
-                //{
-
-                //}  
-                //foreach (GooglePlace route in RouteWaypoints)
-                //{
-                //    Pin pin = new Pin
-                //    {
-                //        Type = PinType.Place,
-                //        Position = new Position(route.Latitude, route.Longitude),
-                //        Label = "נקודת איסוף",
-                //        Address = route.Name
-                //    };
-                //    pins.Add(pin);
-                //}
-
 
                 if (OnUpdateMapEvent != null)
                     OnUpdateMapEvent();
@@ -319,8 +302,6 @@ namespace CarpoolApp.ViewModels
             {
                 Console.WriteLine(e.Message);
             }
-
-
         }
         #endregion
 

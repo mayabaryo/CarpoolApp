@@ -52,25 +52,6 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        //#region KidsCollection
-        //private ObservableCollection<Kid> kidsCollection;
-        //public ObservableCollection<Kid> KidsCollection
-        //{
-        //    get
-        //    {
-        //        return this.kidsCollection;
-        //    }
-        //    set
-        //    {
-        //        if (this.kidsCollection != value)
-        //        {
-        //            this.kidsCollection = value;
-        //            OnPropertyChanged("KidsCollection");
-        //        }
-        //    }
-        //}
-        //#endregion
-
         public ObservableCollection<Kid> KidList { get; }
 
         #region Constructor

@@ -58,13 +58,6 @@ namespace CarpoolApp.ViewModels
         {
             App theApp = (App)App.Current;
 
-            //RequestToJoinCarpool request = new RequestToJoinCarpool()
-            //{
-            //    KidId = Kid.Id,
-            //    CarpoolId = carpool.Id,
-            //    //RequestStatusId = 3
-            //};
-
             ServerStatus = "מתחבר לשרת...";
             await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
 
@@ -80,9 +73,6 @@ namespace CarpoolApp.ViewModels
             {
                 ServerStatus = "קורא נתונים...";
 
-
-                //theApp.CurrentPlayer.RequestToJoinTeams.Add(request);
-
                 await App.Current.MainPage.DisplayAlert("הגשת בקשה להצטרפות להסעה", "הגשת הבקשה להצטרפות להסעה נשלחה לנהג!", "אישור", FlowDirection.RightToLeft);
                 await App.Current.MainPage.Navigation.PopModalAsync();
 
@@ -90,21 +80,7 @@ namespace CarpoolApp.ViewModels
                 page.Title = "שלום " + theApp.CurrentUser.UserName;
                 App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
 
-                //NavigationPage p = new NavigationPage(new GamesScores());
-                //NavigationPage.SetHasNavigationBar(p, false);
-                //await App.Current.MainPage.Navigation.PushAsync(p);
             }
-
-            //Page page = new AddCarpool();
-
-            //AddCarpoolViewModel carpoolContext = new AddCarpoolViewModel()
-            //{
-            //    Activity = activity,
-            //    Kid = this.Kid
-            //};
-            //page.BindingContext = carpoolContext;
-            //page.Title = "צור הסעה";
-            //await App.Current.MainPage.Navigation.PushAsync(page);
         }
         #endregion
     }

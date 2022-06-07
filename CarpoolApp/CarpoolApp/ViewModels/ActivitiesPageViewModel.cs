@@ -32,8 +32,7 @@ namespace CarpoolApp.ViewModels
 
         public ActivitiesPageViewModel()
         {
-            //ActivityList = new ObservableCollection<Activity>();
-            //CreateActivityCollection();
+            
         }
 
         #region CreateActivityCollection
@@ -82,22 +81,8 @@ namespace CarpoolApp.ViewModels
 
             List<Carpool> activityCarpools = await proxy.GetCarpoolsInActivityAsync(activity);
 
-            //System.Threading.Thread.Sleep(10000);
-
-            //ObservableCollection<Carpool> carpoolsInAcivity = new ObservableCollection<Carpool>(activityCarpools);
-
 
             Carpool myCarpool = theCarpools.Where(a => a.ActivityId == activity.Id).FirstOrDefault();
-
-            //List<Carpool> otherCarpools = activityCarpools;
-            //if (myCarpool != null)
-            //{
-            //    foreach (Carpool c in activityCarpools)
-            //    {
-            //        if (c.Id == myCarpool.Id)
-            //            activityCarpools.Remove(c);
-            //    }
-            //}
 
 
             Page page = new CarpoolsPage();

@@ -697,33 +697,6 @@ namespace CarpoolApp.ViewModels
         }
         #endregion
 
-        //#region InitCities
-        //private async void InitCities()
-        //{
-        //    AddressAPIProxy proxy = AddressAPIProxy.CreateProxy();
-        //    this.allCities = await proxy.GetCitiesAsync();
-
-        //    //Copy list to the filtered list
-        //    this.FilteredCities = new ObservableCollection<string>(this.allCities);
-        //    this.FilteredCities.Clear();
-        //    City = String.Empty;
-        //}
-        //#endregion
-
-        //#region InitStreets
-        //private async void InitStreets()
-        //{
-        //    CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-        //    this.allStreets = await proxy.GetStreetsAsync();
-
-        //    //Copy list to the filtered list
-        //    this.FilteredStreets = new ObservableCollection<string>(this.allStreets);
-        //    this.FilteredStreets.Clear();
-        //    Street = String.Empty;
-        //    //IsRefreshing = false;
-        //}
-        //#endregion
-
         #region Constructor
         public SignUpViewModel()
         {
@@ -734,9 +707,6 @@ namespace CarpoolApp.ViewModels
 
             this.allStreets = theApp.StreetList;
             this.FilteredStreets = new ObservableCollection<string>();
-
-            //InitCities();
-            //InitStreets();
 
             //set the path url to the contact photo
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
@@ -853,13 +823,7 @@ namespace CarpoolApp.ViewModels
                                 Name = this.imageFileResult.FullPath
                             }, $"{newAdult.Id}.jpg");
                         }
-                        //else
-                        //{
-                        //    bool success = await proxy.UploadImage(new FileInfo()
-                        //    {
-                        //        Name = DEFAULT_PHOTO
-                        //    }, $"{newAdult.Id}.jpg");
-                        //}
+
                         ServerStatus = "שומר נתונים...";
 
                         App theApp = (App)App.Current;

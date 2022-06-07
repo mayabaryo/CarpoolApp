@@ -67,22 +67,22 @@ namespace CarpoolApp.Services
        
         public async Task SendKidOnBoard(int carpoolId, int kidId)
         {
-
-            await hubConnection.InvokeAsync("SendKidOnBoard", carpoolId, kidId);
+            if (hubConnection.State == HubConnectionState.Connected)
+                await hubConnection.InvokeAsync("SendKidOnBoard", carpoolId, kidId);
 
         }
 
         public async Task SendArriveToDestination(int carpoolId)
         {
-
-            await hubConnection.InvokeAsync("SendArriveToDestination", carpoolId);
+            if (hubConnection.State == HubConnectionState.Connected)
+                await hubConnection.InvokeAsync("SendArriveToDestination", carpoolId);
 
         }
 
         public async Task SendLocation(int carpoolId, double longitude, double latitude)
         {
-
-            await hubConnection.InvokeAsync("SendLocation", carpoolId, longitude, latitude);
+            if (hubConnection.State == HubConnectionState.Connected)
+                await hubConnection.InvokeAsync("SendLocation", carpoolId, longitude, latitude);
 
         }
 
@@ -93,7 +93,7 @@ namespace CarpoolApp.Services
 
         }
 
-
+        //
 
         public void RegisterToKidOnBoard(Action<int> UpdateKidOnBoard)
         {

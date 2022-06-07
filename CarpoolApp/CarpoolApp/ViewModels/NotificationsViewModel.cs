@@ -89,10 +89,7 @@ namespace CarpoolApp.ViewModels
             App theApp = (App)App.Current;
             User currentUser = theApp.CurrentUser;
           
-            //List<Adult> adults = new List<Adult>(kidsIn.Kid.KidsOfAdults);
             List<KidsOfAdult> kidsOfAdult = new List<KidsOfAdult>(kidsIn.Kid.KidsOfAdults);
-            //Player player = request.Player;
-            //player.Team = request.Team;
 
             ServerStatus = "מתחבר לשרת...";
             await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));
@@ -107,7 +104,6 @@ namespace CarpoolApp.ViewModels
             }
             else
             {
-                //theApp.CurrentCoach.Team.Players.Add(player);
                 ServerStatus = "קורא נתונים...";
 
                 string body = "בקשתך לצרף את " + kidsIn.Kid.IdNavigation.UserName + " להסעה אושרה על ידי " + currentUser.UserName;
@@ -119,17 +115,12 @@ namespace CarpoolApp.ViewModels
                     bool isSent = await proxy.SendEmailAsync(body, to, toName);
                 }
 
-
                 await App.Current.MainPage.DisplayAlert("אישור בקשת הצטרפות להסעה", "הוספת משתמש להסעה בוצעה בהצלחה!", "אישור", FlowDirection.RightToLeft);
                 await App.Current.MainPage.Navigation.PopModalAsync();
 
                 Page page = new AdultMainTab();
                 page.Title = "שלום " + theApp.CurrentUser.UserName;
                 App.Current.MainPage = new NavigationPage(page) { BarBackgroundColor = Color.FromHex("#81cfe0") };
-
-                //NavigationPage p = new NavigationPage(new GamesScores());
-                //NavigationPage.SetHasNavigationBar(p, false);
-                //await App.Current.MainPage.Navigation.PushAsync(p);
             }
 
         }
@@ -140,8 +131,6 @@ namespace CarpoolApp.ViewModels
         private async void DeleteRequest(KidsInCarpool kidsIn)
         {
             App theApp = (App)App.Current;
-            //Player player = request.Player;
-            //player.Team = null;
 
             ServerStatus = "מתחבר לשרת...";
             await App.Current.MainPage.Navigation.PushModalAsync(new Views.ServerStatusPage(this));

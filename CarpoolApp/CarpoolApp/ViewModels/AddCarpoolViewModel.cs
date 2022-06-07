@@ -66,8 +66,8 @@ namespace CarpoolApp.ViewModels
 
         private void ValidateCarpoolTime()
         {
-            TimeSpan ts = this.CarpoolTime - this.Activity.StartTime.TimeOfDay;
-            this.ShowCarpoolTimeError = ts.TotalMinutes < 0;
+            //TimeSpan ts = this.CarpoolTime - this.Activity.StartTime.TimeOfDay;
+            //this.ShowCarpoolTimeError = ts.TotalMinutes < 0;
         }
         #endregion        
 

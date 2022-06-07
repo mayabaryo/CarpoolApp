@@ -21,7 +21,7 @@ namespace CarpoolApp
     {
         //Generate Google Api Key at: https://console.cloud.google.com/ for Places API, Directions API, Maps SDK For android!
         //Generate Bing Api Key at: https://www.bingmapsportal.com/
-        public const string GoogleApiKey = "AIzaSyDfdooasyKxw5Qm9Hy5196Pg47HSf2eY4g";
+        public const string GoogleApiKey = "";
         public const string BingApiKey = "YOUR BING API KEY";
     }
     public partial class App : Application
@@ -36,17 +36,13 @@ namespace CarpoolApp
 
         //The current logged in user
         public User CurrentUser { get; set; }
-        //public Adult CurrentAdult { get; set; }
-        //public Kid CurrentKid { get; set; }
         public List<string> Cities { get; set; }
-        public List<string> Streets { get; set; }
         public List<Street> StreetList { get; set; }
 
 
         public App()
         {
             Cities = new List<string>();
-            //Streets = new List<string>();
             StreetList = new List<Street>();
 
             InitializeComponent();
@@ -54,23 +50,16 @@ namespace CarpoolApp
             GoogleMapsApiService.Initialize(Constants.GoogleApiKey);
 
             CurrentUser = null;
-            //CurrentAdult = null;
-            //CurrentKid = null;
+
 
             Page p = new Views.Login();
             p.Title = "התחברות";
             MainPage = new NavigationPage(p) { BarBackgroundColor = Color.FromHex("#81cfe0") };
-
-            //MainPage = new NavigationPage(new Views.AdultMainTab());
-
-            //bdb2ff
-            //MainPage = new MainPage();
         }
 
         protected async override void OnStart()
         {
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            //this.Streets = await proxy.GetStreetsAsync();
             this.Cities = await proxy.GetCitiesAsync();
             this.StreetList = await proxy.GetStreetListAsync();
         }
