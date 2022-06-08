@@ -1,130 +1,144 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="CarpoolApp.Model.GeocodedWaypoint" Collapsed="true">
+  <Class Name="CarpoolApp.Model.GeocodedWaypoint">
     <Position X="12.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.Northeast" Collapsed="true">
-    <Position X="5.5" Y="2.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.Northeast">
+    <Position X="5.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.Southwest" Collapsed="true">
-    <Position X="12.5" Y="2.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.Southwest">
+    <Position X="12.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.Bounds" Collapsed="true">
+  <Class Name="CarpoolApp.Model.Bounds">
     <Position X="5.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.DistanceOp" Collapsed="true">
+  <Class Name="CarpoolApp.Model.DistanceOp">
     <Position X="7.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgCAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.Duration" Collapsed="true">
+  <Class Name="CarpoolApp.Model.Duration">
     <Position X="9" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgCAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.EndLocation" Collapsed="true">
+  <Class Name="CarpoolApp.Model.EndLocation">
     <Position X="10.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.StartLocation" Collapsed="true">
-    <Position X="5.5" Y="3.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.StartLocation">
+    <Position X="5.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.Polyline" Collapsed="true">
-    <Position X="9" Y="2.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.Polyline">
+    <Position X="9" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.Step" Collapsed="true">
-    <Position X="7.25" Y="3.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.Step">
+    <Position X="7.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAACAAAAAAACEAEAAAAAAABAAAAAIAACAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Distance" />
+      <Property Name="EndLocation" />
+      <Property Name="Duration" />
+      <Property Name="HtmlInstructions" />
+      <Property Name="Maneuver" />
+      <Property Name="Polyline" />
+      <Property Name="StartLocation" />
+    </ShowAsAssociation>
   </Class>
-  <Class Name="CarpoolApp.Model.Leg" Collapsed="true">
-    <Position X="12.5" Y="1.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.Leg">
+    <Position X="12.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAQAAAAACAAAAAAAAEAAABAACAABBAABAAAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.OverviewPolyline" Collapsed="true">
-    <Position X="7.25" Y="2.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.OverviewPolyline">
+    <Position X="7.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.Route" Collapsed="true">
-    <Position X="10.75" Y="2.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.Route">
+    <Position X="10.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IACAAAAAAAAAwAAAAAAIAAAAAAAAAAAAQAAAAAAAAgA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.GoogleDirection" Collapsed="true">
-    <Position X="5.5" Y="1.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.GoogleDirection">
+    <Position X="5.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAAEAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GoogleDirection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.GooglePlace" Collapsed="true">
-    <Position X="7.25" Y="1.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.GooglePlace">
+    <Position X="7.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAACAAAAAAIAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GooglePlace.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.GooglePlaceAutoCompletePrediction" Collapsed="true">
-    <Position X="9" Y="1.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.GooglePlaceAutoCompletePrediction">
+    <Position X="9" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAGAACAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>Models\GooglePlaceAutoCompletePrediction.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.StructuredFormatting" Collapsed="true">
-    <Position X="9" Y="3.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.StructuredFormatting">
+    <Position X="9" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GooglePlaceAutoCompletePrediction.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CarpoolApp.Model.GooglePlaceAutoCompleteResult" Collapsed="true">
-    <Position X="10.75" Y="1.75" Width="1.5" />
+  <Class Name="CarpoolApp.Model.GooglePlaceAutoCompleteResult">
+    <Position X="10.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\GooglePlaceAutoCompletePrediction.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="System.String" Collapsed="true">
+    <Position X="10.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

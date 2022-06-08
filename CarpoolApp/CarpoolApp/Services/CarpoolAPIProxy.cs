@@ -748,15 +748,7 @@ namespace CarpoolApp.Services
             {
                 HttpResponseMessage response = await this.client.GetAsync($"{this.baseUri}/AddRequestToJoinCarpool?kidId={kidId}&carpoolId={carpoolId}");
                 if (response.IsSuccessStatusCode)
-                {
-                    //JsonSerializerOptions options = new JsonSerializerOptions
-                    //{
-                    //    ReferenceHandler = ReferenceHandler.Preserve, //avoid reference loops!
-                    //    PropertyNameCaseInsensitive = true
-                    //};
-                    //string content = await response.Content.ReadAsStringAsync();
-                    //List<Kid> kids = JsonSerializer.Deserialize<List<Kid>>(content, options);
-
+                {                  
                     return true;
                 }
                 else
