@@ -741,7 +741,6 @@ namespace CarpoolApp.Services
         }
         #endregion
 
-
         #region AddRequestToJoinCarpoolAsync
         public async Task<bool> AddRequestToJoinCarpoolAsync(int kidId, int carpoolId)
         {
@@ -771,41 +770,7 @@ namespace CarpoolApp.Services
                 return false;
             }
         }
-        #endregion
-
-        //#region AddRequestToJoinCarpoolAsync
-        //public async Task<bool> AddRequestToJoinCarpoolAsync(RequestToJoinCarpool request)
-        //{
-        //    try
-        //    {
-        //        JsonSerializerOptions options = new JsonSerializerOptions
-        //        {
-        //            ReferenceHandler = ReferenceHandler.Preserve,
-        //            Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
-        //            PropertyNameCaseInsensitive = true
-        //        };
-        //        string jsonObject = JsonSerializer.Serialize<RequestToJoinCarpool>(request, options);
-        //        StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-
-        //        HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/AddRequestToJoinCarpool", content);
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            //jsonObject = await response.Content.ReadAsStringAsync();
-        //            //bool r = JsonSerializer.Deserialize<bool>(jsonObject, options);
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        return false;
-        //    }
-        //}
-        //#endregion
+        #endregion        
 
         #region GetRequestsToJoinCarpoolAsync
         public async Task<List<KidsInCarpool>> GetRequestsToJoinCarpoolAsync(Adult adult)
@@ -835,7 +800,6 @@ namespace CarpoolApp.Services
         }
         #endregion
 
-
         #region ApproveRequestToJoinCarpoolAsync
         public async Task<bool> ApproveRequestToJoinCarpoolAsync(int kidId, int carpoolId)
         {
@@ -857,43 +821,7 @@ namespace CarpoolApp.Services
                 return false;
             }
         }
-        #endregion
-
-        //#region ApproveRequestToJoinCarpoolAsync
-        //public async Task<bool> ApproveRequestToJoinCarpoolAsync(RequestToJoinCarpool request)
-        //{
-        //    try
-        //    {
-        //        JsonSerializerOptions options = new JsonSerializerOptions
-        //        {
-        //            ReferenceHandler = ReferenceHandler.Preserve,
-        //            Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
-        //            PropertyNameCaseInsensitive = true
-        //        };
-        //        string jsonObject = JsonSerializer.Serialize<RequestToJoinCarpool>(request, options);
-        //        StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-
-        //        HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/ApproveRequestToJoinCarpool", content);
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            //jsonObject = await response.Content.ReadAsStringAsync();
-        //            //RequestToJoinCarpool requestToJoin = JsonSerializer.Deserialize<RequestToJoinCarpool>(jsonObject, options);
-
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        return false;
-        //    }
-        //}
-        //#endregion
-
+        #endregion        
 
         #region DeclineRequestToJoinCarpoolAsync
         public async Task<bool> DeclineRequestToJoinCarpoolAsync(int kidId, int carpoolId)
@@ -916,44 +844,7 @@ namespace CarpoolApp.Services
                 return false;
             }
         }
-        #endregion
-
-        //#region DeleteRequestToJoinCarpoolAsync
-        //public async Task<bool> DeleteRequestToJoinCarpoolAsync(RequestToJoinCarpool request)
-        //{
-        //    try
-        //    {
-        //        JsonSerializerOptions options = new JsonSerializerOptions
-        //        {
-        //            ReferenceHandler = ReferenceHandler.Preserve,
-        //            Encoder = JavaScriptEncoder.Create(UnicodeRanges.Hebrew, UnicodeRanges.BasicLatin),
-        //            PropertyNameCaseInsensitive = true
-        //        };
-        //        string jsonObject = JsonSerializer.Serialize<RequestToJoinCarpool>(request, options);
-        //        StringContent content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-
-        //        HttpResponseMessage response = await this.client.PostAsync($"{this.baseUri}/DeleteRequestToJoinCarpool", content);
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            //jsonObject = await response.Content.ReadAsStringAsync();
-        //            //RequestToJoinCarpool requestToJoin = JsonSerializer.Deserialize<RequestToJoinCarpool>(jsonObject, options);
-
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        return false;
-        //    }
-        //}
-        //#endregion
-
-        //Upload file to server (only images!)
+        #endregion       
 
         #region IsKidInActiveCarpoolAsync
         public async Task<Carpool> IsKidInActiveCarpoolAsync(Kid kid)
@@ -1106,55 +997,7 @@ namespace CarpoolApp.Services
                 return null;
             }
         }
-        #endregion
-
-
-
-        //#region GetStreetsNameList
-        //private List<string> GetStreetsNameList(List<Street> streets/*, string city*/)
-        //{
-        //    List<string> streetsName = new List<string>();
-
-        //    foreach (Street street in streets)
-        //    {
-        //        streetsName.Add(street.street_name);
-        //    }
-
-        //    return streetsName;
-        //}
-        //#endregion
-
-        //#region GetStreetsAsync
-        //public async Task<List<string>> GetStreetsAsync(/*string city*/)
-        //{
-        //    //?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500
-        //    try
-        //    {
-        //        HttpResponseMessage response = await this.client.GetAsync($"{this.baseDataUri}/streets.json?666");
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            JsonSerializerOptions options = new JsonSerializerOptions
-        //            {
-        //                PropertyNameCaseInsensitive = true
-        //            };
-        //            string content = await response.Content.ReadAsStringAsync();
-                    
-        //            List<Street> streets = JsonSerializer.Deserialize<List<Street>>(content, options);
-        //            return GetStreetsNameList(streets/*, city*/);
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        return null;
-        //    }
-        //}
-        //#endregion
-
+        #endregion     
 
         #region GetStreetsNameByCity
         private List<string> GetStreetsNameByCity(List<Street> streets, string city)
@@ -1200,7 +1043,6 @@ namespace CarpoolApp.Services
             }
         }
         #endregion
-
 
         #region GetStreetListAsync
         public async Task<List<Street>> GetStreetListAsync()
