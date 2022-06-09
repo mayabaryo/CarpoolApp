@@ -32,7 +32,7 @@
 
                                             <SwipeItemView BackgroundColor="#e1eff6">
                                                 <StackLayout Margin="10" WidthRequest="100" HeightRequest="200">
-                                                    <Button Text="התחל נסיעה" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+                                                    <Button Text="צפה בנסיעה" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
                                                     Command="{Binding Source={x:Reference collectionName}, Path=BindingContext.StartCommand}"
                                                     CommandParameter="{Binding}"/>
                                                 </StackLayout>

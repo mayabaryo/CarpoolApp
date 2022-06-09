@@ -94,10 +94,12 @@ namespace CarpoolApp.ViewModels
                     string point = $"{user.City},{user.Street} {user.HouseNum}";
                     waypoints.Add(point);
                 }
+                ShowMap page = new ShowMap(origin, dest, waypoints, kids, carpool);
+                await App.Current.MainPage.Navigation.PushAsync(page);
             }
+            else
+                await App.Current.MainPage.DisplayAlert("תקלה", "ההסעה בוצעה או ריקה", "בסדר");
             
-            ShowMap page = new ShowMap(origin, dest, waypoints, kids, carpool);
-            await App.Current.MainPage.Navigation.PushAsync(page);
         }
         #endregion
 

@@ -52,43 +52,52 @@ namespace CarpoolApp.Services
         //Connect gets a list of groups the user belongs to!
         public async Task Connect(int carpoolId)
         {
-            await hubConnection.StartAsync();
+            if (hubConnection.State == HubConnectionState.Disconnected)
+                await hubConnection.StartAsync();
             await hubConnection.InvokeAsync("OnConnect", carpoolId);
         }
 
         
         public async Task Disconnect(int carpoolId)
         {
-            await hubConnection.InvokeAsync("OnDisconnect", carpoolId);
-            await hubConnection.StopAsync();
+            if (hubConnection.State == HubConnectionState.Connected)
+            {
+                await hubConnection.InvokeAsync("OnDisconnect", carpoolId);
+                //await hubConnection.StopAsync();
+            }
+                
 
         }
 
        
         public async Task SendKidOnBoard(int carpoolId, int kidId)
         {
-            if (hubConnection.State == HubConnectionState.Connected)
-                await hubConnection.InvokeAsync("SendKidOnBoard", carpoolId, kidId);
+            if (hubConnection.State == HubConnectionState.Disconnected)
+                await hubConnection.StartAsync();
+            await hubConnection.InvokeAsync("SendKidOnBoard", carpoolId, kidId);
 
         }
 
         public async Task SendArriveToDestination(int carpoolId)
         {
-            if (hubConnection.State == HubConnectionState.Connected)
-                await hubConnection.InvokeAsync("SendArriveToDestination", carpoolId);
+            if (hubConnection.State == HubConnectionState.Disconnected)
+                await hubConnection.StartAsync();
+            await hubConnection.InvokeAsync("SendArriveToDestination", carpoolId);
 
         }
 
         public async Task SendLocation(int carpoolId, double longitude, double latitude)
         {
-            if (hubConnection.State == HubConnectionState.Connected)
-                await hubConnection.InvokeAsync("SendLocation", carpoolId, longitude, latitude);
+            if (hubConnection.State == HubConnectionState.Disconnected)
+                await hubConnection.StartAsync();
+            await hubConnection.InvokeAsync("SendLocation", carpoolId, longitude, latitude);
 
         }
 
         public async Task StartDrive(int carpoolId)
         {
-
+            if (hubConnection.State == HubConnectionState.Disconnected)
+                await hubConnection.StartAsync();
             await hubConnection.InvokeAsync("StartDrive", carpoolId);
 
         }

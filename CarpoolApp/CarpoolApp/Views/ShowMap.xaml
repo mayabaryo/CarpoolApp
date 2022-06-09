@@ -89,7 +89,7 @@
 
             <maps:Map x:Name="map" IsShowingUser="True" HorizontalOptions="FillAndExpand"/>
 
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" Margin="4, 0, 4, 6" Spacing="8">
 
                 <Button Text="התחל ניווט" IsVisible="{Binding IsDriver}" Style="{StaticResource Button}" BackgroundColor="LightGreen" Command="{Binding NavigateCommand}"></Button>
 

@@ -183,7 +183,11 @@ namespace CarpoolApp.ViewModels
         }
         private async void OnArriveToDestination()
         {
+            await App.Current.MainPage.DisplayAlert("נסיעה הושלמה", "הנהג הגיע ליעד והנסיעה הסתיימה", "בסדר");
+            await App.Current.MainPage.Navigation.PopAsync();
             await this.service.Disconnect(carpool.Id);
+
+
         }
         private void OnKidOnBoard(int kidId)
         {
@@ -334,15 +338,11 @@ namespace CarpoolApp.ViewModels
 
                 App theApp = (App)App.Current;
 
-                Page page = new AdultMainTab();
-                page.Title = "שלום " + theApp.CurrentUser.UserName;
-               
+                
                 await this.service.SendArriveToDestination(Carpool.Id);
                 InDrive = false;
                 await this.service.Disconnect(Carpool.Id);
-                //await App.Current.MainPage.DisplayAlert("הרשמה", "ההרשמה בוצעה בהצלחה", "אישור", FlowDirection.RightToLeft);
-                theApp.MainPage = new NavigationPage(page) /*{ BarBackgroundColor = Color.FromHex("#81cfe0") }*/;
-
+                await theApp.MainPage.Navigation.PopAsync();
             }
             catch (Exception e)
             {
@@ -355,24 +355,26 @@ namespace CarpoolApp.ViewModels
         public ICommand KidInCommand => new Command<Kid>(OnKidIn);
         public async void OnKidIn(Kid kid)
        {
-            //this.Color = "LightGreen";
-            if(!kid.IsInCarpool)
-                kid.IsInCarpool = true;
-            else
-                kid.IsInCarpool = false;
-
-            CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
-            List<KidsOfAdult> kidsOfAdult = kid.KidsOfAdults.ToList();
-
-            string body = $"{kid.IdNavigation.FirstName} {kid.IdNavigation.LastName}" + " כעת בהסעה לפעילות. ניתן לצפות במסלול בזמן אמת באפליקציה";
-            foreach (KidsOfAdult kidsOf in kidsOfAdult)
+            if (IsDriver)
             {
-                Adult adult = kidsOf.Adult;
-                string to = adult.IdNavigation.Email;
-                string toName = adult.IdNavigation.UserName;
-                bool isSent = await proxy.SendEmailAsync(body, to, toName);
-            }
-            await this.service.SendKidOnBoard(Carpool.Id, kid.Id);
+                if (!kid.IsInCarpool)
+                    kid.IsInCarpool = true;
+                //else
+                //    kid.IsInCarpool = false;
+
+                CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
+                List<KidsOfAdult> kidsOfAdult = kid.KidsOfAdults.ToList();
+
+                string body = $"{kid.IdNavigation.FirstName} {kid.IdNavigation.LastName}" + " כעת בהסעה לפעילות. ניתן לצפות במסלול בזמן אמת באפליקציה";
+                foreach (KidsOfAdult kidsOf in kidsOfAdult)
+                {
+                    Adult adult = kidsOf.Adult;
+                    string to = adult.IdNavigation.Email;
+                    string toName = adult.IdNavigation.UserName;
+                    bool isSent = await proxy.SendEmailAsync(body, to, toName);
+                }
+                await this.service.SendKidOnBoard(Carpool.Id, kid.Id);
+            }            
         }
         #endregion
 
