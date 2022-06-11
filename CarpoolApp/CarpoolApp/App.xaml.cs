@@ -21,7 +21,7 @@ namespace CarpoolApp
     {
         //Generate Google Api Key at: https://console.cloud.google.com/ for Places API, Directions API, Maps SDK For android!
         //Generate Bing Api Key at: https://www.bingmapsportal.com/
-        public const string GoogleApiKey = "AIzaSyC_6Zf6hub8Hx00ur9BvUtRApvkidgDdpQ";
+        public const string GoogleApiKey = "AIzaSyDODu_-vK1_6456joACCNCj5AZ7v32_6Dk";
         public const string BingApiKey = "YOUR BING API KEY";
     }
     public partial class App : Application

@@ -77,9 +77,14 @@ namespace CarpoolApp.ViewModels
             CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
             List<Carpool> kidCarpools = await proxy.GetKidCarpoolsAsync(this.Kid);
 
-            ObservableCollection<Carpool> theCarpools = new ObservableCollection<Carpool>(kidCarpools);
+            ObservableCollection<Carpool> theCarpools = new ObservableCollection<Carpool>(new List<Carpool>());
+            if (kidCarpools != null)
+                theCarpools = new ObservableCollection<Carpool>(kidCarpools);
+
 
             List<Carpool> activityCarpools = await proxy.GetCarpoolsInActivityAsync(activity);
+            if (activityCarpools == null)
+                activityCarpools = new List<Carpool>();
 
 
             Carpool myCarpool = theCarpools.Where(a => a.ActivityId == activity.Id).FirstOrDefault();
