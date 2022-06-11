@@ -359,8 +359,8 @@ namespace CarpoolApp.ViewModels
             {
                 if (!kid.IsInCarpool)
                     kid.IsInCarpool = true;
-                //else
-                //    kid.IsInCarpool = false;
+                else
+                    kid.IsInCarpool = false;
 
                 CarpoolAPIProxy proxy = CarpoolAPIProxy.CreateProxy();
                 List<KidsOfAdult> kidsOfAdult = kid.KidsOfAdults.ToList();

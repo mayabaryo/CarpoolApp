@@ -69,9 +69,9 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0"
-                                   Text="שם משתמש" FontAttributes="Bold"/>
+                                   Text="פעילות" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="0"
-                                   Text="{Binding Kid.IdNavigation.UserName}"/>
+                                   Text="{Binding Carpool.Activity.ActivityName}"/>
                                 <Label Grid.Column="0" Grid.Row="1"
                                    Text="שם פרטי" FontAttributes="Bold"/>
                                 <Label Grid.Column="1" Grid.Row="1"
